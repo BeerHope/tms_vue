@@ -1,0 +1,61 @@
+export default {
+  login: {
+    title: 'XTMS管理系统',
+    subtitle: 'XTMS Management System',
+    username: '用户名',
+    password: '密码',
+    submit: '登录',
+    tips: {
+      username: '请输入正确的用户名',
+      password: '输入密码不能少于8位'
+    },
+    switchLang: '语言选择',
+    langs: {
+      zh: '中文',
+      en: '英文'
+    }
+  },
+  routes: {
+    dashboard: '首页',
+    terminal: '终端管理',
+    terminalList: '终端列表',
+    merchant: '商户管理',
+    merchantList: '商户列表',
+    merchantTerminalList: '商户终端列表',
+    channel: '渠道商管理',
+    channelList: '渠道商列表',
+    config: '配置管理',
+    configList: '配置列表',
+    modelList: '机型列表',
+    task: '任务管理',
+    taskList: '任务列表',
+    systemUpdate: '系统升级',
+    systemPackageList: '系统包列表',
+    app: '应用管理',
+    appList: '应用列表',
+    appReturnedList: '应用打回列表',
+    appStore: '应用商店',
+    appPromotion: '应用推广',
+    slideshow: '轮播图',
+    parameter: '参数管理',
+    parameterList: '参数列表',
+    appParameter: '应用参数',
+    ads: '广告管理',
+    terminalAdsList: '终端广告列表',
+    appAdsList: '应用广告列表',
+    log: '日志管理',
+    updateLog: '升级日志',
+    operateLog: '操作日志',
+    terminalVisitLog: '终端访问日志',
+    terminalRunLog: '终端运行日志',
+    user: '用户授权',
+    userList: '用户列表',
+    roleList: '角色列表',
+    menuList: '菜单列表',
+    key: '密钥管理',
+    keyImportRecordList: '密钥导入记录列表',
+    TMkList: '终端密钥列表',
+    mPos: 'MPos管理',
+    machineList: '机型列表'
+  }
+}

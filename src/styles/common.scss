@@ -1,0 +1,125 @@
+@each $align-name, $align in
+  (c, center),
+  (l, left),
+  (r, right) {
+  .t-#{$align-name}{text-align: $align;}
+  .f-#{$align-name} {float: $align;}
+}
+
+@each $display-name, $display in
+  (db, block),
+  (dib, inline-block),
+  (di, inline),
+  (df, flex),
+  (dt, table) {
+  .#{$display-name}{display: $display;}
+}
+
+@each $pos-type in
+  static,
+  fixed,
+  absolute,
+  relative {
+  .pos-#{$pos-type} {
+    position: $pos-type;
+  }  
+}
+
+/* size of margin/border/padding */
+$size: 0;
+@while $size <= 30 {
+  .m-#{$size} { margin: 1px * $size; }
+  .m-t-#{$size} { margin-top: 1px * $size; }
+  .m-r-#{$size} { margin-top: 1px * $size; }
+  .m-b-#{$size} { margin-bottom: 1px * $size; }
+  .m-l-#{$size} { margin-left: 1px * $size; }
+  .p-#{$size} { padding: 1px * $size; }
+  .p-t-#{$size} { padding-top: 1px * $size; }
+  .p-r-#{$size} { padding-top: 1px * $size; }
+  .p-b-#{$size} { padding-bottom: 1px * $size; }
+  .p-l-#{$size} { padding-left: 1px * $size; }
+  @if $size <= 10 {
+    .b-#{$size} { border: 1px * $size; }
+    .b-t-#{$size} { border-top: 1px * $size; }
+    .b-r-#{$size} { border-top: 1px * $size; }
+    .b-b-#{$size} { border-bottom: 1px * $size; }
+    .b-l-#{$size} { border-left: 1px * $size; }
+  }
+  .f-z-#{$size} { font-size: 1px * $size;}
+  $size: $size + 2;
+}
+
+/* mixin style */
+@mixin clearfix {
+  display: inline-block;
+  &:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+  }
+  * html & { height: 1px }
+}
+
+/* set color of background,text and border */
+@mixin bg_text_border-color($bg-color, $text-color, $border-color) {
+  background-color: $bg-color;
+  color: $text-color;
+  border-color: $border-color;
+}
+
+/* common theme colors */
+$color-333: #333;
+$color-666: #666;
+$color-999: #999;
+$color-ccc: #ccc;
+$color-ddd: #ddd;
+$color-eee: #eee;
+$color-cbcfd4: #cbcfd4;
+$color-f5:#f5f5f5;
+$white: #ffffff;
+$color-00b4c5: #00b4c5;
+$color-67C23A: #67C23A;
+@each $color-name, $color in
+  (color-333, $color-333),
+  (color-666, $color-666),
+  (color-999, $color-999),
+  (color-ccc, $color-ccc),
+  (color-ddd, $color-ddd),
+  (color-eee, $color-eee),
+  (color-cbcfd4, $color-cbcfd4),
+  (color-00b4c5, $color-00b4c5),
+  (color-67C23A, $color-67C23A),
+  (color-white, $white) {
+  .text-#{$color-name} { color: $color; }
+  .border-#{$color-name} { border-color: $color; }
+  .border-left-#{$color-name} {border-left-color: $color;}
+  .border-right-#{$color-name} {border-right-color: $color;}
+  .border-top-#{$color-name} {border-top-color: $color;}
+  .border-bottom-#{$color-name} {border-bottom-color: $color;}
+}
+
+/* set button style */
+$hover-opacity: 0.78;
+.el-button{
+  color: $white;
+  &.el-button--primary {
+    @include bg_text_border-color($color-00b4c5, $white, $color-00b4c5);
+    &:hover{
+      opacity: $hover-opacity;
+    }
+  }
+}
+
+/* set form item style */
+.el-form-item__content {
+  @include bg_text_border-color($white, $color-999, $color-cbcfd4);
+}
+
+/* set dropdown style */
+.el-dropdown-menu__item {
+  &:focus, &:not(.is-disabled):hover{
+    color: $color-00b4c5;
+  }
+}

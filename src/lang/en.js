@@ -1,0 +1,60 @@
+export default {
+  login: {
+    title: 'XTMS',
+    subtitle: 'XTMS Management System',
+    username: 'Username',
+    password: 'Password',
+    submit: 'Login',
+    tips: {
+      username: 'Please enter the correct user name',
+      password: 'The password can not be less than 8 digits'
+    },
+    switchLang: 'Switch language',
+    langs: {
+      zh: 'Chinese',
+      en: 'English'
+    }
+  },
+  routes: {
+    dashboard: 'Home',
+    terminal: 'Terminal Management',
+    terminalList: 'Terminal List',
+    merchant: 'Merchant Management',
+    merchantList: 'Merchant List',
+    merchantTerminalList: 'Merchant Terminal List',
+    channel: 'Channel Management',
+    channelList: 'Channel List',
+    config: 'Config Management',
+    configList: 'Config List',
+    modelList: 'Model List',
+    task: 'Task Management',
+    taskList: 'Task List',
+    systemUpdate: 'System Update',
+    systemPackageList: 'System Package List',
+    app: 'App Management',
+    appList: 'App List',
+    appReturned: 'App Returned',
+    appStore: 'App Store',
+    appPromotion: 'App Promotion',
+    slideshow: 'Slideshow',
+    parameter: 'Parameter Management',
+    parameterList: 'Parameter List',
+    appParameter: 'App Parameter',
+    ads: 'Ads Management',
+    terminalAdsList: 'Terminal Ads List',
+    appAdsList: 'App Ads List',
+    log: 'Log Management',
+    updateLog: 'Update Log',
+    operateLog: 'Operate Log',
+    terminalVisitLog: 'Terminal Visit Log',
+    user: 'User Authority',
+    userList: 'User List',
+    roleList: 'Role List',
+    menuList: 'Menu List',
+    key: 'Key Management',
+    keyImportRecordList: 'Key Import Record List',
+    TMkList: 'TMK List',
+    mPos: 'MPos Management',
+    machineList: 'Machine List'
+  }
+}

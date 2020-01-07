@@ -8,7 +8,7 @@ const mocks = [
   ...user,
   ...table
 ]
-
+console.log(mocks, 'mock!!!!!!!!!!!!!')
 // for front mock
 // please use it cautiously, it will redefine XMLHttpRequest,
 // which will cause many of your third-party libraries to be invalidated(like progress event).

@@ -1,73 +1,80 @@
 <template>
   <div class="login-container">
-    <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-
-      <div class="title-container">
-        <h3 class="title">Login Form</h3>
+    <div class="logo">
+      <img src="@/assets/login_images/logo-en.png" alt="logo">
+    </div>
+    <div class="login-body">
+      <div class="system-title">
+        <h3 class="content">{{ $t('login.title') }}</h3>
+        <p class="desc">{{ $t('login.subtitle') }}</p>
       </div>
-
-      <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon icon-class="user" />
-        </span>
-        <el-input
-          ref="username"
-          v-model="loginForm.username"
-          placeholder="Username"
-          name="username"
-          type="text"
-          tabindex="1"
-          auto-complete="on"
-        />
-      </el-form-item>
-
-      <el-form-item prop="password">
-        <span class="svg-container">
-          <svg-icon icon-class="password" />
-        </span>
-        <el-input
-          :key="passwordType"
-          ref="password"
-          v-model="loginForm.password"
-          :type="passwordType"
-          placeholder="Password"
-          name="password"
-          tabindex="2"
-          auto-complete="on"
-          @keyup.enter.native="handleLogin"
-        />
-        <span class="show-pwd" @click="showPwd">
-          <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
-        </span>
-      </el-form-item>
-
-      <el-button :loading="loading" type="primary" style="width:100%;margin-bottom:30px;" @click.native.prevent="handleLogin">Login</el-button>
-
-      <div class="tips">
-        <span style="margin-right:20px;">username: admin</span>
-        <span> password: any</span>
-      </div>
-
-    </el-form>
+      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
+        <!-- <div class="title-container">
+          <h3 class="title">Login Form</h3>
+        </div> -->
+        <el-form-item prop="username">
+          <span class="svg-container">
+            <svg-icon icon-class="user" />
+          </span>
+          <el-input
+            ref="username"
+            v-model="loginForm.username"
+            :placeholder="$t('login.username')"
+            name="username"
+            type="text"
+            tabindex="1"
+            auto-complete="on"
+          />
+        </el-form-item>
+        <el-form-item prop="password">
+          <span class="svg-container">
+            <svg-icon icon-class="password" />
+          </span>
+          <el-input
+            :key="passwordType"
+            ref="password"
+            v-model="loginForm.password"
+            :type="passwordType"
+            :placeholder="$t('login.password')"
+            name="password"
+            tabindex="2"
+            auto-complete="on"
+            @keyup.enter.native="handleLogin"
+          />
+          <span class="show-pwd" @click="showPwd">
+            <svg-icon :icon-class="passwordType === 'password' ? 'eye' : 'eye-open'" />
+          </span>
+        </el-form-item>
+        <div class="lang-select">
+          <span class="lang-desc f-z-14">{{ $t('login.switchLang') }}</span>
+          <LangSelect />
+        </div>
+        <el-button class="submit" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{ $t('login.submit') }}</el-button>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
 import { validUsername } from '@/utils/validate'
+import LangSelect from '@/components/LangSelect'
 
 export default {
   name: 'Login',
+  components: {
+    LangSelect
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        callback(new Error(this.$t('login.tips.username')))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+      if (value.length < 8) {
+        callback(new Error(this.$t('login.tips.password')))
       } else {
         callback()
       }
@@ -75,7 +82,7 @@ export default {
     return {
       loginForm: {
         username: 'admin',
-        password: '111111'
+        password: '11111145'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -133,41 +140,44 @@ $bg:#283443;
 $light_gray:#fff;
 $cursor: #fff;
 
-@supports (-webkit-mask: none) and (not (cater-color: $cursor)) {
-  .login-container .el-input input {
-    color: $cursor;
-  }
-}
-
 /* reset element-ui css */
 .login-container {
+  padding: 20px 10%;
+  position: relative;
+  .login-body{
+    height: calc(100% - 200px);
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 80%;
+  }
   .el-input {
     display: inline-block;
-    height: 47px;
+    height: 36px;
     width: 85%;
-
     input {
       background: transparent;
       border: 0px;
       -webkit-appearance: none;
       border-radius: 0px;
-      padding: 12px 5px 12px 15px;
-      color: $light_gray;
-      height: 47px;
-      caret-color: $cursor;
-
+      padding: 6px 6px 6px 16px;
+      height: 36px;
+      // caret-color: $cursor;
       &:-webkit-autofill {
         box-shadow: 0 0 0px 1000px $bg inset !important;
         -webkit-text-fill-color: $cursor !important;
       }
     }
   }
-
   .el-form-item {
     border: 1px solid rgba(255, 255, 255, 0.1);
     background: rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     color: #454545;
+  }
+  .el-form-item__content{
+    line-height: 30px;
   }
 }
 </style>
@@ -176,22 +186,59 @@ $cursor: #fff;
 $bg:#2d3a4b;
 $dark_gray:#889aa4;
 $light_gray:#eee;
+$login_bg: url('~@/assets/login_images/login_bg.png');
 
 .login-container {
-  min-height: 100%;
-  width: 100%;
+  min-height: calc(100% - 10px);
+  width: calc(100% - 10px);
   background-color: $bg;
+  background-image: $login_bg;
   overflow: hidden;
-
+  .logo{
+    position: relative;
+    top: 100px;
+  }
+  .system-title{
+    color: #fff;
+    .content{
+      line-height: 52px;
+      letter-spacing: 2px;
+      font-size: 46px;
+      font-weight: normal;
+      font-family: 'Microsoft Yahei', Arial, sans-serif;
+      color: #fff;
+      margin: 10px 0;
+    }
+    .desc{
+      font-size: 18px;
+      font-style: italic;
+      letter-spacing: 1px;
+    }
+  }
   .login-form {
     position: relative;
     width: 520px;
     max-width: 100%;
-    padding: 160px 35px 0;
-    margin: 0 auto;
+    padding: 50px 80px;
     overflow: hidden;
+    background: #fff;
+    .lang-select{
+      width: 100%;
+      line-height: 36px;
+      padding: 2px 10px 2px 14px;
+      text-align: right;
+      border: 1px solid #eee;
+      .lang-desc{
+        float: left;
+        color: #adabab;
+      }
+    }
+    .submit{
+      width: 100%;
+      margin-top: 50px;
+      height: 42px;
+    }
   }
-
   .tips {
     font-size: 14px;
     color: #fff;
@@ -203,7 +250,6 @@ $light_gray:#eee;
       }
     }
   }
-
   .svg-container {
     padding: 6px 5px 6px 15px;
     color: $dark_gray;
@@ -211,19 +257,6 @@ $light_gray:#eee;
     width: 30px;
     display: inline-block;
   }
-
-  .title-container {
-    position: relative;
-
-    .title {
-      font-size: 26px;
-      color: $light_gray;
-      margin: 0px auto 40px auto;
-      text-align: center;
-      font-weight: bold;
-    }
-  }
-
   .show-pwd {
     position: absolute;
     right: 10px;
@@ -232,6 +265,14 @@ $light_gray:#eee;
     color: $dark_gray;
     cursor: pointer;
     user-select: none;
+  }
+}
+
+@media screen and (max-width: 1024px){
+  .login-container{
+    .login-form{
+      width: 420px;
+    }
   }
 }
 </style>
