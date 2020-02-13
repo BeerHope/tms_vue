@@ -7,7 +7,6 @@
         </el-menu-item>
       </app-link>
     </template>
-
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="$t(`routes.${item.meta.title}`)" />
@@ -56,9 +55,7 @@ export default {
     this.onlyOneChild = null
     return {}
   },
-  created() {
-    console.log(this.item, 'this.item!!!!!!')
-  },
+  created() {},
   methods: {
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {
@@ -71,8 +68,8 @@ export default {
         }
       })
 
-      // When there is only one child router, the child router is displayed by default
-      if (showingChildren.length === 1) {
+      // The home page is displayed by default
+      if (showingChildren.length === 1 && this.item.path === '/') {
         return true
       }
 

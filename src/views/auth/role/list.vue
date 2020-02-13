@@ -1,20 +1,21 @@
 <template>
-  <div></div>
+  <div class="role-list">
+  </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'RoleList',
   components: {},
   props: {},
   directive: {},
+  computed: {},
+  watch: {},
   data() {
     return {
 
     }
   },
-  computed: {},
-  watch: {},
   created() {},
   beforeMount() {},
   mounted() {},

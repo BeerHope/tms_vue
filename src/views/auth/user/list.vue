@@ -1,20 +1,21 @@
 <template>
-  <div></div>
+  <div class="user-list">
+  </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'UserList',
   components: {},
   props: {},
   directive: {},
+  computed: {},
+  watch: {},
   data() {
     return {
 
     }
   },
-  computed: {},
-  watch: {},
   created() {},
   beforeMount() {},
   mounted() {},

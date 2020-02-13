@@ -1,7 +1,6 @@
 import Vue from 'vue'
 
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
-
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import i18n from '@/lang/index' // lang i18n
@@ -23,20 +22,19 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
+console.log(process.env, 'env!!!!')
+/* 本地mock 暂时屏蔽*/
 import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'development') {
   mockXHR()
 }
-
-// set ElementUI lang to EN
 Vue.use(ElementUI, {
   i18n: (key, value) => {
     i18n.t(key, value)
   }
 })
-
+Vue.config.devTools = true
 Vue.config.productionTip = false
-
 new Vue({
   el: '#app',
   router,

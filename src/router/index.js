@@ -70,7 +70,7 @@ export const constantRoutes = [
       }
     ]
   },
-
+  /* 商户管理 */
   {
     path: '/merchant',
     component: Layout,
@@ -80,90 +80,81 @@ export const constantRoutes = [
     children: [
       {
         path: 'list',
-        name: 'list',
+        name: 'merchantList',
         component: () => import('@/views/merchant/list'),
         meta: { title: 'merchantList', icon: 'table' }
       },
       {
-        path: 'tree',
+        path: '/merchant-terminal/list',
         name: 'Tree',
-        component: () => import('@/views/tree/index'),
+        component: () => import('@/views/merchantTerminal/list'),
         meta: { title: 'merchantTerminalList', icon: 'tree' }
       }
     ]
   },
-
+  /* 渠道商管理 */
   {
-    path: '/form',
+    path: '/channel',
     component: Layout,
+    redirect: '/channel/list',
+    name: 'channel',
+    meta: { title: 'channel', icon: 'example' },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'list',
+        name: 'channelList',
+        component: () => import('@/views/merchant/list'),
+        meta: { title: 'channelList', icon: 'table' }
+      },
+      {
+        path: 'batch-import',
+        name: 'batchImport',
+        component: () => import('@/views/tree/index'),
+        meta: { title: 'batchImportChannel', icon: 'tree' }
       }
     ]
   },
-
+  /* 授权模块 */
   {
-    path: '/nested',
+    path: '/auth',
     component: Layout,
-    redirect: '/nested/menu1',
-    name: 'Nested',
+    redirect: '/auth/user/list',
+    name: 'auth',
     meta: {
-      title: 'Nested',
+      title: 'auth',
       icon: 'nested'
     },
     children: [
       {
-        path: 'menu1',
+        path: 'user/list',
         component: () => import('@/views/nested/menu1/index'), // Parent router-view
-        name: 'Menu1',
-        meta: { title: 'Menu1' },
-        children: [
-          {
-            path: 'menu1-1',
-            component: () => import('@/views/nested/menu1/menu1-1'),
-            name: 'Menu1-1',
-            meta: { title: 'Menu1-1' }
-          },
-          {
-            path: 'menu1-2',
-            component: () => import('@/views/nested/menu1/menu1-2'),
-            name: 'Menu1-2',
-            meta: { title: 'Menu1-2' },
-            children: [
-              {
-                path: 'menu1-2-1',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-1'),
-                name: 'Menu1-2-1',
-                meta: { title: 'Menu1-2-1' }
-              },
-              {
-                path: 'menu1-2-2',
-                component: () => import('@/views/nested/menu1/menu1-2/menu1-2-2'),
-                name: 'Menu1-2-2',
-                meta: { title: 'Menu1-2-2' }
-              }
-            ]
-          },
-          {
-            path: 'menu1-3',
-            component: () => import('@/views/nested/menu1/menu1-3'),
-            name: 'Menu1-3',
-            meta: { title: 'Menu1-3' }
-          }
-        ]
+        name: 'user',
+        meta: { title: 'userList' }
       },
       {
-        path: 'menu2',
+        path: 'role/list',
         component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'menu2' }
+        meta: { title: 'roleList' }
+      },
+      {
+        path: 'menu/list',
+        component: () => import('@/views/auth/menu/list'),
+        meta: { title: 'menuList' }
       }
     ]
   },
-
+  // {
+  //   path: '/form',
+  //   component: Layout,
+  //   children: [
+  //     {
+  //       path: 'index',
+  //       name: 'Form',
+  //       component: () => import('@/views/form/index'),
+  //       meta: { title: 'Form', icon: 'form' }
+  //     }
+  //   ]
+  // },
   // {
   //   path: 'external-link',
   //   component: Layout,

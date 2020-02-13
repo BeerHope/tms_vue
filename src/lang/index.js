@@ -25,12 +25,10 @@ const messages = {
 }
 
 export const getLocale = () => {
-  // 获取cookieLanguage
   const cookieLanguage = getLanguage()
   if (cookieLanguage) {
     return cookieLanguage
   }
-
   const language = navigator.language.toLowerCase()
   const locales = Object.keys(messages)
   for (const locale of locales) {

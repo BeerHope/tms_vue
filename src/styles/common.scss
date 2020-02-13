@@ -1,28 +1,39 @@
-@each $align-name, $align in
+@each $alignName, $align in
   (c, center),
   (l, left),
   (r, right) {
-  .t-#{$align-name}{text-align: $align;}
-  .f-#{$align-name} {float: $align;}
+  .t-#{$alignName}{text-align: $align;}
+  .f-#{$alignName} {float: $align;}
 }
 
-@each $display-name, $display in
+@each $displayName, $display in
   (db, block),
   (dib, inline-block),
   (di, inline),
   (df, flex),
   (dt, table) {
-  .#{$display-name}{display: $display;}
+  .#{$displayName}{display: $display;}
 }
 
-@each $pos-type in
+@each $posType in
   static,
   fixed,
   absolute,
   relative {
-  .pos-#{$pos-type} {
-    position: $pos-type;
+  .pos-#{$posType} {
+    position: $posType;
   }  
+}
+
+@each $cursor in
+  auto,
+  pointer,
+  wait,
+  help,
+  move,{
+  .cur-#{$cursor} {
+    cursor: $cursor;
+  }
 }
 
 /* size of margin/border/padding */
@@ -30,24 +41,25 @@ $size: 0;
 @while $size <= 30 {
   .m-#{$size} { margin: 1px * $size; }
   .m-t-#{$size} { margin-top: 1px * $size; }
-  .m-r-#{$size} { margin-top: 1px * $size; }
+  .m-r-#{$size} { margin-right: 1px * $size; }
   .m-b-#{$size} { margin-bottom: 1px * $size; }
   .m-l-#{$size} { margin-left: 1px * $size; }
   .p-#{$size} { padding: 1px * $size; }
   .p-t-#{$size} { padding-top: 1px * $size; }
-  .p-r-#{$size} { padding-top: 1px * $size; }
+  .p-r-#{$size} { padding-right: 1px * $size; }
   .p-b-#{$size} { padding-bottom: 1px * $size; }
   .p-l-#{$size} { padding-left: 1px * $size; }
   @if $size <= 10 {
-    .b-#{$size} { border: 1px * $size; }
-    .b-t-#{$size} { border-top: 1px * $size; }
-    .b-r-#{$size} { border-top: 1px * $size; }
-    .b-b-#{$size} { border-bottom: 1px * $size; }
+    .b-#{$size} { border-width: 1px * $size; }
+    .b-t-#{$size} { border-top-width: 1px * $size; }
+    .b-r-#{$size} { border-right-width: 1px * $size; }
+    .b-b-#{$size} { border-bottom-width: 1px * $size; }
     .b-l-#{$size} { border-left: 1px * $size; }
   }
   .f-z-#{$size} { font-size: 1px * $size;}
-  $size: $size + 2;
+  $size: $size + 1;
 }
+
 
 /* mixin style */
 @mixin clearfix {
@@ -63,10 +75,10 @@ $size: 0;
 }
 
 /* set color of background,text and border */
-@mixin bg_text_border-color($bg-color, $text-color, $border-color) {
-  background-color: $bg-color;
-  color: $text-color;
-  border-color: $border-color;
+@mixin bg_text_border-color($bgColor, $textColor, $borderColor) {
+  background-color: $bgColor;
+  color: $textColor;
+  border-color: $borderColor;
 }
 
 /* common theme colors */
@@ -81,7 +93,7 @@ $color-f5:#f5f5f5;
 $white: #ffffff;
 $color-00b4c5: #00b4c5;
 $color-67C23A: #67C23A;
-@each $color-name, $color in
+@each $colorName, $color in
   (color-333, $color-333),
   (color-666, $color-666),
   (color-999, $color-999),
@@ -92,22 +104,22 @@ $color-67C23A: #67C23A;
   (color-00b4c5, $color-00b4c5),
   (color-67C23A, $color-67C23A),
   (color-white, $white) {
-  .text-#{$color-name} { color: $color; }
-  .border-#{$color-name} { border-color: $color; }
-  .border-left-#{$color-name} {border-left-color: $color;}
-  .border-right-#{$color-name} {border-right-color: $color;}
-  .border-top-#{$color-name} {border-top-color: $color;}
-  .border-bottom-#{$color-name} {border-bottom-color: $color;}
+  .text-#{$colorName} { color: $color; }
+  .border-#{$colorName} { border-color: $color; }
+  .border-left-#{$colorName} {border-left-color: $color;}
+  .border-right-#{$colorName} {border-right-color: $color;}
+  .border-top-#{$colorName} {border-top-color: $color;}
+  .border-bottom-#{$colorName} {border-bottom-color: $color;}
 }
 
 /* set button style */
-$hover-opacity: 0.78;
+$hoverOpacity: 0.78;
 .el-button{
   color: $white;
   &.el-button--primary {
     @include bg_text_border-color($color-00b4c5, $white, $color-00b4c5);
     &:hover{
-      opacity: $hover-opacity;
+      opacity: $hoverOpacity;
     }
   }
 }
@@ -116,10 +128,66 @@ $hover-opacity: 0.78;
 .el-form-item__content {
   @include bg_text_border-color($white, $color-999, $color-cbcfd4);
 }
+/* readonly form item */
+.el-input__inner{
+  &[readonly="readonly"]:focus,
+  &[readonly="readonly"]:hover{
+    border-color: $readonlyColor;
+  }
+}
 
 /* set dropdown style */
 .el-dropdown-menu__item {
   &:focus, &:not(.is-disabled):hover{
     color: $color-00b4c5;
   }
+}
+/* set button style */
+.el-button{
+  color: $color-666;
+  min-width: 80px;
+}
+
+/* set common-container style */
+.common-container{
+  position: absolute;
+  min-height: calc(100% - 32px);
+  width: calc(100% - 32px);
+}
+.common-form{
+  width: 60%;
+  min-width: 400px;
+  margin: auto;
+  .el-select{
+    width: 100%;
+  }
+}
+.custom-hover{
+  &:hover{
+    color: $color-00b4c5;
+  }
+}
+.shadow{
+  box-shadow: 0 2px 12px 0 rgba(0,0,0,.1);
+}
+.common-border{
+  border: 1px solid $color-eee;
+}
+.l{
+  float: left;
+}
+.r{
+  float: right;
+}
+.b{
+  font-weight: bold;
+}
+.m-a{
+  margin: auto;
+}
+.w-100{
+  width: 100%;
+}
+.h-100{
+  height: 100%;
 }

@@ -31,7 +31,6 @@ export default {
       'sidebar'
     ]),
     routes() {
-      console.log(this.$router.options, '路由选项！！！')
       return this.$router.options.routes
     },
     activeMenu() {

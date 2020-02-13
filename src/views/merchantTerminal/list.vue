@@ -1,5 +1,7 @@
 <template>
-  <div></div>
+  <div>
+    商户终端管理！！！
+  </div>
 </template>
 
 <script>
@@ -9,9 +11,7 @@ export default {
   props: {},
   directive: {},
   data() {
-    return {
-
-    }
+    return {}
   },
   computed: {},
   watch: {},

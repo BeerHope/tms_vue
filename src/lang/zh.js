@@ -1,20 +1,4 @@
 export default {
-  login: {
-    title: 'XTMS管理系统',
-    subtitle: 'XTMS Management System',
-    username: '用户名',
-    password: '密码',
-    submit: '登录',
-    tips: {
-      username: '请输入正确的用户名',
-      password: '输入密码不能少于8位'
-    },
-    switchLang: '语言选择',
-    langs: {
-      zh: '中文',
-      en: '英文'
-    }
-  },
   routes: {
     dashboard: '首页',
     terminal: '终端管理',
@@ -24,6 +8,7 @@ export default {
     merchantTerminalList: '商户终端列表',
     channel: '渠道商管理',
     channelList: '渠道商列表',
+    batchImportChannel: '批量导入渠道商',
     config: '配置管理',
     configList: '配置列表',
     modelList: '机型列表',
@@ -48,7 +33,7 @@ export default {
     operateLog: '操作日志',
     terminalVisitLog: '终端访问日志',
     terminalRunLog: '终端运行日志',
-    user: '用户授权',
+    auth: '用户授权',
     userList: '用户列表',
     roleList: '角色列表',
     menuList: '菜单列表',
@@ -57,5 +42,100 @@ export default {
     TMkList: '终端密钥列表',
     mPos: 'MPos管理',
     machineList: '机型列表'
+  },
+  login: {
+    title: 'XTMS管理系统',
+    subtitle: 'XTMS Management System',
+    username: '用户名',
+    password: '密码',
+    submit: '登录',
+    tips: {
+      username: '请输入正确的用户名',
+      password: '输入密码不能少于8位'
+    },
+    switchLang: '语言选择',
+    langs: {
+      zh: '中文',
+      en: '英文'
+    }
+  },
+  /* 公共功能点 */
+  function: {
+    add: '新增',
+    delete: '删除',
+    edit: '编辑',
+    details: '详情',
+    search: '搜索',
+    save: '保存',
+    update: '更新',
+    modify: '修改',
+    cancel: '取消',
+    reset: '重置'
+  },
+  /* 字典 */
+  dictionary: {
+    states: [
+      {
+        value: 0,
+        label: '启用'
+      },
+      {
+        value: 1,
+        label: '禁用'
+      }
+    ]
+  },
+  menuList: {
+    updateCategory: '更新目录',
+    addSubMenu: '添加子菜单',
+    configInfo: '信息',
+    tipsInfo: ' 点击左侧菜单对其操作(添加子菜单、编辑、删除)',
+    menuTree: {
+      parentMenu: '根节点',
+      terminalManagement: '终端管理',
+      terminalList: '终端列表',
+      addTerminal: '新增终端',
+      editTerminal: '编辑终端',
+      deleteTerminal: '删除终端',
+      importTerminal: '导入终端',
+      terminalDetails: '终端详情'
+    },
+    form: {
+      label: {
+        parent: '父级名称',
+        name: '菜单名称',
+        state: '状 态',
+        type: '菜单类型',
+        url: '链接地址'
+      },
+      tips: {
+        name: '支持中文、数字、英文字母、空格，且字符长度不能大于15',
+        url: '支持英文字母、数字和部分符号（:-/.?#_）, 且长度不能大于100'
+      }
+    },
+    states: [
+      {
+        value: 0,
+        label: '启用'
+      },
+      {
+        value: 1,
+        label: '禁用'
+      }
+    ],
+    types: [
+      {
+        value: 1,
+        label: '目录'
+      },
+      {
+        value: 2,
+        label: '菜单'
+      },
+      {
+        value: 3,
+        label: '功能'
+      }
+    ]
   }
 }

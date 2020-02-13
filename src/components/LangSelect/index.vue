@@ -1,15 +1,13 @@
 <template>
   <el-dropdown
     trigger="click"
-    class="international"
+    class="international cur-pointer"
     @command="handleSetLanguage"
   >
     <div>
-      <svg-icon
-        name="language"
-        icon-class="language"
-        class-name="lang"
-      />
+      <span class="el-dropdown-link">
+        {{langTxt}}<i class="el-icon-arrow-down el-icon--right"></i>
+      </span>
     </div>
     <el-dropdown-menu slot="dropdown">
       <el-dropdown-item
@@ -36,6 +34,11 @@ export default {
   data() {
     return {
       language: getLanguage() || navigator.language.toLowerCase().slice(0, 2)
+    }
+  },
+  computed: {
+    langTxt() {
+      return this.language === 'zh' ? this.$t('login.langs.zh') : this.$t('login.langs.en')
     }
   },
   methods: {
