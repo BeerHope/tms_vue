@@ -91,7 +91,7 @@ export default {
     configInfo: '信息',
     tipsInfo: ' 点击左侧菜单对其操作(添加子菜单、编辑、删除)',
     menuTree: {
-      parentMenu: '根节点',
+      rootMenu: '根节点',
       terminalManagement: '终端管理',
       terminalList: '终端列表',
       addTerminal: '新增终端',

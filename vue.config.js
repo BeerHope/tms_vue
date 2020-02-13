@@ -42,7 +42,7 @@ module.exports = {
         target: process.env.VUE_APP_API_PATH,
         changeOrigin: true,
         pathRewrite: {
-          ['^' + process.env.VUE_APP_BASE_API]: process.env.VUE_APP_API_PATH
+          ['^' + process.env.VUE_APP_API_PATH]: ''
         }
       }
     },

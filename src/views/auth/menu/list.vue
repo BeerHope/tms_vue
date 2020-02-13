@@ -49,7 +49,7 @@ export default {
       },
       treeData: [
         {
-          label: 'parentMenu',
+          label: 'root',
           children: [
             {
               label: 'terminalManagement',
@@ -92,7 +92,7 @@ export default {
   watch: {},
   created() {
     getList().then(res => {
-      console.log('获取请求的数据：', res)
+      this.treeData = res.data
     })
   },
   beforeMount() {},
@@ -106,7 +106,7 @@ export default {
       this.isAddPageVisible = false
       // 后期添加中英文转换
       this.menuTitle = this.$t(`menuList.menuTree.${data.label}`)
-      this.isCurrentNodeLeaf = !!data.children.length
+      this.isCurrentNodeLeaf = !!(data.children && data.children.length)
       /* 模拟异步调用 */
       this.isLoading = true
       setTimeout(() => {

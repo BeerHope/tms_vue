@@ -80,7 +80,7 @@ export default {
     configInfo: 'Information',
     tipsInfo: 'Click Left Menu to Operate(Add,Edit and Delete Submenu)',
     menuTree: {
-      parentMenu: 'Parent Menu',
+      rootMenu: 'Root Menu',
       terminalManagement: 'Terminal Management',
       terminalList: 'Terminal List',
       addTerminal: 'Add New Terminal',
