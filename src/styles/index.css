@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :export {
   menuText: #bfcbd9;
   menuActiveText: #409EFF;
@@ -6,9 +7,11 @@
   menuHover: #263445;
   subMenuBg: #1f2d3d;
   subMenuHover: #001528;
-  sideBarWidth: 210px;
+  sideBarWidth: 260px;
+  readonlyColor: #DCDFE6;
 }
 
+/* common size variable */
 /* fade */
 .fade-enter-active,
 .fade-leave-active {
@@ -96,13 +99,13 @@
 #app .main-container {
   min-height: 100%;
   transition: margin-left .28s;
-  margin-left: 210px;
+  margin-left: 260px;
   position: relative;
 }
 
 #app .sidebar-container {
   transition: width 0.28s;
-  width: 210px !important;
+  width: 260px;
   background-color: #304156;
   height: 100%;
   position: fixed;
@@ -165,7 +168,7 @@
 
 #app .sidebar-container .nest-menu .el-submenu > .el-submenu__title,
 #app .sidebar-container .el-submenu .el-menu-item {
-  min-width: 210px !important;
+  min-width: 260px !important;
   background-color: #1f2d3d !important;
 }
 
@@ -220,7 +223,7 @@
 }
 
 #app .el-menu--collapse .el-menu .el-submenu {
-  min-width: 210px !important;
+  min-width: 260px !important;
 }
 
 #app .mobile .main-container {
@@ -229,13 +232,13 @@
 
 #app .mobile .sidebar-container {
   transition: transform .28s;
-  width: 210px !important;
+  width: 260px !important;
 }
 
 #app .mobile.hideSidebar .sidebar-container {
   pointer-events: none;
   transition-duration: 0.3s;
-  transform: translate3d(-210px, 0, 0);
+  transform: translate3d(-260px, 0, 0);
 }
 
 #app .withoutAnimation .main-container,
@@ -270,6 +273,19 @@
   border-radius: 20px;
 }
 
+:export {
+  menuText: #bfcbd9;
+  menuActiveText: #409EFF;
+  subMenuActiveText: #f4f4f5;
+  menuBg: #304156;
+  menuHover: #263445;
+  subMenuBg: #1f2d3d;
+  subMenuHover: #001528;
+  sideBarWidth: 260px;
+  readonlyColor: #DCDFE6;
+}
+
+/* common size variable */
 .t-c {
   text-align: center;
 }
@@ -328,6 +344,26 @@
 
 .pos-relative {
   position: relative;
+}
+
+.cur-auto {
+  cursor: auto;
+}
+
+.cur-pointer {
+  cursor: pointer;
+}
+
+.cur-wait {
+  cursor: wait;
+}
+
+.cur-help {
+  cursor: help;
+}
+
+.cur-move {
+  cursor: move;
 }
 
 /* size of margin/border/padding */
@@ -2180,6 +2216,11 @@
   border-color: #cbcfd4;
 }
 
+/* readonly form item */
+.el-input__inner[readonly="readonly"]:focus, .el-input__inner[readonly="readonly"]:hover {
+  border-color: #DCDFE6;
+}
+
 /* set dropdown style */
 .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover {
   color: #00b4c5;
@@ -2188,6 +2229,25 @@
 /* set button style */
 .el-button {
   color: #666;
+  min-width: 80px;
+}
+
+.el-button .el-button-small {
+  height: 32px;
+}
+
+/* el-dialog */
+.el-dialog {
+  min-width: 580px;
+}
+
+.el-dialog .el-dialog__body {
+  width: 80%;
+  margin: auto;
+}
+
+.el-dialog .el-dialog__footer {
+  text-align: center;
 }
 
 /* set common-container style */
@@ -2195,6 +2255,67 @@
   position: absolute;
   min-height: calc(100% - 32px);
   width: calc(100% - 32px);
+}
+
+.common-form {
+  width: 60%;
+  min-width: 400px;
+  margin: auto;
+}
+
+.common-form .el-select {
+  width: 100%;
+}
+
+.common-pagination {
+  width: 100%;
+  padding: 10px;
+  text-align: right;
+}
+
+.common-list .filter-box {
+  width: 1200px;
+  margin: auto;
+}
+
+.common-list .common-table {
+  width: 1200px;
+  height: calc(100% - 50px);
+  margin: auto;
+}
+
+.custom-hover:hover {
+  color: #00b4c5;
+}
+
+/* 状态颜色值 */
+.state {
+  width: 46px;
+  height: 56px;
+  position: relative;
+  padding-top: 10px;
+}
+
+.state.enabled {
+  background-color: #FFF0E5;
+  color: #FF7940;
+}
+
+.state.disabled {
+  background-color: #FEDEE0;
+  color: #FB2434;
+}
+
+.state:after {
+  content: '';
+  position: absolute;
+  width: 0;
+  border-top: 20px solid transparent;
+  border-right: 23px solid transparent;
+  border-bottom: 20px solid #fff;
+  border-left: 23px solid transparent;
+  right: 0;
+  bottom: 0;
 }
 
 .shadow {
@@ -2289,4 +2410,18 @@ div:focus {
 /* menu-list */
 .menu-list .el-card__header {
   padding: 12px 16px;
+}
+
+/* role-add */
+.role-dialog .tree-wrapper .el-form-item__content {
+  height: 250px;
+  border: 1px solid #DCDFE6;
+  overflow-y: auto;
+  border-radius: 2px;
+}
+
+/* common-list-common */
+.list-item .el-card__body {
+  height: 100%;
+  position: relative;
 }

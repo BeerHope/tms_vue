@@ -11,6 +11,9 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import _ from 'lodash'
+import moment from 'moment'
+
 import '@/icons' // icon
 import '@/permission' // permission control
 
@@ -28,7 +31,12 @@ import { mockXHR } from '../mock'
 if (process.env.NODE_ENV === 'development') {
   mockXHR()
 }
+_.assign(window, {
+  _,
+  moment
+})
 Vue.use(ElementUI, {
+  size: 'small',
   i18n: (key, value) => {
     i18n.t(key, value)
   }

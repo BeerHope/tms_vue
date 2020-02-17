@@ -14,13 +14,7 @@ module.exports = {
   // add your custom rules here
   //it is base on https://github.com/vuejs/eslint-config-vue
   rules: {
-    "vue/max-attributes-per-line": [2, {
-      "singleline": 10,
-      "multiline": {
-        "max": 1,
-        "allowFirstLine": false
-      }
-    }],
+    "vue/max-attributes-per-line": "off",
     "vue/singleline-html-element-content-newline": "off",
     "vue/multiline-html-element-content-newline":"off",
     "vue/name-property-casing": ["error", "PascalCase"],
@@ -32,6 +26,13 @@ module.exports = {
     }],
     "vue/attributes-order": "off",
     "vue/html-self-closing": "off",
+    "vue/html-indent": ["error",{
+      "attribute": 1,
+      "baseIndent": 1,
+      "closeBracket": 0,
+      "alignAttributesVertically": false,
+      "ignores": []
+    }],
     'block-spacing': [2, 'always'],
     'brace-style': [2, '1tbs', {
       'allowSingleLine': true
@@ -39,7 +40,8 @@ module.exports = {
     'camelcase': [0, {
       'properties': 'always'
     }],
-    'comma-dangle': [2, 'never'],
+    'comma-dangle': 0,
+    // 'comma-dangle': [2, 'never'],
     'comma-spacing': [2, {
       'before': false,
       'after': true
@@ -71,6 +73,7 @@ module.exports = {
       'newIsCap': true,
       'capIsNew': false
     }],
+    "vue/html-closing-bracket-newline": 0,
     'new-parens': 2,
     'no-array-constructor': 2,
     'no-caller': 2,
@@ -135,7 +138,8 @@ module.exports = {
     'no-this-before-super': 2,
     'no-throw-literal': 2,
     'no-trailing-spaces': 0,
-    'no-undef': 2,
+    // 'no-undef': 2,
+    'no-undef': 0,
     'no-undef-init': 2,
     'no-unexpected-multiline': 2,
     'no-unmodified-loop-condition': 2,
@@ -164,11 +168,13 @@ module.exports = {
       }
     }],
     'padded-blocks': [2, 'never'],
-    'quotes': [2, 'single', {
-      'avoidEscape': true,
-      'allowTemplateLiterals': true
-    }],
-    'semi': [2, 'never'],
+    // 'quotes': [2, 'single', {
+    //   'avoidEscape': true,
+    //   'allowTemplateLiterals': true
+    // }],
+    // 'semi': [2, 'never'],
+    quotes: 0,
+    'semi': 0,
     'semi-spacing': [2, {
       'before': false,
       'after': true

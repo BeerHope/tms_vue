@@ -127,15 +127,20 @@ export const constantRoutes = [
     children: [
       {
         path: 'user/list',
-        component: () => import('@/views/nested/menu1/index'), // Parent router-view
+        component: () => import('@/views/auth/user/list'), // Parent router-view
         name: 'user',
         meta: { title: 'userList' }
       },
       {
         path: 'role/list',
-        component: () => import('@/views/nested/menu2/index'),
-        meta: { title: 'roleList' }
+        component: () => import('@/views/auth/role/list'),
+        meta: { title: 'roleList' },
       },
+      // {
+      //   path: 'role/user-management',
+      //   component: () => import('@/views/auth/role/user-management-list'),
+      //   meta: { title: 'roleList' }
+      // },
       {
         path: 'menu/list',
         component: () => import('@/views/auth/menu/list'),
@@ -143,29 +148,6 @@ export const constantRoutes = [
       }
     ]
   },
-  // {
-  //   path: '/form',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       name: 'Form',
-  //       component: () => import('@/views/form/index'),
-  //       meta: { title: 'Form', icon: 'form' }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: 'external-link',
-  //   component: Layout,
-  //   children: [
-  //     {
-  //       path: 'https://panjiachen.github.io/vue-element-admin-site/#/',
-  //       meta: { title: 'External Link', icon: 'link' }
-  //     }
-  //   ]
-  // },
-
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

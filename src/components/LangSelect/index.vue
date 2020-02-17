@@ -6,7 +6,7 @@
   >
     <div>
       <span class="el-dropdown-link">
-        {{langTxt}}<i class="el-icon-arrow-down el-icon--right"></i>
+        {{ langTxt }}<i class="el-icon-arrow-down el-icon--right"></i>
       </span>
     </div>
     <el-dropdown-menu slot="dropdown">

@@ -18,11 +18,18 @@
         </el-option>
       </el-select>
       <el-button type="primary"><i class="el-icon-search m-r-4"></i>搜索</el-button>
-      <el-button type="primary" @click="openDialog(0, -1, true)"><i class="el-icon-plus m-r-4"></i>新增角色</el-button>
+      <el-button type="primary" @click="openDialog"><i class="el-icon-plus m-r-4"></i>新增</el-button>
     </div>
     <div class="common-table">
-      <list-item v-for="(item, index) in roleList" :key="index" :item-data="item"
-        @edit="openDialog(1, 0, true)" @manageUser="manageUser"></list-item>
+      <el-table height="calc(100% - 40px)" :data="roleList" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
+        <el-table-column v-for="item in tableHead" :key="item.prop" :prop="item.prop" :label="item.label"></el-table-column>
+        <el-table-column prop="operation" align="center" label="操作">
+          <template>
+            <el-button type="primary" size="mini" @click="deleteRole">删除</el-button>
+            <el-button type="primary" size="mini" @click="openDialog(1, 0, true)">编辑</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -90,63 +97,63 @@ export default {
       roleList: [
         {
           name: '角色1',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色2',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色1',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色2',
-          state: 1,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色1',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色2',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色1',
-          state: 1,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色2',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色1',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         },
         {
           name: '角色2',
-          state: 0,
+          state: '正常',
           createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
+          remark: '备注内容！！'
         }
       ],
       currentPage: 1,
@@ -181,11 +188,6 @@ export default {
       })
       this.$refs.dialog.dialogVisible = true
     },
-    manageUser() {
-      console.log('跳转角色下用户管理页面！！！！')
-      // this.$router.push('/role/user-management')
-    },
-    /* 暂时将该功能删除 */
     deleteRole() {
       this.$confirm('此操作将永远删除该角色，是否继续?', '提示', {
         confirmButtonText: '确定',

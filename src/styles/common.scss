@@ -1,3 +1,4 @@
+@import './variables.scss';
 @each $alignName, $align in
   (c, center),
   (l, left),
@@ -146,6 +147,22 @@ $hoverOpacity: 0.78;
 .el-button{
   color: $color-666;
   min-width: 80px;
+  .el-button-small {
+    height: $smallSize;
+  }
+}
+
+/* el-dialog */
+.el-dialog{
+  min-width: 580px;
+  .el-dialog__body{
+    // min-height: 500px;
+    width: 80%;
+    margin: auto;
+  }
+  .el-dialog__footer{
+    text-align: center;
+  }
 }
 
 /* set common-container style */
@@ -162,9 +179,58 @@ $hoverOpacity: 0.78;
     width: 100%;
   }
 }
+
+.common-pagination{
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+}
+
+.common-list{
+  .filter-box{
+    width: 1200px;
+    margin: auto;
+  }
+  .common-table{
+    width: 1200px;
+    height: calc(100% - 50px);
+    margin: auto;
+  }
+}
 .custom-hover{
   &:hover{
     color: $color-00b4c5;
+  }
+}
+
+/* 状态颜色值 */
+$enabledBg: #FFF0E5;
+$enabledTextColor: #FF7940;
+$disabledBg: #FEDEE0;
+$disabledTextColor: #FB2434;
+.state{
+  width: 46px;
+  height: 56px;
+  position: relative;
+  padding-top: 10px;
+  &.enabled{
+    background-color: $enabledBg;
+    color: $enabledTextColor;
+  }
+  &.disabled{
+    background-color: $disabledBg;
+    color: $disabledTextColor;
+  }
+  &:after{
+    content: '';
+    position: absolute;
+    width: 0;
+    border-top: 20px solid transparent;
+    border-right: 23px solid transparent;
+    border-bottom: 20px solid #fff;
+    border-left: 23px solid transparent;
+    right: 0;
+    bottom: 0;
   }
 }
 .shadow{
