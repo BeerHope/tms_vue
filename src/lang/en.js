@@ -74,7 +74,7 @@ export default {
     reset: 'Reset'
   },
   /* 用户权限 -> 菜单列表 */
-  menuList: {
+  menu: {
     updateCategory: 'Update Category',
     addSubMenu: 'Add submenu',
     configInfo: 'Information',
@@ -126,5 +126,15 @@ export default {
         label: 'Function'
       }
     ]
+  },
+  role: {
+    userManage: {
+      thead: {
+        account: 'Account',
+        name: 'Username',
+        channel: 'Channel provider',
+        operation: 'Operation',
+      }
+    }
   }
 }

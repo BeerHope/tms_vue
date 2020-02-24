@@ -9,29 +9,41 @@
           </template>
         </div>
         <el-tree
-          ref="menuTree" highlight-current
-          draggable default-expand-all :data="menuData" node-key="id"
-          :props="defaultProps" @node-click="handleNodeClick"
-          :expand-on-click-node="false" @node-drop="dropNode">
+          ref="menuTree"
+          highlight-current
+          draggable
+          default-expand-all
+          :data="menuData"
+          node-key="id"
+          :props="defaultProps"
+          @node-click="handleNodeClick"
+          :expand-on-click-node="false"
+          @node-drop="dropNode"
+        >
           <span slot-scope="{node, data}">
-            <span class="f-z-14">{{ $t(`menuList.menuTree.${data.label}`) }}</span>
+            <span class="f-z-14">{{ $t(`menu.menuTree.${data.label}`) }}</span>
           </span>
         </el-tree>
       </el-col>
       <el-col :span="19" class="p-l-10 h-100 pos-relative">
         <menu-edit
-          v-loading="isLoading" v-if="isTreeNodeClicked && !isAddPageVisible && !isLoading"
-          :title="menuTitle" :is-leaf="isLeaf" @showAddPage="showAddPage">
-        </menu-edit>
+          v-loading="isLoading"
+          v-if="isTreeNodeClicked && !isAddPageVisible && !isLoading"
+          :title="menuTitle"
+          :is-leaf="isLeaf"
+          @showAddPage="showAddPage"
+        ></menu-edit>
         <transition name="el-zoom-in-bottom">
           <menu-add
-            v-if="isAddPageVisible" :title="menuTitle"
-            :is-leaf="isLeaf" @closeAddPage="isAddPageVisible = false">
-          </menu-add>
+            v-if="isAddPageVisible"
+            :title="menuTitle"
+            :is-leaf="isLeaf"
+            @closeAddPage="isAddPageVisible = false"
+          ></menu-add>
         </transition>
         <div v-if="!isTreeNodeClicked" class="text-color-666 p-20">
           <i class="el-icon-info text-color-999"></i>
-          {{ $t('menuList.tipsInfo') }}
+          {{ $t('menu.tipsInfo') }}
         </div>
       </el-col>
     </el-row>
@@ -72,10 +84,10 @@ export default {
   created() {
     this.getMenuList()
   },
-  beforeMount() {},
-  mounted() {},
-  beforeDestroy() {},
-  destroyed() {},
+  beforeMount() { },
+  mounted() { },
+  beforeDestroy() { },
+  destroyed() { },
   methods: {
     getMenuList() {
       getList().then(res => {
@@ -87,7 +99,7 @@ export default {
       this.isTreeNodeClicked = true
       this.isAddPageVisible = false
       // 后期添加中英文转换
-      this.menuTitle = this.$t(`menuList.menuTree.${data.label}`)
+      this.menuTitle = this.$t(`menu.menuTree.${data.label}`)
       this.isLeaf = !!(data.children && data.children.length)
       this.currentNode = data
       this.$refs.menuTree.setCurrentKey(data.id)
@@ -128,18 +140,19 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .menu-list{
-    .category-opt{
-      text-align: right;
-      height: 36px;
-      margin-bottom: 10px;
-      border-bottom: 1px solid #eee;
-    }
-    .menu-edit, .menu-add{
-      line-height: 30px;
-      .el-card__header{
-        height: 29px;
-      }
+.menu-list {
+  .category-opt {
+    text-align: right;
+    height: 36px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+  }
+  .menu-edit,
+  .menu-add {
+    line-height: 30px;
+    .el-card__header {
+      height: 29px;
     }
   }
+}
 </style>

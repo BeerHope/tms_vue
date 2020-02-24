@@ -1,0 +1,1 @@
+.el-pagination button,.el-pagination span:not([class*=suffix]){height:32px;line-height:32px}.el-pager li{width:32px;height:32px;line-height:32px;border:1px solid #DDDDDE}.el-pager li+li{margin-left:12px}.el-pager li:hover,.el-pager li.active{background-color:#5087E5;color:#fff}.el-pager li:hover+li,.el-pager li.active+li{border-left:1px solid #DDDDDE}

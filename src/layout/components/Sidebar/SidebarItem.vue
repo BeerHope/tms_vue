@@ -1,15 +1,27 @@
 <template>
   <div v-if="!item.hidden" class="menu-wrapper">
-    <template v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow">
+    <template
+      v-if="hasOneShowingChild(item.children,item) && (!onlyOneChild.children||onlyOneChild.noShowingChildren)&&!item.alwaysShow"
+    >
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)" :class="{'submenu-title-noDropdown':!isNest}">
-          <item :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)" :title="$t(`routes.${onlyOneChild.meta.title}`)" />
+        <el-menu-item
+          :index="resolvePath(onlyOneChild.path)"
+          :class="{'submenu-title-noDropdown':!isNest, 'home': item.path==='/'}"
+        >
+          <item
+            :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
+            :title="$t(`routes.${onlyOneChild.meta.title}`)"
+          />
         </el-menu-item>
       </app-link>
     </template>
     <el-submenu v-else ref="subMenu" :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
-        <item v-if="item.meta" :icon="item.meta && item.meta.icon" :title="$t(`routes.${item.meta.title}`)" />
+        <item
+          v-if="item.meta"
+          :icon="item.meta && item.meta.icon"
+          :title="$t(`routes.${item.meta.title}`)"
+        />
       </template>
       <sidebar-item
         v-for="child in item.children"
@@ -55,7 +67,7 @@ export default {
     this.onlyOneChild = null
     return {}
   },
-  created() {},
+  created() { },
   methods: {
     hasOneShowingChild(children = [], parent) {
       const showingChildren = children.filter(item => {

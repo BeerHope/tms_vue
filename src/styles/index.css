@@ -1,17 +1,6 @@
 @charset "UTF-8";
-:export {
-  menuText: #bfcbd9;
-  menuActiveText: #409EFF;
-  subMenuActiveText: #f4f4f5;
-  menuBg: #304156;
-  menuHover: #263445;
-  subMenuBg: #1f2d3d;
-  subMenuHover: #001528;
-  sideBarWidth: 260px;
-  readonlyColor: #DCDFE6;
-}
-
 /* common size variable */
+/* default style */
 /* fade */
 .fade-enter-active,
 .fade-leave-active {
@@ -106,7 +95,7 @@
 #app .sidebar-container {
   transition: width 0.28s;
   width: 260px;
-  background-color: #304156;
+  background-color: #F4F5F7;
   height: 100%;
   position: fixed;
   font-size: 0px;
@@ -159,22 +148,39 @@
 
 #app .sidebar-container .submenu-title-noDropdown:hover,
 #app .sidebar-container .el-submenu__title:hover {
-  background-color: #263445 !important;
+  background-color: #E2E4E9 !important;
 }
 
 #app .sidebar-container .is-active > .el-submenu__title {
-  color: #f4f4f5 !important;
+  color: #5087E5 !important;
+}
+
+#app .sidebar-container .is-active > .el-submenu__title .nest-menu {
+  color: #505F79;
+  background-color: #E2E4E9;
 }
 
 #app .sidebar-container .nest-menu .el-submenu > .el-submenu__title,
 #app .sidebar-container .el-submenu .el-menu-item {
   min-width: 260px !important;
-  background-color: #1f2d3d !important;
 }
 
-#app .sidebar-container .nest-menu .el-submenu > .el-submenu__title:hover,
-#app .sidebar-container .el-submenu .el-menu-item:hover {
-  background-color: #001528 !important;
+#app .sidebar-container .nest-menu .el-submenu > .el-submenu__title:hover, #app .sidebar-container .nest-menu .el-submenu > .el-submenu__title.is-active,
+#app .sidebar-container .el-submenu .el-menu-item:hover,
+#app .sidebar-container .el-submenu .el-menu-item.is-active {
+  background-color: #E2E4E9 !important;
+}
+
+#app .el-menu-item.home {
+  height: 70px;
+  line-height: 70px;
+  color: #fff !important;
+  font-size: 22px;
+  background-color: #5087E5 !important;
+}
+
+#app .el-menu-item.home:hover {
+  background-color: #5087E5 !important;
 }
 
 #app .hideSidebar .sidebar-container {
@@ -252,7 +258,7 @@
 
 .el-menu--vertical .nest-menu .el-submenu > .el-submenu__title:hover,
 .el-menu--vertical .el-menu-item:hover {
-  background-color: #263445 !important;
+  background-color: #E2E4E9 !important;
 }
 
 .el-menu--vertical > .el-menu--popup {
@@ -273,19 +279,27 @@
   border-radius: 20px;
 }
 
-:export {
-  menuText: #bfcbd9;
-  menuActiveText: #409EFF;
-  subMenuActiveText: #f4f4f5;
-  menuBg: #304156;
-  menuHover: #263445;
-  subMenuBg: #1f2d3d;
-  subMenuHover: #001528;
-  sideBarWidth: 260px;
-  readonlyColor: #DCDFE6;
+/* el-dialog */
+.el-dialog {
+  min-width: 580px;
+  max-width: 698px;
+}
+
+.el-dialog .el-dialog__body {
+  width: 80%;
+  margin: auto;
+}
+
+.el-dialog .el-dialog__footer {
+  text-align: center;
+}
+
+.el-pager li {
+  border: 1px solid #DDDDDE;
 }
 
 /* common size variable */
+/* default style */
 .t-c {
   text-align: center;
 }
@@ -2123,51 +2137,51 @@
 }
 
 .text-color-00b4c5 {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 .border-color-00b4c5 {
-  border-color: #00b4c5;
+  border-color: #5087E5;
 }
 
 .border-left-color-00b4c5 {
-  border-left-color: #00b4c5;
+  border-left-color: #5087E5;
 }
 
 .border-right-color-00b4c5 {
-  border-right-color: #00b4c5;
+  border-right-color: #5087E5;
 }
 
 .border-top-color-00b4c5 {
-  border-top-color: #00b4c5;
+  border-top-color: #5087E5;
 }
 
 .border-bottom-color-00b4c5 {
-  border-bottom-color: #00b4c5;
+  border-bottom-color: #5087E5;
 }
 
-.text-color-67C23A {
-  color: #67C23A;
+.text-color-1ECE9A {
+  color: #1ECE9A;
 }
 
-.border-color-67C23A {
-  border-color: #67C23A;
+.border-color-1ECE9A {
+  border-color: #1ECE9A;
 }
 
-.border-left-color-67C23A {
-  border-left-color: #67C23A;
+.border-left-color-1ECE9A {
+  border-left-color: #1ECE9A;
 }
 
-.border-right-color-67C23A {
-  border-right-color: #67C23A;
+.border-right-color-1ECE9A {
+  border-right-color: #1ECE9A;
 }
 
-.border-top-color-67C23A {
-  border-top-color: #67C23A;
+.border-top-color-1ECE9A {
+  border-top-color: #1ECE9A;
 }
 
-.border-bottom-color-67C23A {
-  border-bottom-color: #67C23A;
+.border-bottom-color-1ECE9A {
+  border-bottom-color: #1ECE9A;
 }
 
 .text-color-white {
@@ -2200,13 +2214,18 @@
 }
 
 .el-button.el-button--primary {
-  background-color: #00b4c5;
+  background-color: #5087E5;
   color: #ffffff;
-  border-color: #00b4c5;
+  border-color: #5087E5;
 }
 
 .el-button.el-button--primary:hover {
   opacity: 0.78;
+}
+
+.el-button.el-button--primary.green-btn {
+  background-color: #1ECE9A;
+  border-color: #1ECE9A;
 }
 
 /* set form item style */
@@ -2223,7 +2242,7 @@
 
 /* set dropdown style */
 .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 /* set button style */
@@ -2234,20 +2253,6 @@
 
 .el-button .el-button-small {
   height: 32px;
-}
-
-/* el-dialog */
-.el-dialog {
-  min-width: 580px;
-}
-
-.el-dialog .el-dialog__body {
-  width: 80%;
-  margin: auto;
-}
-
-.el-dialog .el-dialog__footer {
-  text-align: center;
 }
 
 /* set common-container style */
@@ -2270,22 +2275,27 @@
 .common-pagination {
   width: 100%;
   padding: 10px;
-  text-align: right;
+  text-align: center;
+}
+
+.common-list {
+  padding: 0 45px;
 }
 
 .common-list .filter-box {
-  width: 1200px;
   margin: auto;
 }
 
 .common-list .common-table {
-  width: 1200px;
   height: calc(100% - 50px);
   margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .custom-hover:hover {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 /* 状态颜色值 */
@@ -2297,8 +2307,8 @@
 }
 
 .state.enabled {
-  background-color: #FFF0E5;
-  color: #FF7940;
+  background-color: #E5F1FB;
+  color: #016ECA;
 }
 
 .state.disabled {
@@ -2316,6 +2326,35 @@
   border-left: 23px solid transparent;
   right: 0;
   bottom: 0;
+}
+
+/* title */
+.common-title {
+  padding: 2px 20px;
+  border-left: 4px solid #1ece9a;
+  font-size: 20px;
+  color: #172B4D;
+}
+
+/* 删除对话框 */
+.delete-confirm {
+  width: 632px;
+  height: 304px;
+  padding: 4px 25px;
+}
+
+.delete-confirm .el-message-box__header {
+  margin-bottom: 50px;
+}
+
+.delete-confirm .el-message-box__content {
+  height: 150px;
+  text-align: center;
+  color: #172B4D;
+}
+
+.delete-confirm .el-message-box__btns {
+  text-align: center;
 }
 
 .shadow {
@@ -2356,6 +2395,8 @@ body {
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
   font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+  font-size: 14px;
+  color: #333;
 }
 
 label {

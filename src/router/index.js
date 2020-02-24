@@ -136,11 +136,12 @@ export const constantRoutes = [
         component: () => import('@/views/auth/role/list'),
         meta: { title: 'roleList' },
       },
-      // {
-      //   path: 'role/user-management',
-      //   component: () => import('@/views/auth/role/user-management-list'),
-      //   meta: { title: 'roleList' }
-      // },
+      {
+        path: 'role/user-management',
+        component: () => import('@/views/auth/role/user-management-list'),
+        meta: { title: 'userManagement' },
+        hidden: true
+      },
       {
         path: 'menu/list',
         component: () => import('@/views/auth/menu/list'),

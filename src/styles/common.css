@@ -1,12 +1,12 @@
 @charset "UTF-8";
 :export {
-  menuText: #bfcbd9;
-  menuActiveText: #409EFF;
-  subMenuActiveText: #f4f4f5;
-  menuBg: #304156;
-  menuHover: #263445;
-  subMenuBg: #1f2d3d;
-  subMenuHover: #001528;
+  menuText: #505F79;
+  menuActiveText: #5087E5;
+  subMenuActiveText: #5087E5;
+  menuBg: #F4F5F7;
+  menuHover: #E2E4E9;
+  subMenuBg: #F4F5F7;
+  subMenuHover: #E2E4E9;
   sideBarWidth: 260px;
   readonlyColor: #DCDFE6;
 }
@@ -1849,51 +1849,51 @@
 }
 
 .text-color-00b4c5 {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 .border-color-00b4c5 {
-  border-color: #00b4c5;
+  border-color: #5087E5;
 }
 
 .border-left-color-00b4c5 {
-  border-left-color: #00b4c5;
+  border-left-color: #5087E5;
 }
 
 .border-right-color-00b4c5 {
-  border-right-color: #00b4c5;
+  border-right-color: #5087E5;
 }
 
 .border-top-color-00b4c5 {
-  border-top-color: #00b4c5;
+  border-top-color: #5087E5;
 }
 
 .border-bottom-color-00b4c5 {
-  border-bottom-color: #00b4c5;
+  border-bottom-color: #5087E5;
 }
 
-.text-color-67C23A {
-  color: #67C23A;
+.text-color-1ECE9A {
+  color: #1ECE9A;
 }
 
-.border-color-67C23A {
-  border-color: #67C23A;
+.border-color-1ECE9A {
+  border-color: #1ECE9A;
 }
 
-.border-left-color-67C23A {
-  border-left-color: #67C23A;
+.border-left-color-1ECE9A {
+  border-left-color: #1ECE9A;
 }
 
-.border-right-color-67C23A {
-  border-right-color: #67C23A;
+.border-right-color-1ECE9A {
+  border-right-color: #1ECE9A;
 }
 
-.border-top-color-67C23A {
-  border-top-color: #67C23A;
+.border-top-color-1ECE9A {
+  border-top-color: #1ECE9A;
 }
 
-.border-bottom-color-67C23A {
-  border-bottom-color: #67C23A;
+.border-bottom-color-1ECE9A {
+  border-bottom-color: #1ECE9A;
 }
 
 .text-color-white {
@@ -1926,13 +1926,18 @@
 }
 
 .el-button.el-button--primary {
-  background-color: #00b4c5;
+  background-color: #5087E5;
   color: #ffffff;
-  border-color: #00b4c5;
+  border-color: #5087E5;
 }
 
 .el-button.el-button--primary:hover {
   opacity: 0.78;
+}
+
+.el-button.el-button--primary.green-btn {
+  background-color: #1ECE9A;
+  border-color: #1ECE9A;
 }
 
 /* set form item style */
@@ -1949,7 +1954,7 @@
 
 /* set dropdown style */
 .el-dropdown-menu__item:focus, .el-dropdown-menu__item:not(.is-disabled):hover {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 /* set button style */
@@ -1960,20 +1965,6 @@
 
 .el-button .el-button-small {
   height: 32px;
-}
-
-/* el-dialog */
-.el-dialog {
-  min-width: 580px;
-}
-
-.el-dialog .el-dialog__body {
-  width: 80%;
-  margin: auto;
-}
-
-.el-dialog .el-dialog__footer {
-  text-align: center;
 }
 
 /* set common-container style */
@@ -1999,19 +1990,24 @@
   text-align: center;
 }
 
+.common-list {
+  padding: 0 45px;
+}
+
 .common-list .filter-box {
-  width: 1200px;
   margin: auto;
 }
 
 .common-list .common-table {
-  width: 1200px;
   height: calc(100% - 50px);
   margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
 }
 
 .custom-hover:hover {
-  color: #00b4c5;
+  color: #5087E5;
 }
 
 /* 状态颜色值 */
@@ -2023,8 +2019,8 @@
 }
 
 .state.enabled {
-  background-color: #FFF0E5;
-  color: #FF7940;
+  background-color: #E5F1FB;
+  color: #016ECA;
 }
 
 .state.disabled {
@@ -2042,6 +2038,35 @@
   border-left: 23px solid transparent;
   right: 0;
   bottom: 0;
+}
+
+/* title */
+.common-title {
+  padding: 2px 20px;
+  border-left: 4px solid #1ece9a;
+  font-size: 20px;
+  color: #172B4D;
+}
+
+/* 删除对话框 */
+.delete-confirm {
+  width: 632px;
+  height: 304px;
+  padding: 4px 25px;
+}
+
+.delete-confirm .el-message-box__header {
+  margin-bottom: 50px;
+}
+
+.delete-confirm .el-message-box__content {
+  height: 150px;
+  text-align: center;
+  color: #172B4D;
+}
+
+.delete-confirm .el-message-box__btns {
+  text-align: center;
 }
 
 .shadow {

@@ -1,30 +1,36 @@
 // sidebar
-$menuText:#bfcbd9;
-$menuActiveText:#409EFF;
-$subMenuActiveText:#f4f4f5; //https://github.com/ElemeFE/element/issues/12951
+$menuText: #505F79;
+$menuActiveText: #5087E5;
+$subMenuActiveText: #5087E5; // https://github.com/ElemeFE/element/issues/12951
 
-$menuBg:#304156;
-$menuHover:#263445;
+$menuBg: #F4F5F7;
+$menuHover: #E2E4E9;
 
-$subMenuBg:#1f2d3d;
-$subMenuHover:#001528;
+$subMenuBg: #F4F5F7;
+$subMenuHover: #E2E4E9;
 
 $sideBarWidth: 260px;
 $readonlyColor: #DCDFE6;
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
-:export {
-  menuText: $menuText;
-  menuActiveText: $menuActiveText;
-  subMenuActiveText: $subMenuActiveText;
-  menuBg: $menuBg;
-  menuHover: $menuHover;
-  subMenuBg: $subMenuBg;
-  subMenuHover: $subMenuHover;
-  sideBarWidth: $sideBarWidth;
-  readonlyColor: $readonlyColor;
-}
+// :export
+// {
+//     menuText: $menuText;
+//     menuActiveText: $menuActiveText;
+//     subMenuActiveText: $subMenuActiveText;
+//     menuBg: $menuBg;
+//     menuHover: $menuHover;
+//     subMenuBg: $subMenuBg;
+//     subMenuHover: $subMenuHover;
+//     sideBarWidth: $sideBarWidth;
+//     readonlyColor: $readonlyColor;
+// }
 
 /* common size variable */
-$smallSize: 32px;
+$smallSize: 32px; // 设置表单元素的统一高度
+$customBlackFont: #172B4D; // 自定义黑体
+
+/* default style */
+$defaultFontSize: 14px;
+$defaultTextColor: #333;

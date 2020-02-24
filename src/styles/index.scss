@@ -3,91 +3,96 @@
 @import './transition.scss';
 @import './element-ui.scss';
 @import './sidebar.scss';
+@import './dialog.scss';
+@import './pagination.scss';
 @import './common.scss';
 
+
 body {
-  height: 100%;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
-  font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    height: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    font-size: $defaultFontSize;
+    color: $defaultTextColor;
 }
 
 label {
-  font-weight: 700;
+    font-weight: 700;
 }
 
 html {
-  height: 100%;
-  box-sizing: border-box;
+    height: 100%;
+    box-sizing: border-box;
 }
 
 #app {
-  height: 100%;
+    height: 100%;
 }
 
 *,
 *:before,
 *:after {
-  box-sizing: inherit;
+    box-sizing: inherit;
 }
 
 a:focus,
 a:active {
-  outline: none;
+    outline: none;
 }
 
 a,
 a:focus,
 a:hover {
-  cursor: pointer;
-  color: inherit;
-  text-decoration: none;
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
 }
 
 div:focus {
-  outline: none;
+    outline: none;
 }
 
 .clearfix {
-  &:after {
-    visibility: hidden;
-    display: block;
-    font-size: 0;
-    content: " ";
-    clear: both;
-    height: 0;
-  }
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
 }
 
 // main-container global css
 .app-container {
-  padding: 20px;
+    padding: 20px;
 }
 
 /* menu-list */
-.menu-list{
-  .el-card__header{
-    padding: 12px 16px;
-  }
+.menu-list {
+    .el-card__header {
+        padding: 12px 16px;
+    }
 }
 
 /* role-add */
-.role-dialog{
-  .tree-wrapper{
-    .el-form-item__content{
-      height: 250px;
-      border: 1px solid #DCDFE6;
-      overflow-y: auto;
-      border-radius: 2px;
+.role-dialog {
+    .tree-wrapper {
+        .el-form-item__content {
+            height: 250px;
+            border: 1px solid #DCDFE6;
+            overflow-y: auto;
+            border-radius: 2px;
+        }
     }
-  }
 }
 
 /* common-list-common */
-.list-item{
-  .el-card__body{
-    height: 100%;
-    position: relative;
-  }
+.list-item {
+    .el-card__body {
+        height: 100%;
+        position: relative;
+    }
 }

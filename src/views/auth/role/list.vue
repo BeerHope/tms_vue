@@ -1,54 +1,59 @@
 <template>
   <div class="common-list role-list">
-    <div class="filter-box p-t-6 p-b-6 m-b-10">
-      <el-select v-model="roleName" placeholder="角色名称" clearable>
-        <el-option
-          v-for="item in roles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-select v-model="roleName" placeholder="状态" clearable>
-        <el-option
-          v-for="item in roles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button type="primary"><i class="el-icon-search m-r-4"></i>搜索</el-button>
-      <el-button type="primary" @click="openDialog(0, -1, true)"><i class="el-icon-plus m-r-4"></i>新增角色</el-button>
-    </div>
-    <div class="common-table">
-      <list-item v-for="(item, index) in roleList" :key="index" :item-data="item"
-        @edit="openDialog(1, 0, true)" @manageUser="manageUser"></list-item>
-      <!-- 分页 -->
-      <el-pagination
-        class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
-      </el-pagination>
+    <div v-if="!isShowUserManagement">
+      <div class="filter-box p-t-6 p-b-6 m-b-10">
+        <el-select v-model="roleName" placeholder="角色名称" clearable>
+          <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        <el-select v-model="roleName" placeholder="状态" clearable>
+          <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        </el-select>
+        <el-button type="primary">
+          <i class="el-icon-search m-r-4"></i>搜索
+        </el-button>
+        <el-button type="primary" class="green-btn" @click="openDialog(0, -1, true)">
+          <i class="el-icon-plus m-r-4"></i>新增角色
+        </el-button>
+      </div>
+      <div class="common-table">
+        <list-item
+          v-for="(item, index) in roleList"
+          :key="index"
+          :item-data="item"
+          @edit="openDialog(1, 0, true)"
+          @manageUser="manageUser"
+        ></list-item>
+        <!-- 分页 -->
+        <el-pagination
+          class="common-pagination"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[100, 200, 300, 400]"
+          :page-size="100"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="400"
+        ></el-pagination>
+      </div>
     </div>
     <!-- 新增角色 -->
-    <role-add ref="dialog"></role-add>
+    <role-add ref="dialog" v-if="!isShowUserManagement"></role-add>
+    <!-- 管理用户 -->
+    <user-management v-else></user-management>
   </div>
 </template>
 
 <script>
 import RoleAdd from './components/RoleAdd'
 import ListItem from './components/ListItem'
+import UserManagement from './components/UserManagement'
 
 export default {
   name: 'RoleList',
   components: {
     RoleAdd,
-    ListItem
+    ListItem,
+    UserManagement
   },
   props: {},
   directive: {},
@@ -150,16 +155,16 @@ export default {
         }
       ],
       currentPage: 1,
-
+      isShowUserManagement: false
     }
   },
   computed: {},
   watch: {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeDestroy() {},
-  destroyed() {},
+  created() { },
+  beforeMount() { },
+  mounted() { },
+  beforeDestroy() { },
+  destroyed() { },
   methods: {
     handleSizeChange() {
       console.log('handle size change!!!!')
@@ -182,8 +187,8 @@ export default {
       this.$refs.dialog.dialogVisible = true
     },
     manageUser() {
-      console.log('跳转角色下用户管理页面！！！！')
-      // this.$router.push('/role/user-management')
+      this.$router.push('/auth/role/user-management')
+      // this.isShowUserManagement = true
     },
     /* 暂时将该功能删除 */
     deleteRole() {
@@ -203,5 +208,4 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
 </style>

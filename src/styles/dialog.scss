@@ -1,0 +1,15 @@
+$dialogMinWidth: 580px;
+$dialogMaxWidth: 698px;
+/* el-dialog */
+.el-dialog {
+    min-width: $dialogMinWidth;
+    max-width: $dialogMaxWidth;
+    .el-dialog__body {
+        width: 80%;
+        margin: auto;
+    }
+
+    .el-dialog__footer {
+        text-align: center;
+    }
+}

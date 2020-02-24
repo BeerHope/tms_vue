@@ -1,6 +1,6 @@
 export default {
   routes: {
-    dashboard: '首页',
+    dashboard: '终端管理系统',
     terminal: '终端管理',
     terminalList: '终端列表',
     merchant: '商户管理',
@@ -85,7 +85,7 @@ export default {
       }
     ]
   },
-  menuList: {
+  menu: {
     updateCategory: '更新目录',
     addSubMenu: '添加子菜单',
     configInfo: '信息',
@@ -137,5 +137,15 @@ export default {
         label: '功能'
       }
     ]
+  },
+  role: {
+    userManagement: {
+      thead: {
+        account: '账号',
+        name: '姓名',
+        channel: '所属渠道商',
+        operation: '操作',
+      }
+    }
   }
 }
