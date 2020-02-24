@@ -2,17 +2,17 @@
   <div class="common-list role-list">
     <div v-if="!isShowUserManagement">
       <div class="filter-box p-t-6 p-b-6 m-b-10">
-        <el-select v-model="roleName" placeholder="角色名称" clearable>
+        <el-select v-model="roleName" placeholder="角色名称" clearable class="m-r-8">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
-        <el-select v-model="roleName" placeholder="状态" clearable>
+        <el-select v-model="roleName" placeholder="状态" clearable class="m-r-8">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
         <el-button type="primary">
-          <i class="el-icon-search m-r-4"></i>搜索
+          <svg-icon icon-class="search" class="m-r-4"></svg-icon>搜索
         </el-button>
         <el-button type="primary" class="green-btn" @click="openDialog(0, -1, true)">
-          <i class="el-icon-plus m-r-4"></i>新增角色
+          <svg-icon icon-class="add" class="m-r-4"></svg-icon>新增角色
         </el-button>
       </div>
       <div class="common-table">
@@ -187,7 +187,7 @@ export default {
       this.$refs.dialog.dialogVisible = true
     },
     manageUser() {
-      this.$router.push('/auth/role/user-management')
+      this.$router.push('/system/role/user-management')
       // this.isShowUserManagement = true
     },
     /* 暂时将该功能删除 */

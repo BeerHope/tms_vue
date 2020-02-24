@@ -54,41 +54,54 @@ export const constantRoutes = [
       meta: { title: 'dashboard', icon: 'dashboard' }
     }]
   },
-
+  /* 系统管理 */
   {
-    path: '/terminal',
+    path: '/system',
     component: Layout,
-    redirect: '/terminal/list',
-    name: 'Terminal',
-    meta: { title: 'terminal', icon: 'example' },
+    redirect: '/system/user/list',
+    name: 'system',
+    meta: {
+      title: 'system',
+      icon: 'system'
+    },
     children: [
       {
-        path: 'list',
-        name: 'list',
-        component: () => import('@/views/terminal/list'),
-        meta: { title: 'terminalList', icon: 'table' }
+        path: 'user/list',
+        component: () => import('@/views/system/user/list'), // Parent router-view
+        name: 'user',
+        meta: { title: 'userList' }
+      },
+      {
+        path: 'role/list',
+        component: () => import('@/views/system/role/list'),
+        meta: { title: 'roleList' },
+      },
+      {
+        path: 'role/user-management',
+        component: () => import('@/views/system/role/user-management-list'),
+        meta: { title: 'userManagement' },
+        hidden: true
+      },
+      {
+        path: 'menu/list',
+        component: () => import('@/views/system/menu/list'),
+        meta: { title: 'menuList' }
       }
     ]
   },
-  /* 商户管理 */
+  /* 商户终端管理 */
   {
     path: '/merchant',
     component: Layout,
     redirect: '/merchant/list',
     name: 'Merchant',
-    meta: { title: 'merchant', icon: 'example' },
+    meta: { title: 'merchant', icon: 'terminal' },
     children: [
-      {
-        path: 'list',
-        name: 'merchantList',
-        component: () => import('@/views/merchant/list'),
-        meta: { title: 'merchantList', icon: 'table' }
-      },
       {
         path: '/merchant-terminal/list',
         name: 'Tree',
-        component: () => import('@/views/merchantTerminal/list'),
-        meta: { title: 'merchantTerminalList', icon: 'tree' }
+        component: () => import('@/views/merchant-terminal/list'),
+        meta: { title: 'merchantTerminalList' }
       }
     ]
   },
@@ -98,54 +111,38 @@ export const constantRoutes = [
     component: Layout,
     redirect: '/channel/list',
     name: 'channel',
-    meta: { title: 'channel', icon: 'example' },
+    meta: { title: 'channel', icon: 'channel' },
     children: [
       {
         path: 'list',
         name: 'channelList',
-        component: () => import('@/views/merchant/list'),
-        meta: { title: 'channelList', icon: 'table' }
+        component: () => import('@/views/channel/list'),
+        meta: { title: 'channelList' }
       },
       {
         path: 'batch-import',
         name: 'batchImport',
         component: () => import('@/views/tree/index'),
-        meta: { title: 'batchImportChannel', icon: 'tree' }
+        meta: { title: 'batchImportChannel' }
       }
     ]
   },
-  /* 授权模块 */
+  /* 设备配置管理 */
   {
-    path: '/auth',
+    path: '/equipment',
     component: Layout,
-    redirect: '/auth/user/list',
-    name: 'auth',
+    redirect: '/equipment/list',
+    name: 'equipment',
     meta: {
-      title: 'auth',
-      icon: 'nested'
+      title: 'equipment',
+      icon: 'equipment'
     },
     children: [
       {
-        path: 'user/list',
-        component: () => import('@/views/auth/user/list'), // Parent router-view
-        name: 'user',
-        meta: { title: 'userList' }
-      },
-      {
-        path: 'role/list',
-        component: () => import('@/views/auth/role/list'),
-        meta: { title: 'roleList' },
-      },
-      {
-        path: 'role/user-management',
-        component: () => import('@/views/auth/role/user-management-list'),
-        meta: { title: 'userManagement' },
-        hidden: true
-      },
-      {
-        path: 'menu/list',
-        component: () => import('@/views/auth/menu/list'),
-        meta: { title: 'menuList' }
+        path: 'list',
+        name: 'equipmentList',
+        component: () => import('@/views/equipment/list'),
+        meta: { title: 'equipmentList' }
       }
     ]
   },

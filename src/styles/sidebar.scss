@@ -1,3 +1,12 @@
+$menuText: #505F79;
+$menuActiveText: #5087E5;
+$subMenuActiveText: #5087E5;
+$menuBg: #F4F5F7;
+$menuHover: #E2E4E9;
+$subMenuBg: #F4F5F7;
+$subMenuHover: #E2E4E9;
+$sideBarWidth: 251px;
+
 #app {
   .main-container {
     min-height: 100%;
@@ -60,7 +69,6 @@
       border: none;
       height: 100%;
       width: 100% !important;
-
     }
 
     // menu hover
@@ -73,7 +81,6 @@
 
     .is-active>.el-submenu__title {
       color: $menuActiveText !important;
-
       .nest-menu {
         color: $menuText;
         background-color: $subMenuHover;
@@ -87,6 +94,11 @@
       &:hover,
       &.is-active {
         background-color: $subMenuHover !important;
+      }
+    }
+    & .nest-menu{
+      li.el-menu-item{
+        padding-left: 49px !important;
       }
     }
   }

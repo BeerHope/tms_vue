@@ -33,7 +33,7 @@ export default {
     updateLog: 'Update Log',
     operateLog: 'Operate Log',
     terminalVisitLog: 'Terminal Visit Log',
-    auth: 'User Authority',
+    system: 'System Management',
     userList: 'User List',
     roleList: 'Role List',
     menuList: 'Menu List',
@@ -41,7 +41,8 @@ export default {
     keyImportRecordList: 'Key Import Record List',
     TMkList: 'TMK List',
     mPos: 'MPos Management',
-    machineList: 'Machine List'
+    machineList: 'Machine List',
+    merchantTerminal: 'Merchant Terminal Management',
   },
   /* 登录 */
   login: {

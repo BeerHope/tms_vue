@@ -29,6 +29,16 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-pagination
+        class="common-pagination"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400"
+      ></el-pagination>
     </section>
   </div>
 </template>
@@ -53,6 +63,7 @@ export default {
           channel: '所属渠道商111',
         }
       ],
+      currentPage: 1,
     }
   },
   computed: {},
@@ -70,14 +81,19 @@ export default {
       this.$confirm('此操作将剔除该角色下的用户，是否继续?', '剔除', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
-        // type: 'warning'
-        customClass: 'delete-confirm'
+        // customClass: 'delete-confirm'
       }).then(() => {
         // 进行删除操作
         this.$message.success('删除成功')
       }).catch(() => {
         console.log('取消删除操作')
       })
+    },
+    handleSizeChange() {
+      console.log('handleSizeChange!!!!')
+    },
+    handleCurrentChange() {
+      console.log('handleCurrentChnage!!!')
     }
   }
 }

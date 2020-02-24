@@ -9,7 +9,8 @@
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
+          <svg-icon icon-class="username" style="font-size: 32px"></svg-icon>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -54,13 +55,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$navBorderColor: #F0F3F4;
 .navbar {
   height: 70px;
   line-height: 70px;
   overflow: hidden;
   position: relative;
   background: #fff;
-  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: none;
+  border-bottom: 1px solid $navBorderColor;
 
   .hamburger-container {
     height: 100%;
@@ -81,12 +85,9 @@ export default {
   .right-menu {
     float: right;
     height: 100%;
-    line-height: 50px;
-
     &:focus {
       outline: none;
     }
-
     .right-menu-item {
       display: inline-block;
       padding: 0 8px;

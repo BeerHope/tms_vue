@@ -1,7 +1,7 @@
 // sidebar
 $menuText: #505F79;
 $menuActiveText: #5087E5;
-$subMenuActiveText: #5087E5; // https://github.com/ElemeFE/element/issues/12951
+$subMenuActiveText: #5087E5;
 
 $menuBg: #F4F5F7;
 $menuHover: #E2E4E9;
@@ -9,23 +9,23 @@ $menuHover: #E2E4E9;
 $subMenuBg: #F4F5F7;
 $subMenuHover: #E2E4E9;
 
-$sideBarWidth: 260px;
+$sideBarWidth: 250px;
 $readonlyColor: #DCDFE6;
 
 // the :export directive is the magic sauce for webpack
 // https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
-// :export
-// {
-//     menuText: $menuText;
-//     menuActiveText: $menuActiveText;
-//     subMenuActiveText: $subMenuActiveText;
-//     menuBg: $menuBg;
-//     menuHover: $menuHover;
-//     subMenuBg: $subMenuBg;
-//     subMenuHover: $subMenuHover;
-//     sideBarWidth: $sideBarWidth;
-//     readonlyColor: $readonlyColor;
-// }
+:export
+{
+    menuText: $menuText;
+    menuActiveText: $menuActiveText;
+    subMenuActiveText: $subMenuActiveText;
+    menuBg: $menuBg;
+    menuHover: $menuHover;
+    subMenuBg: $subMenuBg;
+    subMenuHover: $subMenuHover;
+    sideBarWidth: $sideBarWidth;
+    readonlyColor: $readonlyColor;
+}
 
 /* common size variable */
 $smallSize: 32px; // 设置表单元素的统一高度

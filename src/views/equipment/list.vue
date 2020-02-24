@@ -1,17 +1,17 @@
 <template>
-  <div>
-    商户终端管理！！！
+  <div class="equipment-list">
   </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'EquipmentList',
   components: {},
   props: {},
   directive: {},
   data() {
-    return {}
+    return {
+    }
   },
   computed: {},
   watch: {},

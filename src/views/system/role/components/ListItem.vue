@@ -76,13 +76,14 @@ $hoverTextColor: #3b78fc;
         margin-top: -20px;
       }
       .role-info {
-        margin-top: 46px;
+        margin-top: 40px;
         .name {
           font-size: 18px;
         }
         .desc {
           font-size: 14px;
           color: #666;
+          height: 30px;
         }
       }
       .operation {
@@ -91,9 +92,11 @@ $hoverTextColor: #3b78fc;
         align-items: center;
         font-size: 14px;
         text-align: left;
-        margin-top: 26px;
+        margin-top: 30px;
         border-top: 1px solid $borderColor;
-        padding-top: 20px;
+        padding-top: 22px;
+        height: 20px;
+        line-height: 20px;
         span {
           display: inline-block;
           cursor: pointer;

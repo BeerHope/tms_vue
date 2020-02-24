@@ -33,7 +33,7 @@ export default {
     operateLog: '操作日志',
     terminalVisitLog: '终端访问日志',
     terminalRunLog: '终端运行日志',
-    auth: '用户授权',
+    system: '系统管理',
     userList: '用户列表',
     roleList: '角色列表',
     menuList: '菜单列表',
@@ -41,7 +41,10 @@ export default {
     keyImportRecordList: '密钥导入记录列表',
     TMkList: '终端密钥列表',
     mPos: 'MPos管理',
-    machineList: '机型列表'
+    machineList: '机型列表',
+    merchantTerminal: '商户终端管理',
+    equipment: '设备配置管理',
+    equipmentList: '设备配置列表'
   },
   login: {
     title: 'XTMS管理系统',

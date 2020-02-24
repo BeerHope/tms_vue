@@ -1,16 +1,17 @@
 <template>
-  <div></div>
+  <div class="channel-list">
+    渠道商管理
+  </div>
 </template>
 
 <script>
 export default {
-  name: '',
+  name: 'ChannelList',
   components: {},
   props: {},
   directive: {},
   data() {
     return {
-
     }
   },
   computed: {},
