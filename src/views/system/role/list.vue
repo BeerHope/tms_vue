@@ -1,6 +1,6 @@
 <template>
   <div class="common-list role-list">
-    <div v-if="!isShowUserManagement">
+    <div>
       <div class="filter-box p-t-6 p-b-6 m-b-10">
         <el-select v-model="roleName" placeholder="角色名称" clearable class="filter-item">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -37,23 +37,19 @@
       </div>
     </div>
     <!-- 新增/编辑 角色 -->
-    <role-add ref="dialog" v-if="!isShowUserManagement"></role-add>
-    <!-- 管理用户 -->
-    <user-management v-else></user-management>
+    <role-add ref="dialog"></role-add>
   </div>
 </template>
 
 <script>
 import RoleAdd from './components/RoleAdd'
 import ListItem from './components/ListItem'
-import UserManagement from './components/UserManagement'
 
 export default {
   name: 'RoleList',
   components: {
     RoleAdd,
-    ListItem,
-    UserManagement
+    ListItem
   },
   props: {},
   directive: {},
@@ -154,8 +150,7 @@ export default {
           remark: '备注内容，说明文字'
         }
       ],
-      currentPage: 1,
-      isShowUserManagement: false
+      currentPage: 1
     }
   },
   computed: {},

@@ -15,7 +15,7 @@
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
-      <el-button type="primary" class="green-btn">
+      <el-button type="primary" class="green-btn" @click="openDialog">
         <svg-icon icon-class="add"></svg-icon>
         新增用户
       </el-button>
@@ -34,16 +34,19 @@
         :total="400">
       </el-pagination>
     </div>
+    <user-dialog ref="userDialog"></user-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
+import UserDialog from './components/UserDialog'
 
 export default {
   name: 'UserList',
   components: {
-    ListItem
+    ListItem,
+    UserDialog
   },
   props: {},
   directive: {},
@@ -104,6 +107,14 @@ export default {
     },
     handleCurrentChange() {
       console.log('handleCurrentChange')
+    },
+    openDialog(flag = 0, userId = -1, dialogVisible = true) {
+      const userDialog = this.$refs.userDialog
+      _.assign(userDialog, {
+        flag,
+        userId,
+        dialogVisible
+      })
     }
   }
 }
