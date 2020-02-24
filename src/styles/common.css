@@ -7,11 +7,12 @@
   menuHover: #E2E4E9;
   subMenuBg: #F4F5F7;
   subMenuHover: #E2E4E9;
-  sideBarWidth: 260px;
+  sideBarWidth: 250px;
   readonlyColor: #DCDFE6;
 }
 
 /* common size variable */
+/* default style */
 .t-c {
   text-align: center;
 }
@@ -1940,6 +1941,18 @@
   border-color: #1ECE9A;
 }
 
+.el-button.line-type.el-button--primary {
+  background-color: #ffffff;
+  color: #5087E5;
+  border-color: #5087E5;
+}
+
+.el-button.line-type.el-button--primary.green-btn {
+  background-color: #ffffff;
+  color: #1ECE9A;
+  border-color: #1ECE9A;
+}
+
 /* set form item style */
 .el-form-item__content {
   background-color: #ffffff;
@@ -1986,7 +1999,7 @@
 
 .common-pagination {
   width: 100%;
-  padding: 10px;
+  padding: 20px 10px;
   text-align: center;
 }
 
@@ -1994,8 +2007,9 @@
   padding: 0 45px;
 }
 
-.common-list .filter-box {
-  margin: auto;
+.common-list .filter-item {
+  width: 210px;
+  margin-right: 8px;
 }
 
 .common-list .common-table {
@@ -2011,13 +2025,6 @@
 }
 
 /* 状态颜色值 */
-.state {
-  width: 46px;
-  height: 56px;
-  position: relative;
-  padding-top: 10px;
-}
-
 .state.enabled {
   background-color: #E5F1FB;
   color: #016ECA;
@@ -2026,18 +2033,6 @@
 .state.disabled {
   background-color: #FEDEE0;
   color: #FB2434;
-}
-
-.state:after {
-  content: '';
-  position: absolute;
-  width: 0;
-  border-top: 20px solid transparent;
-  border-right: 23px solid transparent;
-  border-bottom: 20px solid #fff;
-  border-left: 23px solid transparent;
-  right: 0;
-  bottom: 0;
 }
 
 /* title */

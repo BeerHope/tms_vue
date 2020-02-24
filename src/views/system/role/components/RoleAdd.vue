@@ -33,7 +33,8 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button v-if="flag === 0" type="primary" @click="dialogVisible = false">新 增</el-button>
+        <el-button v-if="flag === 1" type="primary" @click="dialogVisible = false">保 存</el-button>
       </span>
     </el-dialog>
   </div>

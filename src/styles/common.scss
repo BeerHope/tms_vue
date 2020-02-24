@@ -197,20 +197,24 @@ $color in(color-333, $color-333),
 /* set button style */
 
 $hoverOpacity: 0.78;
-
 .el-button {
     color: $white;
-
     &.el-button--primary {
         @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
-
         &:hover {
             opacity: $hoverOpacity;
         }
-
         &.green-btn {
             background-color: $color-1ECE9A;
             border-color: $color-1ECE9A;
+        }
+    }
+    &.line-type{
+        &.el-button--primary{
+            @include bg_text_border-color($white, $color-5087E5, $color-5087E5);
+            &.green-btn {
+                @include bg_text_border-color($white, $color-1ECE9A, $color-1ECE9A);
+            }
         }
     }
 }
@@ -276,17 +280,16 @@ $hoverOpacity: 0.78;
 
 .common-pagination {
     width: 100%;
-    padding: 10px;
+    padding: 20px 10px;
     text-align: center;
 }
 
 .common-list {
     padding: 0 45px;
-
-    .filter-box {
-        margin: auto;
+    .filter-item{
+        width: 210px;
+        margin-right: 8px;
     }
-
     .common-table {
         height: calc(100% - 50px);
         margin: auto;
@@ -308,13 +311,7 @@ $enabledBg: #E5F1FB;
 $enabledTextColor: #016ECA;
 $disabledBg: #FEDEE0;
 $disabledTextColor: #FB2434;
-
 .state {
-    width: 46px;
-    height: 56px;
-    position: relative;
-    padding-top: 10px;
-
     &.enabled {
         background-color: $enabledBg;
         color: $enabledTextColor;
@@ -323,18 +320,6 @@ $disabledTextColor: #FB2434;
     &.disabled {
         background-color: $disabledBg;
         color: $disabledTextColor;
-    }
-
-    &:after {
-        content: '';
-        position: absolute;
-        width: 0;
-        border-top: 20px solid transparent;
-        border-right: 23px solid transparent;
-        border-bottom: 20px solid #fff;
-        border-left: 23px solid transparent;
-        right: 0;
-        bottom: 0;
     }
 }
 

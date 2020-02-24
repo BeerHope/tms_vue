@@ -1,36 +1,27 @@
 <template>
   <div class="user-list common-list">
-    <div class="filter-box p-t-6 p-b-6 m-b-10">
-      <el-select v-model="roleName" placeholder="角色名称" clearable>
+    <div class="filter-box p-t-6 p-b-6 m-b-20">
+      <el-input v-model="filter.account" placeholder="登录账号" clearable class="filter-item"></el-input>
+      <el-input v-model="filter.name" placeholder="姓名" clearable class="filter-item"></el-input>
+      <el-select v-model="filter.state" placeholder="状态" clearable class="filter-item">
         <el-option
-          v-for="item in roles"
+          v-for="item in state"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
-      <el-select v-model="roleName" placeholder="状态" clearable>
-        <el-option
-          v-for="item in roles"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
-      <el-button type="primary"><i class="el-icon-search m-r-4"></i>搜索</el-button>
-      <el-button type="primary"><i class="el-icon-plus m-r-4"></i>新增</el-button>
+      <el-button type="primary">
+        <svg-icon icon-class="search"></svg-icon>
+        搜索
+      </el-button>
+      <el-button type="primary" class="green-btn">
+        <svg-icon icon-class="add"></svg-icon>
+        新增用户
+      </el-button>
     </div>
     <div class="common-table">
-      <el-table height="calc(100% - 40px)" :data="roleList" :header-cell-style="{background:'#eef1f6',color:'#606266'}">
-        <el-table-column v-for="item in tableHead" :key="item.prop" :prop="item.prop" :label="item.label"></el-table-column>
-        <el-table-column prop="operation" align="center" label="操作">
-          <!-- slot-scope="scope" -->
-          <template>
-            <el-button type="primary" size="mini">查看</el-button>
-            <el-button type="primary" size="mini">编辑</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <list-item v-for="(item, index) in userList" :key="index" :item-data="item"></list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -47,14 +38,57 @@
 </template>
 
 <script>
+import ListItem from './components/ListItem'
+
 export default {
   name: 'UserList',
-  components: {},
+  components: {
+    ListItem
+  },
   props: {},
   directive: {},
   data() {
     return {
-
+      filter: {
+        account: '',
+        name: '',
+        state: 0,
+      },
+      state: [
+        {
+          value: 0,
+          label: '启用'
+        },
+        {
+          value: 1,
+          label: '禁用'
+        }
+      ],
+      userList: [
+        {
+          username: '张三11111',
+          account: 2323264324327,
+          state: 0,
+          createdTime: '2020-02-10',
+          channelProvider: '李四11111'
+        },
+        {
+          username: '张三11111111',
+          account: 2323264324327,
+          state: 0,
+          createdTime: '2020-02-10',
+          channelProvider: '李四2222222'
+        },
+        {
+          username: '张三11111111',
+          account: 2323264324327,
+          state: 1,
+          createdTime: '2020-02-10',
+          channelProvider: '李四2222222'
+        }
+      ],
+      currentPage: 1,
+      total: 50
     }
   },
   computed: {},
@@ -64,7 +98,14 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    handleSizeChange() {
+      cosnole.log('handleSizeChange!!!!!!!')
+    },
+    handleCurrentChange() {
+      console.log('handleCurrentChange')
+    }
+  }
 }
 </script>
 

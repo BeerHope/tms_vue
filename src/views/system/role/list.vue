@@ -2,10 +2,10 @@
   <div class="common-list role-list">
     <div v-if="!isShowUserManagement">
       <div class="filter-box p-t-6 p-b-6 m-b-10">
-        <el-select v-model="roleName" placeholder="角色名称" clearable class="m-r-8">
+        <el-select v-model="roleName" placeholder="角色名称" clearable class="filter-item">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
-        <el-select v-model="roleName" placeholder="状态" clearable class="m-r-8">
+        <el-select v-model="roleName" placeholder="状态" clearable class="filter-item">
           <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
         <el-button type="primary">
@@ -36,7 +36,7 @@
         ></el-pagination>
       </div>
     </div>
-    <!-- 新增角色 -->
+    <!-- 新增/编辑 角色 -->
     <role-add ref="dialog" v-if="!isShowUserManagement"></role-add>
     <!-- 管理用户 -->
     <user-management v-else></user-management>
