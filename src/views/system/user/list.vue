@@ -15,13 +15,17 @@
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
-      <el-button type="primary" class="green-btn" @click="openDialog">
+      <el-button type="primary" class="green-btn" @click="openUserDialog">
         <svg-icon icon-class="add"></svg-icon>
         新增用户
       </el-button>
     </div>
     <div class="common-table">
-      <list-item v-for="(item, index) in userList" :key="index" :item-data="item"></list-item>
+      <list-item
+        v-for="(item, index) in userList" :key="index"
+        :item-data="item" @open-password-dialog="openPasswordDialog"
+        @open-user-dialog="openUserDialog(1, 123, true)"
+      ></list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -35,18 +39,21 @@
       </el-pagination>
     </div>
     <user-dialog ref="userDialog"></user-dialog>
+    <password-dialog ref="passwordDialog"></password-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
 import UserDialog from './components/UserDialog'
+import PasswordDialog from './components/PasswordDialog'
 
 export default {
   name: 'UserList',
   components: {
     ListItem,
-    UserDialog
+    UserDialog,
+    PasswordDialog
   },
   props: {},
   directive: {},
@@ -108,13 +115,18 @@ export default {
     handleCurrentChange() {
       console.log('handleCurrentChange')
     },
-    openDialog(flag = 0, userId = -1, dialogVisible = true) {
+    openUserDialog(flag = 0, userId = -1, dialogVisible = true) {
       const userDialog = this.$refs.userDialog
       _.assign(userDialog, {
         flag,
         userId,
         dialogVisible
       })
+    },
+    openPasswordDialog() {
+      console.log('触发了重置密码！！！！')
+      const passwordDialog = this.$refs.passwordDialog
+      passwordDialog.dialogVisible = true
     }
   }
 }

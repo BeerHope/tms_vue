@@ -63,7 +63,7 @@
       <el-form-item label="角色权限" prop="roles">
         <el-checkbox-group v-model="formData.roles">
           <el-checkbox v-for="item in roles" :key="item.prop" name="roles">
-            <span>{{item.label}}</span>
+            <span>{{ item.label }}</span>
             <el-tooltip class="item" effect="light" placement="top-end">
               <div slot="content">角色说明</div>
               <i class="el-input__icon el-icon-question"></i>

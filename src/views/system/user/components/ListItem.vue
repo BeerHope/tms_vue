@@ -17,8 +17,8 @@
       </p>
     </div>
     <div class="item-right" v-if="itemData.state === 0">
-      <el-button class="line-type" type="primary">重置密码</el-button>
-      <el-button class="line-type green-btn" type="primary">编辑</el-button>
+      <el-button class="line-type" type="primary" @click="$emit('open-password-dialog')">重置密码</el-button>
+      <el-button class="line-type green-btn" type="primary" @click="$emit('open-user-dialog')">编辑</el-button>
     </div>
   </div>
 </template>
