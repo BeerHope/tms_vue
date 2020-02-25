@@ -272,8 +272,7 @@ $hoverOpacity: 0.78;
     width: 60%;
     min-width: 400px;
     margin: auto;
-
-    .el-select {
+    .el-select, .el-date-editor {
         width: 100%;
     }
 }
@@ -285,7 +284,7 @@ $hoverOpacity: 0.78;
 }
 
 .common-list {
-    padding: 0 45px;
+    padding: 0 40px;
     .filter-item{
         width: 210px;
         margin-right: 8px;
@@ -305,7 +304,12 @@ $hoverOpacity: 0.78;
     }
 }
 
+/* tooltips style */
 
+.el-tooltip__popper.is-light{
+    // border-color: #DCDFE6;
+    border-color: #cdcdcd;
+}
 /* 状态颜色值 */
 $enabledBg: #E5F1FB;
 $enabledTextColor: #016ECA;

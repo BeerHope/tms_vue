@@ -6,18 +6,17 @@
       <app-link v-if="onlyOneChild.meta" :to="resolvePath(onlyOneChild.path)">
         <el-menu-item
           :index="resolvePath(onlyOneChild.path)"
-          :class="{'submenu-title-noDropdown':!isNest, 'home': item.path==='/'}"
+          :class="{'submenu-title-noDropdown':!isNest}"
         >
-          
           <item
             v-if="item.meta && item.meta.icon !== 'dashboard'"
             :icon="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"
             :title="$t(`routes.${onlyOneChild.meta.title}`)"
           />
-          <div v-else>
+          <!-- <div v-else>
             <img src="@/assets/sidebar_images/logo.png" class="m-r-4" width="30" height="30" alt="logo">
             <span>{{ $t(`routes.${onlyOneChild.meta.title}`) }} </span>
-          </div>
+          </div> -->
         </el-menu-item>
       </app-link>
     </template>

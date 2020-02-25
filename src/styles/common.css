@@ -1993,7 +1993,7 @@
   margin: auto;
 }
 
-.common-form .el-select {
+.common-form .el-select, .common-form .el-date-editor {
   width: 100%;
 }
 
@@ -2004,7 +2004,7 @@
 }
 
 .common-list {
-  padding: 0 45px;
+  padding: 0 40px;
 }
 
 .common-list .filter-item {
@@ -2022,6 +2022,11 @@
 
 .custom-hover:hover {
   color: #5087E5;
+}
+
+/* tooltips style */
+.el-tooltip__popper.is-light {
+  border-color: #cdcdcd;
 }
 
 /* 状态颜色值 */
