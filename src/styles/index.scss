@@ -96,3 +96,25 @@ div:focus {
         position: relative;
     }
 }
+
+
+/* user-edit-dialog */
+$cardTitleBg: #ECEDF0;
+.user-edit-dialog{
+    margin-top: 8vh !important;
+    .el-dialog__body{
+        width: 100%;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+    .el-card__header{
+        padding: 11px 20px;
+        line-height: 32px;
+        background-color: $cardTitleBg;
+        color: #172B4D;
+    }
+    .user-info{
+        margin-bottom: 38px;
+    }
+}

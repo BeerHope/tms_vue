@@ -1,6 +1,6 @@
 <template>
   <el-dialog
-    class="user-dialog"
+    class="user-add-dialog"
     :title="dialogTitle"
     :visible.sync="dialogVisible"
     width="40%"

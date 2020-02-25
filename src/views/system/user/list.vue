@@ -15,7 +15,7 @@
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
-      <el-button type="primary" class="green-btn" @click="openUserDialog">
+      <el-button type="primary" class="green-btn" @click="openAddDialog">
         <svg-icon icon-class="add"></svg-icon>
         新增用户
       </el-button>
@@ -24,7 +24,7 @@
       <list-item
         v-for="(item, index) in userList" :key="index"
         :item-data="item" @open-password-dialog="openPasswordDialog"
-        @open-user-dialog="openUserDialog(1, 123, true)"
+        @open-edit-dialog="openEditDialog(1, 123, true)"
       ></list-item>
       <!-- 分页 -->
       <el-pagination
@@ -38,21 +38,24 @@
         :total="400">
       </el-pagination>
     </div>
-    <user-dialog ref="userDialog"></user-dialog>
+    <add-dialog ref="addDialog"></add-dialog>
+    <edit-dialog ref="editDialog"></edit-dialog>
     <password-dialog ref="passwordDialog"></password-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
-import UserDialog from './components/UserDialog'
+import AddDialog from './components/UserAdd'
+import EditDialog from './components/UserEdit'
 import PasswordDialog from './components/PasswordDialog'
 
 export default {
   name: 'UserList',
   components: {
     ListItem,
-    UserDialog,
+    AddDialog,
+    EditDialog,
     PasswordDialog
   },
   props: {},
@@ -110,21 +113,24 @@ export default {
   destroyed() {},
   methods: {
     handleSizeChange() {
-      cosnole.log('handleSizeChange!!!!!!!')
+      console.log('handleSizeChange!!!!!!!')
     },
     handleCurrentChange() {
       console.log('handleCurrentChange')
     },
-    openUserDialog(flag = 0, userId = -1, dialogVisible = true) {
-      const userDialog = this.$refs.userDialog
-      _.assign(userDialog, {
+    openAddDialog(flag = 0, userId = -1, dialogVisible = true) {
+      const addDialog = this.$refs.addDialog
+      _.assign(addDialog, {
         flag,
         userId,
         dialogVisible
       })
     },
+    openEditDialog() {
+      const editDialog = this.$refs.editDialog
+      editDialog.dialogVisible = true
+    },
     openPasswordDialog() {
-      console.log('触发了重置密码！！！！')
       const passwordDialog = this.$refs.passwordDialog
       passwordDialog.dialogVisible = true
     }
