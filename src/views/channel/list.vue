@@ -29,7 +29,7 @@
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
-      <el-button type="primary" class="green-btn" @click="openDialog">
+      <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
         添加渠道商
       </el-button>

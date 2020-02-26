@@ -1,10 +1,10 @@
 <template>
   <el-dialog
-    title="添加渠道商"
+    :title="dialogTitle"
     :visible.sync="dialogVisible"
   >
     <el-form ref="form" :rules="rules" :model="formData" label-width="100px">
-      <el-form-item label="渠道商编号" prop="number" v-if="flag !== 0">
+      <el-form-item label="渠道商编号" prop="number" v-if="flag!== 0">
         <el-input v-model="formData.number" disabled></el-input>
       </el-form-item>
       <el-form-item label="渠道商名称" prop="name">
@@ -30,7 +30,8 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">添 加</el-button>
+      <el-button type="primary" @click="dialogVisible = false" v-if="flag === 0">添 加</el-button>
+      <el-button type="primary" @click="dialogVisible = false" v-if="flag === 1">保 存</el-button>
     </span>
   </el-dialog>
 </template>
@@ -74,7 +75,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    dialogTitle() {
+      return this.flag === 0 ? '添加渠道商' : '编辑渠道商' 
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
