@@ -2,7 +2,7 @@
   <div class="list-item">
     <el-card shadow="hover">
       <div
-        :class="['state role-state', itemData.state === 0 ? 'enabled' : 'disabled']"
+        :class="['state bottom', itemData.state === 0 ? 'enabled' : 'disabled']"
       >{{ itemData.state === 0 ? '启用': '禁用' }}</div>
       <div class="role-info">
         <el-avatar :size="72" :src="circleUrl"></el-avatar>
@@ -71,25 +71,6 @@ $hoverTextColor: #3b78fc;
     height: 100%;
     text-align: center;
     .el-card__body {
-      .role-state {
-        float: right;
-        margin-top: -20px;
-        width: 46px;
-        height: 56px;
-        position: relative;
-        padding-top: 10px;
-        &:after {
-          content: '';
-          position: absolute;
-          width: 0;
-          border-top: 20px solid transparent;
-          border-right: 23px solid transparent;
-          border-bottom: 20px solid #fff;
-          border-left: 23px solid transparent;
-          right: 0;
-          bottom: 0;
-        }
-      }
       .role-info {
         margin-top: 40px;
         .name {

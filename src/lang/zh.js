@@ -7,7 +7,7 @@ export default {
     merchantList: '商户列表',
     merchantTerminalList: '商户终端列表',
     channel: '渠道商管理',
-    channelList: '渠道商列表',
+    channelInfoManagement: '渠道商信息管理',
     batchImportChannel: '批量导入渠道商',
     config: '配置管理',
     configList: '配置列表',

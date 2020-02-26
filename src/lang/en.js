@@ -8,7 +8,7 @@ export default {
     merchantList: 'Merchant List',
     merchantTerminalList: 'Merchant Terminal List',
     channel: 'Channel Management',
-    channelList: 'Channel List',
+    channelInfoManagement: 'Channel Information Management',
     batchImportChannel: 'Batch Import Channel',
     config: 'Config Management',
     configList: 'Config List',

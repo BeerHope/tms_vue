@@ -41,7 +41,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
-        <el-button @click="onCancel">Cancel</el-button>
+        <el-button class="line-type blue-btn" @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </div>

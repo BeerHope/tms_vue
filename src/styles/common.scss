@@ -201,19 +201,25 @@ $hoverOpacity: 0.78;
     color: $white;
     &.el-button--primary {
         @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
-        &:hover {
-            opacity: $hoverOpacity;
-        }
         &.green-btn {
             background-color: $color-1ECE9A;
             border-color: $color-1ECE9A;
         }
+        &.cancel {
+            @include bg_text_border-color($white, $color-5087E5, $color-5087E5);
+        }
     }
     &.line-type{
-        &.el-button--primary{
+        &.blue-btn{
             @include bg_text_border-color($white, $color-5087E5, $color-5087E5);
-            &.green-btn {
-                @include bg_text_border-color($white, $color-1ECE9A, $color-1ECE9A);
+            &:hover, &.is-active{
+                @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
+            }
+        }
+        &.green-btn {
+            @include bg_text_border-color($white, $color-1ECE9A, $color-1ECE9A);
+            &:hover, &.is-active{
+                @include bg_text_border-color($color-1ECE9A, $white, $color-1ECE9A);
             }
         }
     }
@@ -307,7 +313,6 @@ $hoverOpacity: 0.78;
 /* tooltips style */
 
 .el-tooltip__popper.is-light{
-    // border-color: #DCDFE6;
     border-color: #cdcdcd;
 }
 /* 状态颜色值 */
@@ -324,6 +329,48 @@ $disabledTextColor: #FB2434;
     &.disabled {
         background-color: $disabledBg;
         color: $disabledTextColor;
+    }
+    &.bottom {
+        float: right;
+        margin-top: -20px;
+        min-width: 46px;
+        height: 56px;
+        position: relative;
+        padding:10px 4px 20px;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            border-top: 20px solid transparent;
+            border-right: 23px solid transparent;
+            border-bottom: 20px solid #fff;
+            border-left: 23px solid transparent;
+            right: 0;
+            bottom: 0;
+        }
+    }
+    &.right {
+        display: inline-block;
+        margin-top: -20px;
+        min-width: 56px;
+        height: 28px;
+        line-height: 28px;
+        position: relative;
+        text-align: left;
+        text-indent: 10px;
+        font-size: 14px;
+        font-weight: normal;
+        padding-right: 20px;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            border-top: 14px solid transparent;
+            border-right: 12px solid #fff;
+            border-bottom: 14px solid transparent;
+            right: 0;
+            bottom: 0;
+        }
     }
 }
 

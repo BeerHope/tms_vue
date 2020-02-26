@@ -14,7 +14,7 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button class="line-type" type="primary" @click="dialogVisible = false">取 消</el-button>
+      <el-button class="cancel" type="primary" @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="dialogVisible = false">修 改</el-button>
     </span>
   </el-dialog>

@@ -30,6 +30,7 @@ import Layout from '@/layout'
  * a base page that does not have permission requirements
  * all roles can be accessed
  */
+/* todo：暂时将所用路由设为constantRoutes完成页面开发，后期根据模块权限进行设置动态路由 */
 export const constantRoutes = [
   {
     path: '/login',
@@ -90,6 +91,22 @@ export const constantRoutes = [
       }
     ]
   },
+  /* 渠道商管理 */
+  {
+    path: '/channel',
+    component: Layout,
+    redirect: '/channel/list',
+    name: 'channel',
+    meta: { title: 'channel', icon: 'channel' },
+    children: [
+      {
+        path: 'list',
+        name: 'channelInfoManagement',
+        component: () => import('@/views/channel/list'),
+        meta: { title: 'channelInfoManagement' }
+      },
+    ]
+  },
   /* 商户终端管理 */
   {
     path: '/merchant',
@@ -103,28 +120,6 @@ export const constantRoutes = [
         name: 'Tree',
         component: () => import('@/views/merchant-terminal/list'),
         meta: { title: 'merchantTerminalList' }
-      }
-    ]
-  },
-  /* 渠道商管理 */
-  {
-    path: '/channel',
-    component: Layout,
-    redirect: '/channel/list',
-    name: 'channel',
-    meta: { title: 'channel', icon: 'channel' },
-    children: [
-      {
-        path: 'list',
-        name: 'channelList',
-        component: () => import('@/views/channel/list'),
-        meta: { title: 'channelList' }
-      },
-      {
-        path: 'batch-import',
-        name: 'batchImport',
-        component: () => import('@/views/tree/index'),
-        meta: { title: 'batchImportChannel' }
       }
     ]
   },
@@ -152,7 +147,7 @@ export const constantRoutes = [
 ]
 
 const createRouter = () => new Router({
-  // mode: 'history', // require service support
+  mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
   routes: constantRoutes
 })

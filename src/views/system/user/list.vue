@@ -65,7 +65,7 @@ export default {
       filter: {
         account: '',
         name: '',
-        state: 0,
+        state: '',
       },
       state: [
         {
