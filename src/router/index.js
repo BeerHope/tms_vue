@@ -107,6 +107,31 @@ export const constantRoutes = [
       },
     ]
   },
+  /* 设备配置管理 */
+  {
+    path: '/equipment',
+    component: Layout,
+    redirect: '/equipment/vendor/list',
+    name: 'equipment',
+    meta: {
+      title: 'equipment',
+      icon: 'equipment'
+    },
+    children: [
+      {
+        path: 'vendor/list',
+        name: 'vendor',
+        component: () => import('@/views/vendor/list'),
+        meta: { title: 'vendor' }
+      },
+      {
+        path: 'model/list',
+        name: 'model',
+        component: () => import('@/views/model/list'),
+        meta: { title: 'model' }
+      }
+    ]
+  },
   /* 商户终端管理 */
   {
     path: '/merchant',
@@ -123,25 +148,7 @@ export const constantRoutes = [
       }
     ]
   },
-  /* 设备配置管理 */
-  {
-    path: '/equipment',
-    component: Layout,
-    redirect: '/equipment/list',
-    name: 'equipment',
-    meta: {
-      title: 'equipment',
-      icon: 'equipment'
-    },
-    children: [
-      {
-        path: 'list',
-        name: 'equipmentList',
-        component: () => import('@/views/equipment/list'),
-        meta: { title: 'equipmentList' }
-      }
-    ]
-  },
+ 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

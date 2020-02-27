@@ -18,9 +18,9 @@ body {
     color: $defaultTextColor;
 }
 
-label {
-    font-weight: 700;
-}
+// label {
+//     font-weight: 700;
+// }
 
 html {
     height: 100%;
@@ -116,5 +116,16 @@ $cardTitleBg: #ECEDF0;
     }
     .user-info{
         margin-bottom: 38px;
+    }
+}
+
+/* channel-list */
+.channel-list{
+    .vue-treeselect__control{
+        height: $smallSize;
+        outline: none;
+    }
+    .vue-treeselect__menu{
+        font-weight: normal;
     }
 }

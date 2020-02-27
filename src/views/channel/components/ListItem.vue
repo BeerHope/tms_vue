@@ -18,7 +18,7 @@
     <div class="item-right" v-if="itemData.state === 0">
       <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
       <el-button class="line-type blue-btn" @click="freezeAccount()">冻结</el-button>
-      <el-button class="line-type blue-btn">查看层级</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-level')">查看层级</el-button>
     </div>
   </div>
 </template>
@@ -48,7 +48,7 @@ export default {
   destroyed() {},
   methods: {
     freezeAccount() {
-     this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
+      this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
       }).then(() => {

@@ -18,8 +18,8 @@
         <el-input v-model="formData.abbreviation" maxlength="20"></el-input>
       </el-form-item>
       <!-- 国家下拉插件 -->
-      <el-form-item label="国家地区" prop="region">
-        <el-input v-model="formData.region" maxlength="20"></el-input>
+      <el-form-item label="国家地区" prop="counrty">
+        <country-selector :language="language" v-model="formData.counrty"></country-selector>
       </el-form-item>
       <el-form-item label="经营地区" prop="businessArea">
         <el-input v-model="formData.businessArea" maxlength="100"></el-input>
@@ -37,9 +37,14 @@
 </template>
 
 <script>
+import CountrySelector from '@/components/Country/CountrySelector'
+import { getLanguage } from '@/utils/cookies.js'
+
 export default {
   name: '',
-  components: {},
+  components: {
+    CountrySelector
+  },
   props: {},
   directive: {},
   data() {
@@ -76,6 +81,9 @@ export default {
     }
   },
   computed: {
+    language() {
+      return getLanguage()
+    },
     dialogTitle() {
       return this.flag === 0 ? '添加渠道商' : '编辑渠道商' 
     }

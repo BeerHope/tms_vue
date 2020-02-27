@@ -265,6 +265,10 @@ $hoverOpacity: 0.78;
         height: $smallSize;
     }
 }
+.el-input--small .el-input__inner {
+    height: $smallSize;
+    line-height: $smallSize;
+}
 
 /* set common-container style */
 
@@ -292,6 +296,7 @@ $hoverOpacity: 0.78;
 .common-list {
     padding: 0 40px;
     .filter-item{
+        display: inline-block;
         width: 210px;
         margin-right: 8px;
     }

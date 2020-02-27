@@ -1,14 +1,7 @@
 <template>
   <div class="channel-list common-list">
     <div class="filter-box p-t-6 p-b-6 m-b-20">
-      <el-select class="filter-item" v-model="filter.channel" filterable placeholder="渠道商">
-        <el-option
-          v-for="item in channels"
-          :key="item.value"
-          :label="item.label"
-          :value="item.value">
-        </el-option>
-      </el-select>
+      <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
       <el-select class="filter-item" v-model="filter.attribution" clearable placeholder="归属">
         <el-option
           v-for="item in attributions"
@@ -38,6 +31,7 @@
       <list-item
         v-for="(item, index) in channelList" :key="index"
         :item-data="item" @open-edit-dialog="openDialog(1, 123, true)"
+        @view-level="viewLevel(1233)"
       ></list-item>
       <!-- 分页 -->
       <el-pagination
@@ -52,38 +46,65 @@
       </el-pagination>
     </div>
     <channel-dialog ref="channelDialog"></channel-dialog>
+    <channel-level ref="channelLevel"></channel-level>
   </div>
 </template>
 
 <script>
+import Treeselect from '@riophae/vue-treeselect'
+import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import ListItem from './components/ListItem.vue'
 import ChannelDialog from './components/ChannelDialog'
+import ChannelLevel from './components/ChannelLevel'
 
 export default {
   name: 'ChannelList',
   components: {
+    Treeselect,
     ListItem,
     ChannelDialog, /* add or edit channel */ 
+    ChannelLevel
   },
   props: {},
   directive: {},
   data() {
     return {
       /* 查询条件 */
+      selectedChannel: '',
       filter: {
-        channel: '',
+        channel: null,
         attribution: '',
         state: '',
       },
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      channels: [
+      channelData: [
         {
-          value: 'qudaoshang1',
-          label: '渠道商1'
+          id: '0',
+          label: '全部渠道商'
         },
         {
-          value: 'qudaoshang2',
-          label: '渠道商2'
+          id: '1',
+          label: '渠道商1',
+          children: [
+            {
+              id: '1-1',
+              label: '渠道商1-1',
+            },
+            {
+              id: '1-2',
+              label: '渠道商1-2',
+            }
+          ],
+        },
+        {
+          id: '2',
+          label: '渠道商2',
+          children: [
+            {
+              id: '2-1',
+              label: '渠道商2-1'
+            }
+          ]
         }
       ],
       attributions: [
@@ -129,7 +150,11 @@ export default {
         }
       ],
       currentPage: 1,
-      total: 10
+      total: 10,
+      defaultProps: {
+        label: 'label',
+        children: 'children'
+      }
     }
   },
   computed: {},
@@ -148,6 +173,25 @@ export default {
         dialogVisible
       })
     },
+    viewLevel(channelId = 1, dialogVisible = true) {
+      console.log('查看详情')
+      const channelLevel = this.$refs.channelLevel
+      _.assign(channelLevel, {
+        channelId,
+        dialogVisible
+      })
+    },
+    /* 触发渠道商搜索 */
+    filterChannel(value) {
+      this.$refs.channelTree.filter(value);
+    },
+    filterNode(value, data) {
+      return data.label.indexOf(value) !== -1;  
+    },
+    handleNodeClick(value) {
+      this.filter.channel = value.id
+      this.selectedChannel = value.label
+    },
     handleSizeChange() {
       console.log('handleSiseChange！！！！')
     },
@@ -159,5 +203,9 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
+.channel-list{
+  .filter-box{
+    display: flex;
+  }
+}
 </style>

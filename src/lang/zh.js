@@ -41,10 +41,9 @@ export default {
     keyImportRecordList: '密钥导入记录列表',
     TMkList: '终端密钥列表',
     mPos: 'MPos管理',
-    machineList: '机型列表',
-    merchantTerminal: '商户终端管理',
     equipment: '设备配置管理',
-    equipmentList: '设备配置列表'
+    vendor: '产商管理',
+    model: '机型管理'
   },
   login: {
     title: 'XTMS管理系统',

@@ -19,7 +19,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'ListItem',
   components: {},
@@ -118,57 +117,57 @@ $hoverTextColor: #3b78fc;
   }
 }
 
-@media screen and (max-width: 1920px) {
-  .list-item {
-    margin-right: calc(20% - 282px);
-    &:nth-child(5n + 5) {
-      margin-right: 0;
-    }
-  }
-}
-@media screen and (max-width: 1831px) {
-  .list-item {
-    margin-right: 50px !important;
-    &:nth-child(4n + 4) {
-      margin-right: 0;
-    }
-  }
-}
-@media screen and (max-width: 1710px) {
-  .list-item {
-    margin-right: 40px !important;
-    &:nth-child(4n + 4) {
-      margin-right: 0;
-    }
-  }
-}
-@media screen and (max-width: 1600px) {
-  .list-item {
-    margin-right: calc(25% - 282px) !important;
-    // &:nth-child(4n+4) {
-    //   margin-right: 0
-    // }
-  }
-}
-@media screen and (max-width: 1440px) {
-  .list-item {
-    margin-right: calc(33.33% - 282px) !important;
-    &:nth-child(3n + 3) {
-      margin-right: 0;
-    }
-  }
-}
-@media screen and (max-width: 1366px) {
-  .list-item {
-    margin-right: calc(33.33% - 282px) !important;
-    &:nth-child(3n + 3) {
-      margin-right: 0;
-    }
-  }
-}
-@media screen and (max-width: 1200px) {
-  .list-item {
-    margin-right: calc(50% - 282px) !important;
-  }
-}
+// @media screen and (max-width: 1920px) {
+//   .list-item {
+//     margin-right: calc(20% - 282px);
+//     &:nth-child(5n + 5) {
+//       margin-right: 0;
+//     }
+//   }
+// }
+// @media screen and (max-width: 1831px) {
+//   .list-item {
+//     margin-right: 50px !important;
+//     &:nth-child(4n + 4) {
+//       margin-right: 0;
+//     }
+//   }
+// }
+// @media screen and (max-width: 1710px) {
+//   .list-item {
+//     margin-right: 40px !important;
+//     &:nth-child(4n + 4) {
+//       margin-right: 0;
+//     }
+//   }
+// }
+// @media screen and (max-width: 1600px) {
+//   .list-item {
+//     margin-right: calc(25% - 282px) !important;
+//     // &:nth-child(4n+4) {
+//     //   margin-right: 0
+//     // }
+//   }
+// }
+// @media screen and (max-width: 1440px) {
+//   .list-item {
+//     margin-right: calc(33.33% - 282px) !important;
+//     &:nth-child(3n + 3) {
+//       margin-right: 0;
+//     }
+//   }
+// }
+// @media screen and (max-width: 1366px) {
+//   .list-item {
+//     margin-right: calc(33.33% - 282px) !important;
+//     &:nth-child(3n + 3) {
+//       margin-right: 0;
+//     }
+//   }
+// }
+// @media screen and (max-width: 1200px) {
+//   .list-item {
+//     margin-right: calc(50% - 282px) !important;
+//   }
+// }
 </style>

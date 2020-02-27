@@ -5,7 +5,7 @@ export default {
     terminal: 'Terminal Management',
     terminalList: 'Terminal List',
     merchant: 'Merchant Management',
-    merchantList: 'Merchant List',
+    machineList: 'Machine List',
     merchantTerminalList: 'Merchant Terminal List',
     channel: 'Channel Management',
     channelInfoManagement: 'Channel Information Management',
@@ -41,8 +41,9 @@ export default {
     keyImportRecordList: 'Key Import Record List',
     TMkList: 'TMK List',
     mPos: 'MPos Management',
-    machineList: 'Machine List',
-    merchantTerminal: 'Merchant Terminal Management',
+    equipment: 'Equipment Configuration Management',
+    vendor: 'Vendor Management',
+    model: 'Model Management'
   },
   /* 登录 */
   login: {
