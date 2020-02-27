@@ -53,11 +53,10 @@ export default {
         cancelButtonText: '否',
       }).then(() => {
         // 进行删除操作
-        this.$message.success('删除成功')
+        this.$message.success('账号已经被冻结')
       }).catch(() => {
-        console.log('取消删除操作')
+        console.log('取消冻结账号！！！')
       })
-      console.log('冻结账号！！！')
     }
   }
 }
