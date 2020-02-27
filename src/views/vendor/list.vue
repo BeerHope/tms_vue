@@ -12,18 +12,32 @@
       </el-button>
     </div>
     <div class="common-table">
-      <list-item v-for="item in vendorList" :key="item.code" :data="item"></list-item>
+      <list-item v-for="item in vendorList" :key="item.code" :data="item" @handle-edit="openDialog(1, 32, true)"></list-item>
+      <!-- 分页 -->
+      <el-pagination
+        class="common-pagination"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page="currentPage"
+        :page-sizes="[100, 200, 300, 400]"
+        :page-size="100"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400">
+      </el-pagination>
     </div>
+    <vendor-dialog ref="vendorDialog"></vendor-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
+import VendorDialog from './components/VendorDialog'
 
 export default {
   name: '',
   components: {
-    ListItem
+    ListItem,
+    VendorDialog
   },
   props: {},
   directive: {},
@@ -63,7 +77,8 @@ export default {
           name: '厂商222',
           code: '1231232348543580'
         }
-      ]
+      ],
+      currentPage: 1
     }
   },
   computed: {},
@@ -73,7 +88,23 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    openDialog(flag = 0, vendorId = -1, dialogVisible = true) {
+      const vendorDialog = this.$refs.vendorDialog
+      _.assign(vendorDialog, {
+        flag,
+        vendorId,
+        dialogVisible
+      })
+      console.log('open dialog!!!!')
+    },
+    handleCurrentChange() {
+      console.log('handleCurrentChange!!!')
+    },
+    handleSizeChange() {
+      console.log('handleSizeChange!!!!!')
+    }
+  }
 }
 </script>
 

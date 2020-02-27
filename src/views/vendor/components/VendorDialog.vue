@@ -1,13 +1,14 @@
 <template>
   <el-dialog
+    :title="dialogTitle"
     :visible.sync="dialogVisible"
     width="40%"
   >
     <el-form :model="formData" :rules="rules" label-width="100px">
-      <el-form-item prop="name">
+      <el-form-item prop="name" label="厂商名称">
         <el-input v-model="formData.name" maxlength="40"></el-input>
       </el-form-item>
-      <el-form-item prop="code">
+      <el-form-item prop="code" label="厂商编码">
         <el-input v-model="formData.code" maxlength="20"></el-input>
       </el-form-item>
     </el-form>
@@ -48,7 +49,11 @@ export default {
       }
     }
   },
-  computed: {},
+  computed: {
+    dialogTitle() {
+      return !this.flag ? '新增厂商' : '编辑厂商'
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},

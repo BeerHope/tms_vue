@@ -7,7 +7,7 @@
       <span>{{data.name}}</span>
       <span>({{data.code}})</span>
     </p>
-    <el-button class="green-btn edit-btn" type="primary">编辑</el-button>
+    <el-button class="green-btn edit-btn" type="primary" @click="$emit('handle-edit')">编辑</el-button>
   </div>
 </template>
 
