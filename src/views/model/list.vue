@@ -24,9 +24,6 @@
         <el-table-column width="160" label="图片" align="center">
           <template slot-scope="scope" width="200">
             <img width="50%" :src="scope.row.type | getPosImg" alt="pos image">
-            <!-- <el-button
-              size="mini"
-              @click="handleEdit(scope.row)">图片</el-button> -->
           </template>
         </el-table-column>
         <el-table-column width="120" label="机型名称" prop="model" align="center"></el-table-column>
@@ -37,13 +34,13 @@
         </el-table-column>
         <el-table-column width="120" label="分辨率" prop="resolution" align="center"></el-table-column>
         <el-table-column width="160" label="厂商名称" prop="vendor" align="center"></el-table-column>
-        <el-table-column label="机型描述" prop="desc" align="center"></el-table-column>
+        <el-table-column label="机型描述" prop="desc"></el-table-column>
         <el-table-column align="center">
           <template slot-scope="scope">
             <el-button
               type="primary"
               size="mini"
-              @click="handleEdit(scope.row)">编辑</el-button>
+              @click="openDialog(1, 2332, true)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -59,6 +56,7 @@
         :total="400">
       </el-pagination>
     </div>
+    <model-dialog ref="modelDialog"></model-dialog>
   </div>
 </template>
 
@@ -66,10 +64,31 @@
 import tposImg from '@/assets/images/tpos.png'
 import sposImg from '@/assets/images/spos.png'
 import mposImg from '@/assets/images/mpos.png'
+import ModelDialog from './components/ModelDialog'
 
 export default {
   name: 'ModelList',
-  components: {},
+  components: {
+    ModelDialog
+  },
+  filters: {
+    getPosImg(posType) {
+      const posImgs = {
+        1: tposImg,
+        2: sposImg,
+        3: mposImg
+      }
+      return posImgs[posType]
+    },
+    getPosType(posType) {
+      const posTypes = {
+        1: '传统pos',
+        2: '智能pos',
+        3: '移动pos'
+      }
+      return posTypes[posType]
+    }
+  },
   props: {},
   directive: {},
   data() {
@@ -134,24 +153,6 @@ export default {
       currentPage: 1,
     }
   },
-  filters: {
-    getPosImg(posType) {
-      const posImgs = {
-        1: tposImg,
-        2: sposImg,
-        3: mposImg
-      }
-      return posImgs[posType]
-    },
-    getPosType(posType) {
-      const posTypes = {
-        1: '传统pos',
-        2: '智能pos',
-        3: '移动pos'
-      }
-      return posTypes[posType]
-    }
-  },
   computed: {},
   watch: {},
   created() {},
@@ -160,8 +161,14 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleEdit(row) {
-      console.log(row, 'row!!!!')
+    openDialog(flag = 0, modelId = -1, dialogVisible = true) {
+      console.log('打开新增弹窗！！！！')
+      const modelDialog = this.$refs.modelDialog
+      _.assign(modelDialog, {
+        flag,
+        modelId,
+        dialogVisible
+      })
     },
     handleSizeChange() {
       console.log('handleSizeChange!!!!')

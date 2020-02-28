@@ -7,7 +7,6 @@ $align in(c, center),
     .t-#{$alignName} {
         text-align: $align;
     }
-
     .f-#{$alignName} {
         float: $align;
     }
