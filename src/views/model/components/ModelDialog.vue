@@ -3,8 +3,10 @@
     width="40%"
     :title="dialogTitle"
     :visible.sync="dialogVisible"
+    @open="openDialog"
+    @closed="closedDialog"
   >
-    <el-form :model="formData" :rules="rules" label-width="80px" class="common-form model-form">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="80px" class="common-form model-form">
       <el-form-item prop="type" label="类型">
         <el-select v-model="formData.type" placeholder="请选择">
           <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value"></el-option>
@@ -14,8 +16,8 @@
         <el-input v-model="formData.model" maxlength="15"></el-input>
       </el-form-item>
       <el-form-item prop="vendor" label="厂商">
-        <el-select v-model="formData.vendors" placeholder="请选择">
-          <el-option v-for="item in types" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        <el-select v-model="formData.vendor" placeholder="请选择">
+          <el-option v-for="item in vendors" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="分辨率" required>
@@ -139,8 +141,8 @@ export default {
           { validator: validateResolution, trigger: 'blur' }
         ],
         height: [
-          {  required: true, message: '请输入高度', trigger: 'blur' },
-          {  required: true, validator: validateResolution, trigger: 'blur' }
+          { required: true, message: '请输入高度', trigger: 'blur' },
+          { required: true, validator: validateResolution, trigger: 'blur' }
         ],
         img: [
           {
@@ -166,16 +168,28 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg';
-      const isLt200K = file.size / 1024 <= 200;
-
+      const isJPG = file.type === 'image/jpeg'
+      const isLt200K = file.size / 1024 <= 200
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!');
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
-      if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 200KB!');
+      if (!isLt200K) {
+        this.$message.error('上传头像图片大小不能超过 200KB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt200K;
+    },
+    openDialog() {
+      if (this.flag) {
+        // 调接口，获取详情
+        console.log('此处调用详情接口！！！！')
+      }
+    },
+    closedDialog() {
+      this.resetForm()
+    },
+    /* 重置表单 */
+    resetForm() {
+      this.$refs.form.resetFields()
     }
   }
 }

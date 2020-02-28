@@ -181,17 +181,6 @@ export default {
         dialogVisible
       })
     },
-    /* 触发渠道商搜索 */
-    filterChannel(value) {
-      this.$refs.channelTree.filter(value);
-    },
-    filterNode(value, data) {
-      return data.label.indexOf(value) !== -1;  
-    },
-    handleNodeClick(value) {
-      this.filter.channel = value.id
-      this.selectedChannel = value.label
-    },
     handleSizeChange() {
       console.log('handleSiseChange！！！！')
     },

@@ -40,13 +40,13 @@
             <el-button
               type="primary"
               size="mini"
-              @click="openDialog(1, 2332, true)">编辑</el-button>
+              @click="openDialog(1, scope.row.id, true)">编辑</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
-        class="common-pagination"
+        class="common-pagination m-t-20"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="currentPage"
@@ -129,6 +129,7 @@ export default {
       /* 暂时以1，2，3分别代表：传统pos，智能pos，移动pos */
       modelList: [
         {
+          id: 234324,
           type: 1,
           model: 'G2',
           resolution: '1280 * 720',
@@ -136,6 +137,7 @@ export default {
           desc: '4核高性能+金融及安全,支持磁条卡、IC卡，非接NFC等多种支付方式,内置专业扫码模块，轻松实现微信，支付宝等二维码支付'
         },
         {
+          id: 234141,
           type: 2,
           model: 'N5',
           resolution: '1280 * 720',
@@ -143,6 +145,7 @@ export default {
           desc: '4核高性能+金融及安全,支持磁条卡、IC卡，非接NFC等多种支付方式,内置专业扫码模块，轻松实现微信，支付宝等二维码支付'
         },
         {
+          id: 9432423,
           type: 3,
           model: 'KD58',
           resolution: '1280 * 720',
