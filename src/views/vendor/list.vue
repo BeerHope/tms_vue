@@ -8,7 +8,7 @@
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        新增厂商
+        新增
       </el-button>
     </div>
     <div class="common-table">
@@ -102,7 +102,7 @@ export default {
       console.log('handleCurrentChange!!!')
     },
     handleSizeChange() {
-      console.log('handleSizeChange!!!!!')
+      console.log('handleSizeChange')
     }
   }
 }

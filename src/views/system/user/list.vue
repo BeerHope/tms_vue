@@ -17,7 +17,7 @@
       </el-button>
       <el-button type="primary" class="green-btn" @click="openAddDialog">
         <svg-icon icon-class="add"></svg-icon>
-        新增用户
+        新增
       </el-button>
     </div>
     <div class="common-table">

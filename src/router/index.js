@@ -68,26 +68,26 @@ export const constantRoutes = [
     },
     children: [
       {
-        path: 'user/list',
-        component: () => import('@/views/system/user/list'), // Parent router-view
-        name: 'user',
-        meta: { title: 'userList' }
+        path: 'menu/list',
+        component: () => import('@/views/system/menu/list'),
+        meta: { title: 'menu' }
       },
       {
         path: 'role/list',
         component: () => import('@/views/system/role/list'),
-        meta: { title: 'roleList' },
+        meta: { title: 'role' },
       },
       {
         path: 'role/user-management',
         component: () => import('@/views/system/role/user-management-list'),
-        meta: { title: 'userManagement' },
+        meta: { title: 'roleUser' },
         hidden: true
       },
       {
-        path: 'menu/list',
-        component: () => import('@/views/system/menu/list'),
-        meta: { title: 'menuList' }
+        path: 'user/list',
+        component: () => import('@/views/system/user/list'), // Parent router-view
+        name: 'user',
+        meta: { title: 'user' }
       }
     ]
   },
@@ -100,10 +100,10 @@ export const constantRoutes = [
     meta: { title: 'channel', icon: 'channel' },
     children: [
       {
-        path: 'list',
-        name: 'channelInfoManagement',
+        path: 'information/list',
+        name: 'channelInfo',
         component: () => import('@/views/channel/list'),
-        meta: { title: 'channelInfoManagement' }
+        meta: { title: 'channelInfo' }
       },
     ]
   },
@@ -136,15 +136,34 @@ export const constantRoutes = [
   {
     path: '/merchant',
     component: Layout,
-    redirect: '/merchant/list',
-    name: 'Merchant',
-    meta: { title: 'merchant', icon: 'terminal' },
+    redirect: '/merchant/analysis/list',
+    name: 'merchant',
+    meta: { title: 'merchantTerminal', icon: 'terminal' },
+    // meta: { title: 'merchant', icon: 'terminal' },
     children: [
       {
-        path: '/merchant-terminal/list',
-        name: 'Tree',
+        path: 'analysis/list',
+        name: 'analysis',
+        component: () => import('@/views/overall-analysis/list'),
+        meta: { title: 'overallAnalysis' }
+      },
+      {
+        path: 'information/list',
+        name: 'information',
+        component: () => import('@/views/merchant-info/list'),
+        meta: { title: 'merchantInfo' }
+      },
+      {
+        path: 'terminal/list',
+        name: 'terminal',
         component: () => import('@/views/merchant-terminal/list'),
-        meta: { title: 'merchantTerminalList' }
+        meta: { title: 'merchantTerminal' }
+      },
+      {
+        path: 'machine/list',
+        name: 'machine',
+        component: () => import('@/views/machine/list'),
+        meta: { title: 'machine' }
       }
     ]
   },

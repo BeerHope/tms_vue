@@ -12,7 +12,7 @@
           <svg-icon icon-class="search" class="m-r-4"></svg-icon>搜索
         </el-button>
         <el-button type="primary" class="green-btn" @click="openDialog(0, -1, true)">
-          <svg-icon icon-class="add" class="m-r-4"></svg-icon>新增角色
+          <svg-icon icon-class="add" class="m-r-4"></svg-icon>新增
         </el-button>
       </div>
       <div class="common-table">

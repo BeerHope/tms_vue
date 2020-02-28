@@ -4,8 +4,8 @@
       <img src="@/assets/images/vendor.png" alt="vendor.png">
     </div>
     <p class="info">
-      <span>{{data.name}}</span>
-      <span>({{data.code}})</span>
+      <span>{{ data.name }}</span>
+      <span>({{ data.code }})</span>
     </p>
     <el-button class="green-btn edit-btn" type="primary" @click="$emit('handle-edit')">编辑</el-button>
   </div>
