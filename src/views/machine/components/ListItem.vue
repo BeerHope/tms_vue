@@ -25,8 +25,8 @@
       <el-button class="line-type green-btn" @click="$emit('handle-edit')">编辑</el-button>
       <el-button class="line-type blue-btn" @click="toDetails(itemData.id)">详情</el-button>
       <!-- 可进行解绑操作，表示为未解绑 -->
-      <el-button v-if="itemData.state === 1" class="line-type blue-btn">解绑</el-button>
-      <el-button v-else class="line-type blue-btn">绑定</el-button>
+      <el-button v-if="itemData.state === 1" class="line-type blue-btn" @click="handleUnbind">解绑</el-button>
+      <el-button v-else class="line-type blue-btn" @click="$emit('open-bind-dialog')">绑定</el-button>
       <el-button class="line-type blue-btn">远程控制</el-button>
     </div>
   </div>
@@ -70,20 +70,16 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    unBindMerchant() {
-      console.log('unbind merchant!!!!!')
-      this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
+    handleUnbind() {
+      this.$confirm('请确认是否解除 设备${设备SN号} 与 ${商户名称}(终端号${终端号})的绑定关系?', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
       }).then(() => {
         // 进行删除操作
-        this.$message.success('账号已经被冻结')
+        this.$message.success('解绑成功')
       }).catch(() => {
         console.log('取消冻结账号！！！')
       })
-    },
-    bindMerchant() {
-      console.log('绑定商户！！！')
     },
     toDetails(machineId) {
       this.$router.push(`/merchant/machine/details/${machineId}`)

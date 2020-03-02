@@ -26,7 +26,7 @@
     <div class="common-table">
       <list-item
         v-for="item in machineList" :key="item.id"
-        :item-data="item"
+        :item-data="item" @open-bind-dialog="openBindDialog"
         @handle-edit="openDialog(1, item.id, true)"
       ></list-item>
       <!-- 分页 -->
@@ -42,11 +42,13 @@
       </el-pagination>
     </div>
     <machine-dialog ref="machineDialog"></machine-dialog>
+    <bind-dialog ref="bindDialog"></bind-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
+import BindDialog from './components/BindDialog'
 import MachineDialog from './components/MachineDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -55,6 +57,7 @@ export default {
   name: 'MachineList',
   components: {
     ListItem,
+    BindDialog,
     MachineDialog,
     Treeselect
   },
@@ -180,6 +183,11 @@ export default {
         machineId,
         dialogVisible
       })
+    },
+    openBindDialog() {
+      console.log('打开了bind dialog！！！')
+      const bindDialog = this.$refs.bindDialog
+      bindDialog.dialogVisible = true
     },
     handleSizeChange() {
       console.log('handleSizeChange!!!!')

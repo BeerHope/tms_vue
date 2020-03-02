@@ -146,12 +146,12 @@ export default {
     },
     getAppList() {
       getAppList()
-      .then((res) => {
-        this.appList = res.data
-      })
-      .catch(err => {
-        console.log(err)
-      })
+        .then((res) => {
+          this.appList = res.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
