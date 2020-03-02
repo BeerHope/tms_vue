@@ -120,7 +120,7 @@ $cardTitleBg: #ECEDF0;
 }
 
 /* channel-list */
-.channel-list{
+.channel-list, .machine-list{
     .vue-treeselect__control{
         height: $smallSize;
         outline: none;

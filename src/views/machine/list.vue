@@ -14,13 +14,21 @@
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
-      <el-button type="primary" class="green-btn">
+      <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        新增
+        添加机具
+      </el-button>
+      <el-button type="primary" class="green-btn">
+        <i class="el-icon-upload2"></i>
+        批量导入
       </el-button>
     </div>
-    <div class="">
-      <list-item v-for="item in machineList" :key="item.id" :itemData="item" ></list-item>
+    <div class="common-table">
+      <list-item
+        v-for="item in machineList" :key="item.id"
+        :item-data="item"
+        @handle-edit="openDialog(1, item.id, true)"
+      ></list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -33,11 +41,13 @@
         :total="400">
       </el-pagination>
     </div>
+    <machine-dialog ref="machineDialog"></machine-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
+import MachineDialog from './components/MachineDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
@@ -45,6 +55,7 @@ export default {
   name: 'MachineList',
   components: {
     ListItem,
+    MachineDialog,
     Treeselect
   },
   props: {},
@@ -112,7 +123,7 @@ export default {
       /* 终端号： terminalId、 */
       machineList: [
         {
-          id: 4423324,
+          id: 14423324,
           type: 1,
           model: 'G2',
           state: 0,
@@ -125,8 +136,21 @@ export default {
           operatedTime: '2020-02-17 10:09:28'
         },
         {
-          id: 442332324,
-          type: 1,
+          id: 1442332324,
+          type: 2,
+          model: 'G2',
+          state: 1,
+          sn: 'G213302113431',
+          attributionChannel: '100056 一级渠道商A简称',
+          merchantId: '4324324',
+          merchantName: '',
+          terminalId: '',
+          createdTime: '2020-02-12 12:09:28',
+          operatedTime: '2020-02-22 10:09:28'
+        },
+        {
+          id: 244233232422,
+          type: 3,
           model: 'G2',
           state: 1,
           sn: 'G213302113431',
@@ -149,6 +173,14 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    openDialog(flag = 0, machineId = -1, dialogVisible = true) {
+      const machineDialog = this.$refs.machineDialog
+      _.assign(machineDialog, {
+        flag,
+        machineId,
+        dialogVisible
+      })
+    },
     handleSizeChange() {
       console.log('handleSizeChange!!!!')
     },
