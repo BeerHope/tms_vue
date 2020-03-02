@@ -14,7 +14,8 @@ export default {
     merchantTerminal: '商户终端管理',
     overallAnalysis: '总体分析',
     merchantInfo: '终端信息管理',
-    machine: '机具管理'
+    machine: '机具管理',
+    machineDetails: '机具详情'
   },
   login: {
     title: 'XTMS管理系统',

@@ -13,14 +13,11 @@ body {
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
-    font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    font-family: Source Han Sans CN, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
     font-size: $defaultFontSize;
     color: $defaultTextColor;
+    user-select: none;
 }
-
-// label {
-//     font-weight: 700;
-// }
 
 html {
     height: 100%;

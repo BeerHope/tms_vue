@@ -10,7 +10,7 @@
         <span>用户信息</span>
         <el-button v-if="!isEditingInfo" type="primary" class="r" @click="isEditingInfo=true">编 辑</el-button>
         <el-button v-if="isEditingInfo" type="primary" class="r" @click="saveInfo">保 存</el-button>
-        <el-button v-if="isEditingInfo" type="primary" class="line-type r m-r-10" @click="cancelEdittingInfo">取 消</el-button>
+        <el-button v-if="isEditingInfo" type="primary" class="blue-btn cancel r m-r-10" @click="cancelEdittingInfo">取 消</el-button>
       </div>
       <el-form label-width="100px" :rules="infoRules" :model="basicInfo">
         <el-form-item prop="account" label="登陆账号">
@@ -40,7 +40,7 @@
         <span>权限控制</span>
         <el-button v-if="!isEditingPermission" type="primary" class="r" @click="isEditingPermission=true">编 辑</el-button>
         <el-button v-if="isEditingPermission" type="primary" class="r" @click="savePermission">保 存</el-button>
-        <el-button v-if="isEditingPermission" type="primary" class="line-type r m-r-10" @click="cancelPermission">取 消</el-button>
+        <el-button v-if="isEditingPermission" type="primary" class="blue-btn cancel r m-r-10" @click="cancelPermission">取 消</el-button>
       </div>
       <el-form :model="permissionInfo" :rules="permissionRules" label-width="100px">
         <el-form-item prop="state" label="状态">

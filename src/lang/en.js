@@ -15,7 +15,8 @@ export default {
     merchantTerminal: 'Merchant Terminal Management',
     overallAnalysis: 'Overall Analysis',
     merchantInfo: 'Merchant Information Management',
-    machine: 'Machines and Tools Management'
+    machine: 'Machine Management',
+    machineDetails: 'Machine Details'
   },
   /* 登录 */
   login: {

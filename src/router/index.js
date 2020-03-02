@@ -164,6 +164,13 @@ export const constantRoutes = [
         name: 'machine',
         component: () => import('@/views/machine/list'),
         meta: { title: 'machine' }
+      },
+      {
+        path: 'machine/details/:id',
+        name: 'machineDetails',
+        component: () => import('@/views/machine/details'),
+        hidden: true,
+        meta: { title: 'machineDetails' }
       }
     ]
   },
