@@ -12,7 +12,7 @@
       </el-select>
       <el-select class="filter-item" v-model="filter.state" clearable placeholder="状态">
         <el-option
-          v-for="item in attributions"
+          v-for="item in states"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -121,7 +121,7 @@ export default {
           value: 'indirectSubordinates '
         }
       ],
-      state: [
+      states: [
         {
           value: -1,
           label: '全部'

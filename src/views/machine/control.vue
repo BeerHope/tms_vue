@@ -33,7 +33,8 @@
             <el-button type="primary" class="m-l-0">设置</el-button>
             <el-button type="primary">清除命令</el-button>
           </div>
-          <app-item v-for="item in appList" :key="item.id" :item-data="item"
+          <app-item
+            v-for="item in appList" :key="item.id" :item-data="item"
             width="100%" custom-class="custom-app-list">
           </app-item>
         </dd>
