@@ -64,6 +64,7 @@ export default {
       .svg-icon{
         width: 40px;
         height: 40px;
+        color: #87A7D6;
       }
     }
     .item-middle{

@@ -27,7 +27,7 @@
       <!-- 可进行解绑操作，表示为未解绑 -->
       <el-button v-if="itemData.state === 1" class="line-type blue-btn" @click="handleUnbind">解绑</el-button>
       <el-button v-else class="line-type blue-btn" @click="$emit('open-bind-dialog')">绑定</el-button>
-      <el-button class="line-type blue-btn">远程控制</el-button>
+      <el-button class="line-type blue-btn" @click="toControl(itemData.id)">远程控制</el-button>
     </div>
   </div>
 </template>
@@ -83,7 +83,9 @@ export default {
     },
     toDetails(machineId) {
       this.$router.push(`/merchant/machine/details/${machineId}`)
-      console.log(`merchant/machine/details/${machineId}`, '`merchant/machine/details/${machineId}`')
+    },
+    toControl(machineId) {
+      this.$router.push(`/merchant/machine/control/${machineId}`)
     }
   }
 }

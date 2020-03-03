@@ -18,7 +18,7 @@
         <svg-icon icon-class="add"></svg-icon>
         添加机具
       </el-button>
-      <el-button type="primary" class="green-btn">
+      <el-button type="primary" class="green-btn" @click="openImportDialog">
         <i class="el-icon-upload2"></i>
         批量导入
       </el-button>
@@ -43,12 +43,14 @@
     </div>
     <machine-dialog ref="machineDialog"></machine-dialog>
     <bind-dialog ref="bindDialog"></bind-dialog>
+    <import-dialog ref="importDialog"></import-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
 import BindDialog from './components/BindDialog'
+import ImportDialog from './components/ImportDialog'
 import MachineDialog from './components/MachineDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -58,6 +60,7 @@ export default {
   components: {
     ListItem,
     BindDialog,
+    ImportDialog,
     MachineDialog,
     Treeselect
   },
@@ -185,9 +188,12 @@ export default {
       })
     },
     openBindDialog() {
-      console.log('打开了bind dialog！！！')
       const bindDialog = this.$refs.bindDialog
-      bindDialog.dialogVisible = true
+      bindDialog.isShowResult = false
+      bindDialog.bindingDialogVisible = true
+    },
+    openImportDialog() {
+      this.$refs.importDialog.dialogVisible = true
     },
     handleSizeChange() {
       console.log('handleSizeChange!!!!')

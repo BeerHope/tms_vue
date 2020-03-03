@@ -16,7 +16,8 @@ export default {
     overallAnalysis: 'Overall Analysis',
     merchantInfo: 'Merchant Information Management',
     machine: 'Machine Management',
-    machineDetails: 'Machine Details'
+    machineDetails: 'Machine Details',
+    machineControl: 'Machine Remote Control'
   },
   /* 登录 */
   login: {

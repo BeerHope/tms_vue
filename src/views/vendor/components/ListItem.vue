@@ -61,8 +61,9 @@ export default {
     justify-content: center;
   }
   .info{
-    font-size: 16px;
+    font-size: 14px;
     margin: 22px auto;
+    color: #505F79;
   }
   .edit-btn{
     border-radius: 16px;

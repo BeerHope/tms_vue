@@ -43,7 +43,7 @@ relative {
 
 $size: 0;
 
-@while $size <=30 {
+@while $size <=50 {
     .m-#{$size} {
         margin: 1px * $size;
     }
@@ -110,7 +110,7 @@ $size: 0;
         font-size: 1px * $size;
     }
 
-    $size: $size + 1;
+    $size: $size + 2;
 }
 
 

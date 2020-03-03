@@ -15,7 +15,8 @@ export default {
     overallAnalysis: '总体分析',
     merchantInfo: '终端信息管理',
     machine: '机具管理',
-    machineDetails: '机具详情'
+    machineDetails: '机具详情',
+    machineControl: '机具远程控制'
   },
   login: {
     title: 'XTMS管理系统',
