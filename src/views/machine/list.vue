@@ -206,9 +206,4 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.machine-list{
-  .filter-box{
-    display: flex;
-  }
-}
 </style>

@@ -216,13 +216,6 @@ export default {
 }
 </script>
 
-<style lang='scss' scoped>
-.merchant-list{
-  .filter-box{
-    display: flex;
-  }
-}
-</style>
 <style lang="scss">
 .merchant-list{
   .el-button{

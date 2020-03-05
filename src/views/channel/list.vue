@@ -192,9 +192,4 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.channel-list{
-  .filter-box{
-    display: flex;
-  }
-}
 </style>

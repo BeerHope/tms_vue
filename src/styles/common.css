@@ -1706,10 +1706,14 @@
   padding: 0 40px;
 }
 
+.common-list .filter-box {
+  display: flex;
+}
+
 .common-list .filter-item {
   display: inline-block;
   width: 210px;
-  margin-right: 8px;
+  margin-right: 10px;
 }
 
 .common-list .common-table {

@@ -294,10 +294,13 @@ $hoverOpacity: 0.78;
 
 .common-list {
     padding: 0 40px;
+    .filter-box{
+        display: flex;
+    }
     .filter-item{
         display: inline-block;
         width: 210px;
-        margin-right: 8px;
+        margin-right: 10px;
     }
     .common-table {
         height: calc(100% - 50px);

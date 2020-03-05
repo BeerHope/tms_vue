@@ -6,8 +6,7 @@
         :data="userList"
         style="width: 100%"
         class="f-z-14"
-        :header-cell-style="headerStyle"
-      >
+        :header-cell-style="headerStyle">
         <el-table-column
           prop="account"
           :label="$t('role.userManagement.thead.account')"
