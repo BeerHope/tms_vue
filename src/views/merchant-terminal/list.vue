@@ -3,7 +3,6 @@
     <div class="filter-box p-t-6 p-b-6">
       <el-input class="filter-item" v-model="filter.merchantId" clearable placeholder="商户编号"></el-input>
       <el-input class="filter-item" v-model="filter.merchantName" clearable placeholder="商户名称"></el-input>
-      <el-input class="filter-item" v-model="filter.channel" clearable placeholder="渠道商"></el-input>
       <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
       <el-input class="filter-item" v-model="filter.channel" clearable placeholder="终端号"></el-input>
       <el-select class="filter-item" v-model="filter.state" clearable placeholder="状态">
@@ -22,34 +21,24 @@
         <svg-icon icon-class="add"></svg-icon>
         添加终端
       </el-button>
-      <el-button type="primary" class="green-btn">
-        <svg-icon icon-class="add"></svg-icon>
+      <el-button type="primary" class="green-btn" @click="openImportDialog">
+        <i class="el-icon-upload2"></i>
         批量导入终端
       </el-button>
-      <el-button type="primary" class="green-btn">
-        <svg-icon icon-class="add"></svg-icon>
+      <el-button type="primary" class="green-btn" @click="openBatchBindDialog">
+        <svg-icon icon-class="bind"></svg-icon>
         批量绑定
       </el-button>
     </div>
     <div class="m-t-20">
-      <el-table
-        :header-cell-style="headerStyle"
-        :cell-style="cellStyle"
-        style="width: 100%"
-        :data="merchantList">
-        <el-table-column prop="id" label="商户编号"></el-table-column>
-        <el-table-column prop="name" label="商户名称"></el-table-column>
-        <el-table-column prop="terminalId" label="终端编号"></el-table-column>
-        <el-table-column prop="equipment" label="绑定设备"></el-table-column>
-        <el-table-column prop="operationTime" label="绑定/解绑时间"></el-table-column>
-        <el-table-column label="操作" width="340px">
-          <template slot-scope="scope">
-            <el-button class="line-type green-btn" @click="openDialog(1, scope.row.id, true)">编辑</el-button>
-            <el-button class="line-type blue-btn">详情</el-button>
-            <el-button class="line-type blue-btn">解绑</el-button>
-          </template>
-        </el-table-column>
-      </el-table>
+      <list-item
+        v-for="item in merchantList" :key="item.id"
+        @open-edit-dialog="openDialog(1, item.id, true)"
+        @open-bind-dialog="openBindDialog"
+        @handle-unbind="handleUnbind"
+        @view-details="openDialog(2, item.id, true)"
+        :item-data="item">
+      </list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -63,10 +52,16 @@
       </el-pagination>
     </div>
     <merchant-dialog ref="merchantDialog"></merchant-dialog>
+    <bind-dialog ref="bindDialog"></bind-dialog>
+    <upload-dialog ref="import" title="批量导入终端"></upload-dialog>
+    <upload-dialog ref="batchBind" title="批量绑定"></upload-dialog>
   </div>
 </template>
 
 <script>
+import UploadDialog from '@/components/Upload'
+import BindDialog from './components/BindDialog'
+import ListItem from './components/ListItem'
 import MerchantDialog from './components/MerchantDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
@@ -74,8 +69,11 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
   name: '',
   components: {
+    ListItem,
+    MerchantDialog,
+    BindDialog,
     Treeselect,
-    MerchantDialog
+    UploadDialog
   },
   props: {},
   directive: {},
@@ -148,21 +146,23 @@ export default {
       ],
       merchantList: [
         {
-          id: 4324324324,
-          name: 'merchant11111',
-          terminalId: 432434324324,
-          equipment: '设备SN2323',
+          id: 10056,
+          name: '一级渠道商直属商户名称',
+          terminalId: 1002656,
+          state: 0, // 绑定
+          equipment: '设备SN1',
           operationTime: '2020-02-20 10:10:30',
-          attributedChannel: '100056 一级渠道商A简称',
+          attributedChannel: '一级渠道商A简称',
           createdTime: '2019-05-30 20:04:05',
         },
         {
-          id: 4324324324112,
-          name: 'merchant2322',
-          terminalId: 432434324324,
-          equipment: '设备SN2323',
+          id: 10057,
+          name: '一级渠道商直属商户名称',
+          terminalId: 1002657,
+          state: 1, // 未绑定
+          equipment: '设备SN2',
           operationTime: '2020-02-20 10:10:30',
-          attributedChannel: '100056 一级渠道商A简称',
+          attributedChannel: '一级渠道商A简称',
           createdTime: '2019-05-30 20:04:05',
         }
       ],
@@ -191,7 +191,27 @@ export default {
         dialogVisible
       })
       console.log('添加渠道商！！！')
-    }
+    },
+    openImportDialog() {
+      this.$refs.import.dialogVisible = true
+    },
+    openBatchBindDialog() {
+      this.$refs.batchBind.dialogVisible = true
+    },
+    openBindDialog() {
+      this.$refs.bindDialog.dialogVisible = true
+    },
+    handleUnbind() {
+      this.$confirm('请确认是否解除 设备${设备SN号} 与 ${商户名称}(终端号${终端号})的绑定关系?', '提示', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+      }).then(() => {
+        // 进行删除操作
+        this.$message.success('解绑成功')
+      }).catch(() => {
+        console.log('取消冻结账号！！！')
+      })
+    },
   }
 }
 </script>

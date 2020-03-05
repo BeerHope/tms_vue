@@ -1,28 +1,31 @@
 <template>
-  <div class="user-list-item">
+  <div class="merchant-list-item">
     <div class="item-left">
-      <h4 class="m-t-16 m-b-16">
-        <span class="first-line">【渠道商编号{{ itemData.number }}】</span>
-        <span class="m-r-10">{{ itemData.abbreviation }}</span>
-        <span :class="['state right', itemData.state === 0 ? 'enabled' : 'disabled']">
-          {{ itemData.state === 0 ? '激活': '冻结' }}
-        </span>
+      <h4 class="m-t-16 m-b-20">
+        <span class="first-line">【商户编号{{ itemData.id }}】</span>
+        <span class="m-r-10">{{ itemData.name }}</span>
+        <span v-if="itemData.state" class="state right disabled">未绑定</span>
+      
       </h4>
       <p class="details">
+        <span class="m-r-30">终端号：{{ itemData.terminalId }}</span>
+        <span class="m-r-30">绑定设备：{{ itemData.equipment }}</span>
+        <span class="m-r-30">所属渠道商：{{ itemData.attributedChannel }}</span>
         <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
       </p>
     </div>
     <div class="item-right">
       <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="freezeAccount()">冻结</el-button>
-      <el-button class="line-type blue-btn" @click="$emit('view-level')">查看层级</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-details')">详情</el-button>
+      <el-button class="line-type blue-btn" v-if="!itemData.state" @click="$emit('handle-unbind')">解绑</el-button>
+      <el-button class="line-type blue-btn" v-if="itemData.state" @click="$emit('open-bind-dialog')">绑定</el-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'ChannelListItem',
+  name: 'MerchantListItem',
   components: {},
   props: {
     itemData: {
@@ -60,11 +63,11 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .user-list-item {
+  .merchant-list-item {
     display: flex;
     align-items: center;
     width: 100%;
-    height: 106px;
+    height: 118px;
     padding: 16px 0;
     border-bottom: 1px solid #EAEAEA;
     .item-left{
@@ -81,5 +84,9 @@ export default {
         color: #9297A3;
       }
     }
+    .el-button{
+      min-width: 80px;
+    }
   }
 </style>
+

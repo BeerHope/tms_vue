@@ -143,7 +143,7 @@ export default {
           state: 0, /* 0:激活，1：冻结 */
         },
         {
-          number: 4324324324432432,
+          number: 43244324321,
           abbreviation: '渠道商1',
           createdTime: '2020-02-10 11:09:30',
           state: 1,

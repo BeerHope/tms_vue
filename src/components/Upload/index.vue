@@ -1,7 +1,7 @@
 <template>
   <el-dialog
     custom-class="import-dialog"
-    title="批量导入机具"
+    :title="title"
     :visible.sync="dialogVisible"
     width="40%"
   >
@@ -25,7 +25,13 @@
 export default {
   name: 'ImportBatch',
   components: {},
-  props: {},
+  props: {
+    title: {
+      type: String,
+      required: true,
+      default: () => '信息'
+    },
+  },
   directive: {},
   data() {
     return {

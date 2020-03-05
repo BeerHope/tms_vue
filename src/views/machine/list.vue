@@ -27,7 +27,7 @@
       <list-item
         v-for="item in machineList" :key="item.id"
         :item-data="item" @open-bind-dialog="openBindDialog"
-        @handle-edit="openDialog(1, item.id, true)"
+        @open-edit-dialog="openDialog(1, item.id, true)"
       ></list-item>
       <!-- 分页 -->
       <el-pagination
@@ -43,15 +43,15 @@
     </div>
     <machine-dialog ref="machineDialog"></machine-dialog>
     <bind-dialog ref="bindDialog"></bind-dialog>
-    <import-dialog ref="importDialog"></import-dialog>
+    <import-dialog ref="importDialog" title="批量导入"></import-dialog>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
-import BindDialog from './components/BindDialog'
-import ImportDialog from './components/ImportDialog'
+import ImportDialog from '@/components/Upload'
 import MachineDialog from './components/MachineDialog'
+import BindDialog from './components/BindDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 
@@ -59,9 +59,9 @@ export default {
   name: 'MachineList',
   components: {
     ListItem,
-    BindDialog,
     ImportDialog,
     MachineDialog,
+    BindDialog,
     Treeselect
   },
   props: {},
