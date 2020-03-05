@@ -20,6 +20,8 @@
     <div class="m-t-20">
       <list-item
         v-for="item in merchantList" :key="item.id"
+        @open-edit-dialog="openDialog(1, item.id, true)"
+        @view-details="openDialog(2, item.id, true)"
         :item-data="item">
       </list-item>
       <!-- 分页 -->

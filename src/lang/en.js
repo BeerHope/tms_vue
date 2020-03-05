@@ -17,7 +17,8 @@ export default {
     merchantInfo: 'Merchant Information Management',
     machine: 'Machine Management',
     machineDetails: 'Machine Details',
-    machineControl: 'Machine Remote Control'
+    machineControl: 'Machine Remote Control',
+    machineAllocation: 'Machines batch allocation'
   },
   /* 登录 */
   login: {

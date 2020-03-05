@@ -6,17 +6,15 @@
         <span class="m-r-10">{{ itemData.name }}</span>
       </h4>
       <p class="details">
-        <span class="m-r-30">终端号：{{ itemData.terminalId }}</span>
-        <span class="m-r-30">绑定设备：{{ itemData.equipment }}</span>
         <span class="m-r-30">所属渠道商：{{ itemData.attributedChannel }}</span>
         <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
       </p>
     </div>
     <div class="item-right">
       <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="freezeAccount()">详情</el-button>
-      <el-button class="line-type blue-btn">管理终端</el-button>
-      <el-button class="line-type blue-btn">管理机具</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-details')">详情</el-button>
+      <el-button class="line-type blue-btn" @click="toManageTerminal">管理终端</el-button>
+      <el-button class="line-type blue-btn" @click="toManageMachine">管理机具</el-button>
     </div>
   </div>
 </template>
@@ -45,16 +43,11 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    freezeAccount() {
-      this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-      }).then(() => {
-        // 进行删除操作
-        this.$message.success('账号已经被冻结')
-      }).catch(() => {
-        console.log('取消冻结账号！！！')
-      })
+    toManageTerminal() {
+      this.$router.push('/merchant/terminal/list')
+    },
+    toManageMachine() {
+      this.$router.push('/merchant/machine/list')
     }
   }
 }

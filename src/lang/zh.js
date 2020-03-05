@@ -13,10 +13,11 @@ export default {
     merchantList: '商户列表',
     merchantTerminal: '商户终端管理',
     overallAnalysis: '总体分析',
-    merchantInfo: '终端信息管理',
+    merchantInfo: '商户信息管理',
     machine: '机具管理',
     machineDetails: '机具详情',
-    machineControl: '机具远程控制'
+    machineControl: '机具远程控制',
+    machineAllocation: '机具批量调拨'
   },
   login: {
     title: 'XTMS管理系统',

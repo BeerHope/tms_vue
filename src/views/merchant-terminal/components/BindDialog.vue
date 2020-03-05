@@ -107,7 +107,6 @@ export default {
           this.isShowResult = true
         }
       })
-
     },
     handleBind() {
       /* 此处调用绑定接口，然后关闭dialog */

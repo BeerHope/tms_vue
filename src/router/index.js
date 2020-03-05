@@ -178,6 +178,13 @@ export const constantRoutes = [
         component: () => import('@/views/machine/control'),
         hidden: true,
         meta: { title: 'machineControl' }
+      },
+      /* 机具批量调拨 */
+      {
+        path: 'allocation/list',
+        name: 'allocation',
+        component: () => import('@/views/machine-allocation/list'),
+        meta: { title: 'machineAllocation' }
       }
     ]
   },

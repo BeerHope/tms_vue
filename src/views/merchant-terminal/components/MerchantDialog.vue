@@ -25,7 +25,11 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" :class="{'cancel': !isDetailsMode}" @click="dialogVisible=false">{{ !isDetailsMode ? '取消' : '关闭'}}</el-button>
+      <el-button
+        type="primary" :class="{'cancel': !isDetailsMode}"
+        @click="dialogVisible=false">
+        {{ !isDetailsMode ? '取消' : '关闭' }}
+      </el-button>
       <el-button type="primary" v-if="flag===0">添 加</el-button>
       <el-button type="primary" v-if="flag===1">保 存</el-button>
     </span>
@@ -75,7 +79,7 @@ export default {
     },
     dialogTitle() {
       let title = ''
-      switch(this.flag) {
+      switch (this.flag) {
         case 0:
           title = '添加终端'
           break;
@@ -86,7 +90,7 @@ export default {
           title = '终端详情'
           break;
         default:
-         break;
+          break;
       }
       return title
     }
@@ -104,7 +108,7 @@ export default {
     handleOpened() {
       // flag判断编辑还是详情
       if (this.flag === 2) {
-        
+        console.log('详情！！！')
       }
     }
   }
