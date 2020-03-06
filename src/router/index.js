@@ -142,12 +142,6 @@ export const constantRoutes = [
     // meta: { title: 'merchant', icon: 'terminal' },
     children: [
       {
-        path: 'analysis/list',
-        name: 'analysis',
-        component: () => import('@/views/overall-analysis/list'),
-        meta: { title: 'overallAnalysis' }
-      },
-      {
         path: 'information/list',
         name: 'information',
         component: () => import('@/views/merchant-info/list'),
@@ -188,11 +182,44 @@ export const constantRoutes = [
       }
     ]
   },
- 
+  /* 文件管理 */
+  {
+    path: '/file',
+    component: Layout,
+    redirect: '/file/package/list',
+    name: 'file',
+    meta: { title: 'file', icon: 'terminal' },
+    children: [
+      {
+        path: 'package/list',
+        name: 'packageList',
+        component: () => import('@/views/system-package/list'),
+        meta: { title: 'systemPackage' }
+      },
+      {
+        path: 'application/details',
+        name: 'packageDetails',
+        component: () => import('@/views/system-package/details'),
+        hidden: true,
+        meta: { title: 'packageDetails' }
+      },
+      {
+        path: 'application/list',
+        name: 'applicationList',
+        component: () => import('@/views/application/list'),
+        meta: { title: 'application' }
+      },
+      {
+        path: 'file-storage/list',
+        name: 'fileStorage',
+        component: () => import('@/views/file-storage/list'),
+        meta: { title: 'fileStorage' }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
-
 const createRouter = () => new Router({
   mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),

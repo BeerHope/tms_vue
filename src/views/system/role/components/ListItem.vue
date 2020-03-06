@@ -12,7 +12,7 @@
       <div class="operation">
         <span @click="doEdit">编辑</span>
         <span @click="manageUser">管理用户</span>
-        <span>新增用户</span>
+        <span @click="toAddUser(1)">新增用户</span>
       </div>
     </el-card>
   </div>
@@ -49,6 +49,9 @@ export default {
     },
     manageUser() {
       this.$emit('manageUser')
+    },
+    toAddUser(id) {
+      this.$router.push('/system/user/list')
     }
   }
 }

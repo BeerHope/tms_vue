@@ -13,12 +13,15 @@ export default {
     model: 'Model Management',
     machineList: 'Machine List',
     merchantTerminal: 'Merchant Terminal Management',
-    overallAnalysis: 'Overall Analysis',
     merchantInfo: 'Merchant Information Management',
     machine: 'Machine Management',
     machineDetails: 'Machine Details',
     machineControl: 'Machine Remote Control',
-    machineAllocation: 'Machines batch allocation'
+    machineAllocation: 'Machines batch allocation',
+    file: '文件管理',
+    systemPackage: '我的系统包',
+    application: '我的应用',
+    fileStorage: '文件仓库'
   },
   /* 登录 */
   login: {

@@ -1,6 +1,6 @@
 <template>
-  <div class="overall-analysis-list common-list">
-    商户终端管理下的总体分析！！！！
+  <div class="package-details">
+    系统包详情！！！！
   </div>
 </template>
 
