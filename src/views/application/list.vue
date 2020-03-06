@@ -32,22 +32,21 @@
       ></el-pagination>
     </div>
     <application-add ref="applicationAdd"></application-add>
-    <!-- <package-update ref="packageUpdate"></package-update>
-    <delete-history ref="deleteHistory"></delete-history> -->
+    <delete-history ref="deleteHistory"></delete-history>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
 import ApplicationAdd from './components/ApplicationAdd'
-// import PackageUpdate from './components/PackageUpdate'
-// import DeleteHistory from './components/DeleteHistory'
+import DeleteHistory from './components/DeleteHistory'
 
 export default {
   name: 'PackageList',
   components: {
     ListItem,
-    ApplicationAdd
+    ApplicationAdd,
+    DeleteHistory
   },
   props: {},
   directive: {},

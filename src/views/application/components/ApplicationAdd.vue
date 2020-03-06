@@ -17,6 +17,7 @@
       </el-upload>
     </div>
     <div class="second-step" v-if="currentStep === 'secondStep'">
+      <!-- <traditional-app></traditional-app> -->
       <smart-app></smart-app>
     </div>
     <span slot="footer" class="dialog-footer" v-if="currentStep==='secondStep'">
@@ -28,13 +29,13 @@
 
 <script>
 import SmartApp from './SmartApp'
-// import TraditionalApp from './TraditionalApp'
+import TraditionalApp from './TraditionalApp'
 
 export default {
   name: 'PackageDialog',
   components: {
     SmartApp,
-    // TraditionalApp
+    TraditionalApp
   },
   props: {},
   directive: {},

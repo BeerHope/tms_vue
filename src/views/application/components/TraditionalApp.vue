@@ -1,43 +1,83 @@
 <template>
-  <div class="tradition-pos">
-    <div class="package-info">
+  <div class="smart-app">
+    <div class="app-info">
       <div class="name m-b-18">
         <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
         <span class="m-l-20">文件名称</span>
       </div>
-      <el-form :model="packageDetails" label-width="80px">
+      <el-form :model="appDetails" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="版本">
-              <el-input v-model="packageDetails.version" disabled></el-input>
+            <el-form-item label="应用名称">
+              <el-input v-model="appDetails.displayName" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="支持版本">
-              <el-input v-model="packageDetails.supportVersion" disabled></el-input>
+            <el-form-item label="版本">
+              <el-input v-model="appDetails.version" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
+            <el-form-item label="应用包名">
+              <el-input v-model="appDetails.appname" disabled></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="12">
             <el-form-item label="大小">
-              <el-input v-model="packageDetails.size" disabled></el-input>
+              <el-input v-model="appDetails.size" disabled></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="12">
+            <el-form-item label="机型">
+              <el-input v-model="appDetails.model" disabled></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="文件MD5">
-              <el-input v-model="packageDetails.fileMD5" disabled></el-input>
+              <el-input v-model="appDetails.fileMD5" disabled></el-input>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-form-item label="解压下发">
-          <el-input v-model="packageDetails.unzipDispatch" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="更新内容">
-          <el-input type="textarea" v-model="packageDetails.updateContent" disabled></el-input>
-        </el-form-item>
       </el-form>
     </div>
+    <el-form class="editable-form" :model="formData" label-width="80px">
+      <el-form-item label="应用icon">
+        <el-upload
+          class="avatar-uploader"
+          action="https://jsonplaceholder.typicode.com/posts/"
+          :show-file-list="false"
+          :on-success="handleAvatarSuccess"
+          :before-upload="beforeAvatarUpload">
+          <img v-if="imageUrl" :src="imageUrl" class="avatar">
+          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+        </el-upload>
+      </el-form-item>
+      <el-form-item label="应用简介">
+        <el-input type="textarea" v-model="formData.abstract"></el-input>
+      </el-form-item>
+      <el-form-item label="应用截图">
+        <!-- 
+          :on-preview="handlePictureCardPreview"
+        -->
+        <el-upload
+          action="https://jsonplaceholder.typicode.com/posts/"
+          list-type="picture-card">
+          <i class="el-icon-plus"></i>
+        </el-upload>
+      </el-form-item>
+      <!-- 
+        备注支持：
+          1、支持输入中文、英文、数字、标点符号、空格、换行，不支持表情符号；
+          2、支持0~200个中文或0-400个英文；
+       -->
+      <el-form-item label="备注">
+        <el-input type="textarea" v-model="formData.remark" maxlength="400"></el-input>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -52,41 +92,21 @@ export default {
   props: {},
   directive: {},
   data() {
-    const modelOptions = ['G2', 'N2', 'K206', 'T2'];
     return {
-      checkedModels: ['G2', 'K206'],
-      modelList: modelOptions,
-      // 选中pos 1: 传统, 2：智能，3：移动
-      selectedPosType: 0,
-      posList: [
-        {
-          type: 1,
-          imgPath: TPOS,
-          textDesc: 'TPOS',
-        },
-        {
-          type: 2,
-          imgPath: SPOS,
-          textDesc: 'SPOS',
-        },
-        {
-          type: 3,
-          imgPath: MPOS,
-          textDesc: 'MPOS',
-        }
-      ],
-      packageDetails: {
+      imageUrl: '',
+      appDetails: {
+        displayName: '应用名称',
+        appname: '应用包名',
         version: 'V2.0.0',
-        supportVersion: 'V2.0.0及以上',
         size: '500MB',
         fileMD5: 'MD54324324343',
-        unzipDispatch: '解压下发了',
-        updateContent: '这里是更新内容'
+        model: '机型111',
       },
       formData: {
-        name: '',
-        model: '',
-        remark: '',
+        icon: '',
+        abstract: '',
+        screenshot: '',
+        remark: ''
       },
       rules: {
         name: [
@@ -102,10 +122,84 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    handleAvatarSuccess(res, file) {
+      this.imageUrl = URL.createObjectURL(file.raw);
+    },
+    beforeAvatarUpload(file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt200K = file.size / 1024 <= 200
+      // if (!isJPG) {
+      //   this.$message.error('上传头像图片只能是 JPG 格式!')
+      // }
+      if (!isLt200K) {
+        this.$message.error('上传头像图片大小不能超过 200KB!')
+      }
+      // return isJPG && isLt200K;
+      return isLt200K;
+    },
+  }
 }
 </script>
 
+<style lang="scss">
+.smart-app{
+  .editable-form{
+    .avatar-uploader .el-upload{
+      border: 1px dashed #d9d9d9 !important;
+    }
+    
+    .el-upload-list--picture-card,
+    .el-upload--picture-card{
+      width: 128px;
+      height: 128px;
+      line-height: 126px;
+    }
+  }
+}
+</style>
 <style lang='scss' scoped>
+@mixin common-box ($pad){
+  border: 1px solid #DCDFE6;
+  padding: $pad;
+  border-radius: 6px;
+}
+.app-info{
+  @include common-box(14px);
+  .name{
+    @include common-box(10px);
+    display: flex;
+    align-items: center;
+  }
+  margin-bottom: 30px;
+}
+.editable-form{
+  @include common-box(14px);
 
+  .avatar-uploader.el-upload--text {
+    height: 70px;
+    .el-upload {
+      border-radius: 6px;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 128px;
+    height: 68px;
+    line-height: 68px;
+    text-align: center;
+  }
+  .avatar {
+    width: 128px;
+    height: 68px;
+    display: block;
+  }
+}
 </style>
