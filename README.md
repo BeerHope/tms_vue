@@ -1,65 +1,48 @@
-# 使用说明
+# 目录
 
-## Run
-```bash
-# clone the project
+## 准备工作
++ node.js环境（npm包管理器）
++ yarn(可选安装，相对npm安装依赖速度更快)
++ vue-cli3脚手架构建工具
++ cnpm（npm淘宝镜像）
+
+
+## 开始
+```
+# 克隆项目
 git clone http://10.18.6.177/tms/web.git
 
-# enter the project directory
-cd 
+# 进入项目
+cd web
 
-# install dependency
-npm install --registery=https://registry.npm.taobao.org
+# 安装依赖
+npm install
+// or 出现安装速度慢，可以设置淘宝镜像
+npm install --registry=https://registry.npm.taobao.org
+// or 使用yarn安装(需要已经全局安装yarn)
+yarn
 
-# develop
-npm run dev
+# 开启本地开发服务
+npm run:dev
+// or 
+yarn run:dev
 ```
 
-This will automatically open http://localhost:9528
+## 发布构建
+```
+# 发布到测试环境
+npm build:test
 
-## Build
+# 发布到生产环境
+npm build:prod
 
-```bash
-# build for test environment
-npm run build:stage
-
-# build for production environment
-npm run build:prod
 ```
 
-## Advanced
+## nginx配置参考
 
-```bash
-# preview the release environment effect
-npm run preview
-
-# preview the release environment effect + static resource analysis
-npm run preview -- --report
-
-# code format check
-npm run lint
-
-# code format check and auto fix
-npm run lint -- --fix
-```
-
-Refer to [Documentation](https://panjiachen.github.io/vue-element-admin-site/guide/essentials/deploy.html) for more information
-
-## Demo
-
-![demo](https://github.com/PanJiaChen/PanJiaChen.github.io/blob/master/images/demo.gif)
-
-## Extra
-
-If you want router permission && generate menu by user roles , you can use this branch [permission-control](https://github.com/PanJiaChen/vue-admin-template/tree/permission-control)
-
-For `typescript` version, you can use [vue-typescript-admin-template](https://github.com/Armour/vue-typescript-admin-template) (Credits: [@Armour](https://github.com/Armour))
+## 目录结构
 
 
-## Browsers support
-Modern browsers and Internet Explorer 10+.
+## 动态路由
 
-| IE / Edge |Firefox | Chrome |Safari |
-| --------- | --------- | --------- | --------- |
-| IE10, IE11, Edge| last 2 versions| last 2 versions| last 2 versions
-
+## 公共状态管理
