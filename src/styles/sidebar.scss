@@ -6,6 +6,7 @@ $menuHover: #E2E4E9;
 $subMenuBg: #F4F5F7;
 $subMenuHover: #E2E4E9;
 $sideBarWidth: 251px;
+$navHeight: 70px;
 
 #app {
   .main-container {
@@ -47,7 +48,7 @@ $sideBarWidth: 251px;
 
     &.has-logo {
       .el-scrollbar {
-        height: calc(100% - 50px);
+        height: calc(100% - 70px);
       }
     }
 
@@ -105,8 +106,8 @@ $sideBarWidth: 251px;
 
   .el-menu-item {
     &.home {
-      height: 70px;
-      line-height: 70px;
+      height: $navHeight;
+      line-height: $navHeight;
       color: #fff !important;
       font-size: 22px;
       background-color: #5087E5 !important;

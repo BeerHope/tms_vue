@@ -59,11 +59,13 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
+// import TimezonePicker from '@/components/TimezonePicker'
 
 export default {
   name: 'Login',
   components: {
-    LangSelect
+    LangSelect,
+    // TimezonePicker
   },
   data() {
     const validateUsername = (rule, value, callback) => {

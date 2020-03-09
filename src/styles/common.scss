@@ -45,43 +45,43 @@ $size: 0;
 
 @while $size <=50 {
     .m-#{$size} {
-        margin: 1px * $size;
+        margin: 1px * $size !important;
     }
 
     .m-t-#{$size} {
-        margin-top: 1px * $size;
+        margin-top: 1px * $size !important;
     }
 
     .m-r-#{$size} {
-        margin-right: 1px * $size;
+        margin-right: 1px * $size !important;
     }
 
     .m-b-#{$size} {
-        margin-bottom: 1px * $size;
+        margin-bottom: 1px * $size !important;
     }
 
     .m-l-#{$size} {
-        margin-left: 1px * $size;
+        margin-left: 1px * $size !important;
     }
 
     .p-#{$size} {
-        padding: 1px * $size;
+        padding: 1px * $size !important;
     }
 
     .p-t-#{$size} {
-        padding-top: 1px * $size;
+        padding-top: 1px * $size !important;
     }
 
     .p-r-#{$size} {
-        padding-right: 1px * $size;
+        padding-right: 1px * $size !important;
     }
 
     .p-b-#{$size} {
-        padding-bottom: 1px * $size;
+        padding-bottom: 1px * $size !important;
     }
 
     .p-l-#{$size} {
-        padding-left: 1px * $size;
+        padding-left: 1px * $size !important;
     }
 
     @if $size <=10 {

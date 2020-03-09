@@ -1,7 +1,7 @@
 <template>
   <div class="menu-list common-container">
-    <el-row class="pos-absolute w-100 h-100">
-      <el-col :span="5" class="p-10 h-100 shadow">
+    <el-row class="w-100 h-100">
+      <el-col :span="5" class="h-100 content-left">
         <div class="category-opt">
           <template v-if="isNodeDragged">
             <el-button @click="resetMenuList">{{ $t('function.reset') }}</el-button>
@@ -48,7 +48,7 @@
 <script>
 import MenuEdit from './components/MenuEdit'
 import MenuAdd from './components/MenuAdd'
-import { getList } from '@/api/menu'
+import { getMenus } from '@/api/menu'
 
 export default {
   name: 'MenuList',
@@ -84,7 +84,8 @@ export default {
   destroyed() { },
   methods: {
     getMenuList() {
-      getList().then(res => {
+      getMenus().then(res => {
+        console.log(res, '####')
         this.menuData = res.data
       })
     },
@@ -135,32 +136,53 @@ export default {
 
 <style lang='scss' scoped>
 .menu-list {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  .content-left{
+    border: 1px solid #eee;
+    border-top: none;
+  }
   .category-opt {
     text-align: right;
-    height: 46px;
-    margin-bottom: 10px;
+    height: 60px;
+    line-height: 60px;
     border-bottom: 1px solid #eee;
     text-align: center;
+    box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 99;
   }
   .menu-edit,
   .menu-add {
-    line-height: 30px;
+    line-height: 33px;
     .el-card__header {
-      height: 29px;
+      height: 33px;
     }
   }
   .el-tree{
     color: #172B4D;
-    
+    height: calc(100% - 60px);
+    overflow-y: auto;
   }
 }
 </style>
 <style lang="scss">
 .menu-list{
   .el-tree{
+    padding: 10px;
     .el-tree-node__expand-icon:not(.is-leaf){
       color: #172B4D;
     }
+  }
+  .el-card__header {
+    padding: 13px 16px;
+    box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+  }
+  .el-card{
+    border-color: transparent;
   }
 }
 </style>

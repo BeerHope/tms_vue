@@ -3,7 +3,7 @@
     :title="dialogTitle"
     :visible.sync="dialogVisible"
   >
-    <el-form ref="form" :rules="rules" :model="formData" label-width="100px">
+    <el-form class="common-form" ref="form" :rules="rules" :model="formData" label-width="100px">
       <el-form-item label="渠道商编号" prop="number" v-if="flag!== 0">
         <el-input v-model="formData.number" disabled></el-input>
       </el-form-item>
@@ -69,12 +69,12 @@ export default {
         ],
         abbreviation: [
           {
-            required: true, message: '请输入渠道商名称', trigger: 'blur'
+            required: true, message: '请输入渠道商简称', trigger: 'blur'
           }
         ],
         timezone: [
           {
-            required: true, message: '请输入渠道商名称', trigger: 'blur'
+            required: true, message: '请选择时区', trigger: 'blur'
           }
         ],
       }

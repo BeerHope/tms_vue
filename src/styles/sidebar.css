@@ -36,7 +36,7 @@
 }
 
 #app .sidebar-container.has-logo .el-scrollbar {
-  height: calc(100% - 50px);
+  height: calc(100% - 70px);
 }
 
 #app .sidebar-container .is-horizontal {

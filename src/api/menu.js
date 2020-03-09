@@ -1,30 +1,38 @@
 import request from '@/utils/request'
 
-export function getList() {
+// get menu
+export function getMenus() {
   return request({
     url: '/menu/list',
     method: 'get'
   })
 }
 
-/* 新增菜单 */
-export function addMenu(params) {
+/* add menu */
+export function addMenu(data) {
   return request({
-    url: '/menu/list',
-    method: 'post'
+    url: '/menu/create',
+    method: 'post',
+    data
   })
 }
 
-/* 保存菜单列表 */
-export function saveMenu() {
-
+/* menu details */
+export function editMenu(id) {
+  return request({
+    url: '/menu/detail',
+    method: 'get',
+    params: {
+      id
+    }
+  })
 }
 
-/* 编辑修改菜单详情 */
-export function editMenu(params) {
+/* update menu */
+export function updateMenu(data) {
   return request({
-    url: '/menu/list',
+    url: '/menu/update',
     method: 'post',
-    params
+    data
   })
 }

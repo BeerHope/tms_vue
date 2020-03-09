@@ -9,7 +9,7 @@
         <svg-icon icon-class="add" class="m-r-4"></svg-icon>添加应用
       </el-button>
       <el-button type="primary" class="cancel del-history" @click="viewDeleteHistory">
-        <svg-icon icon-class="add" class="m-r-4"></svg-icon>删除记录
+        删除记录
       </el-button>
     </div>
     <div class="common-table">

@@ -39,7 +39,7 @@
       <el-form-item label="适用机型" required>
         <el-checkbox-group v-model="formData.model">
           <el-checkbox
-            v-for="item in modelList" :key="item+$index"
+            v-for="(item, index) in modelList" :key="item+index"
             :label="item" name="model">
           </el-checkbox>
         </el-checkbox-group>

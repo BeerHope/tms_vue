@@ -4,7 +4,7 @@
     :visible.sync="dialogVisible"
     width="40%"
   >
-    <el-form :model="formData" :rules="rules" label-width="100px">
+    <el-form class="common-form" :model="formData" :rules="rules" label-width="100px">
       <el-form-item prop="name" label="厂商名称">
         <el-input v-model="formData.name" maxlength="40"></el-input>
       </el-form-item>

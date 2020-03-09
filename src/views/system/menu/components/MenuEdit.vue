@@ -3,7 +3,7 @@
     <div slot="header" class="clearfix f-z-14">
       <span class="b">{{ title }}</span>
       <span>-> {{ $t('menu.configInfo') }}</span>
-      <i class="el-icon-"></i>
+      <!-- <i class="el-icon-"></i> -->
       <el-button
         v-if="isLeaf"
         icon="el-icon-plus"
@@ -13,7 +13,7 @@
       >{{ $t('menu.addSubMenu') }}</el-button>
     </div>
     <!-- form -->
-    <menu-form mode="edit"></menu-form>
+    <menu-form mode="edit" class="m-t-30"></menu-form>
   </el-card>
 </template>
 

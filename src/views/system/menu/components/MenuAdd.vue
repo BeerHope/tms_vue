@@ -4,16 +4,17 @@
     :title="dialogTitle"
     :visible.sync="dialogVisible"
   >
-    <menu-form mode="add" :parent-name="title"></menu-form>
+    <menu-form mode="add" :parent-name="dialogTitle"></menu-form>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" class="cancel" @click="dialogVisible=false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible=false">新 增</el-button>
+      <el-button type="primary" @click="addMenu">新 增</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 import MenuForm from './MenuForm'
+import { addMenu } from '@/api/menu'
 
 export default {
   name: '',
@@ -44,6 +45,19 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    addMenu() {
+      const reqData ={
+        link: '/merchant',
+        name: '商户管理',
+        parentId: 1,
+        remark: '此处填写备注',
+        showOrder: 1,
+        type: 1
+      }
+      addMenu(reqData) .then(res => {
+        console.log(res, 'res!!!!!!')
+      }) 
+    },
     closeAddPage() {
       this.$emit('closeAddPage')
     }

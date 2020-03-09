@@ -6,7 +6,7 @@
       width="40%"
       :before-close="handleClose"
     >
-      <el-form ref="form" :rules="rules" :model="formData" label-width="80px">
+      <el-form class="common-form" ref="form" :rules="rules" :model="formData" label-width="80px">
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="formData.name"></el-input>
         </el-form-item>
