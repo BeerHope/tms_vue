@@ -1,18 +1,18 @@
 <template>
   <div class="login-container">
     <div class="logo">
-      <img src="@/assets/login_images/logo-en.png" alt="logo">
+      <img src="@/assets/images/logo.png" alt="logo">
+      <span class="m-l-20">终端管理系统</span>
     </div>
     <div class="login-body">
       <div class="system-title">
-        <h3 class="content">{{ $t('login.title') }}</h3>
-        <p class="desc">{{ $t('login.subtitle') }}</p>
+        <img src="@/assets/login_images/login_bg2.png" alt="">
       </div>
-      <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
-        <!-- <div class="title-container">
-          <h3 class="title">Login Form</h3>
-        </div> -->
-        <el-form-item prop="username">
+      <el-form
+        ref="loginForm" :model="loginForm" :rules="loginRules"
+        class="login-form" auto-complete="on" label-position="left">
+        <h4 class="login-title">登 录</h4>
+        <el-form-item prop="username" class="m-b-34">
           <span class="svg-container">
             <svg-icon icon-class="user" />
           </span>
@@ -46,12 +46,13 @@
           </span>
         </el-form-item>
         <div class="lang-select">
-          <span class="lang-desc f-z-14">{{ $t('login.switchLang') }}</span>
           <LangSelect />
         </div>
+        <span class="forget-pass">忘记密码</span>
         <el-button class="submit" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{ $t('login.submit') }}</el-button>
       </el-form>
     </div>
+    <el-footer>Copyright © 2020 NEXGO Inc. All Rights Reserved</el-footer>
   </div>
 </template>
 
@@ -116,6 +117,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
+          // 将登陆切换到mock环境
           this.$store.dispatch('user/login', this.loginForm).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
@@ -123,7 +125,6 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
           return false
         }
       })
@@ -136,7 +137,7 @@ export default {
 /* 修复input 背景不协调 和光标变色 */
 /* Detail see https://github.com/PanJiaChen/vue-element-admin/pull/927 */
 
-$bg:#283443;
+$bg:#fff;
 $light_gray:#fff;
 $cursor: #fff;
 
@@ -145,7 +146,7 @@ $cursor: #fff;
   padding: 20px 10%;
   position: relative;
   .login-body{
-    height: calc(100% - 200px);
+    height: calc(100% - 160px);
     position: absolute;
     display: flex;
     align-items: center;
@@ -183,55 +184,67 @@ $cursor: #fff;
 </style>
 
 <style lang="scss" scoped>
-$bg:#2d3a4b;
+$bg:#fff;
 $dark_gray:#889aa4;
 $light_gray:#eee;
 $login_bg: url('~@/assets/login_images/login_bg.png');
 
 .login-container {
-  min-height: calc(100% - 10px);
-  width: calc(100% - 10px);
-  background-color: $bg;
-  background-image: $login_bg;
+  min-height: 100%;
+  width: 100%;
+  background: $bg $login_bg 0 -124px no-repeat;
   overflow: hidden;
+  background-size: 100% auto;
   .logo{
     position: relative;
-    top: 100px;
+    top: 30px;
+    font-size: 32px;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    margin-left: -10%;
   }
   .system-title{
-    color: #fff;
-    .content{
-      line-height: 52px;
-      letter-spacing: 2px;
-      font-size: 46px;
-      font-weight: normal;
-      font-family: 'Microsoft Yahei', Arial, sans-serif;
-      color: #fff;
-      margin: 10px 0;
-    }
-    .desc{
-      font-size: 18px;
-      font-style: italic;
-      letter-spacing: 1px;
+    img{
+      width: 90%;
+      margin-left: 18%;
+      margin-top: -10%;
     }
   }
   .login-form {
     position: relative;
-    width: 520px;
+    width: 510px;
     max-width: 100%;
-    padding: 50px 80px;
+    padding: 60px 90px 80px;
     overflow: hidden;
     background: #fff;
+    box-shadow: 0 4px 20px 0 rgba(0,0,0,.1);
+    font-family: 'MicrosoftYaHei';
+    .login-title{
+      text-align: center;
+      font-size: 24px;
+      color: #333;
+      margin-bottom: 60px;
+      font-weight: normal;
+    }
     .lang-select{
-      width: 100%;
+      width: auto;
       line-height: 36px;
       padding: 2px 10px 2px 14px;
       text-align: right;
-      border: 1px solid #eee;
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      color: #333;
       .lang-desc{
         float: left;
-        color: #adabab;
+        color: #333;
       }
+    }
+    .forget-pass{
+      display: inline-block;
+      margin-top: -14px;
+      float: right;
     }
     .submit{
       width: 100%;
@@ -243,7 +256,6 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     font-size: 14px;
     color: #fff;
     margin-bottom: 10px;
-
     span {
       &:first-of-type {
         margin-right: 16px;
@@ -266,13 +278,84 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     cursor: pointer;
     user-select: none;
   }
+  /* 页脚暂时写成fixed */
+  .el-footer{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 50px!important;
+    line-height: 50px;
+    text-align: center;
+    color: #666;
+    background-color: #F4F5F7;
+  }
+}
+@media screen and (max-width: 1680px){
+  .login-container{
+    background-position-y: -40px;
+    .login-form{
+      width: 480px;
+    }
+    .system-title{
+      img{
+        width: 80%;
+      }
+    }
+  }
 }
 
-@media screen and (max-width: 1024px){
+
+@media screen and (max-width: 1600px){
   .login-container{
+    background-position-y: -140px;
+    .login-form{
+      width: 460px;
+      padding: 40px 60px 70px;
+    }
+    .system-title{
+      img{
+        width: 80%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1440px){
+  .login-container{
+    background-position-y: -60px;
     .login-form{
       width: 420px;
+      padding: 60px 60px 80px;
     }
+    .system-title{
+      img{
+        width: 78%;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1366px){
+  .login-container{
+    background-position-y: -150px;
+    .login-form{
+      width: 380px;
+      padding: 30px 40px 30px;
+    }
+    .system-title{
+      img{
+        width: 66%;
+      }
+    }
+  }
+}
+
+</style>
+<style lang="scss">
+.login-form{
+  .el-form-item--small.el-form-item{
+    margin-bottom: 34px;
   }
 }
 </style>

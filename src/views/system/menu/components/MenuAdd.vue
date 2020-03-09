@@ -1,16 +1,15 @@
 <template>
-  <el-card class="menu-add h-100">
-    <div slot="header" class="clearfix f-z-14">
-      <span class="b">{{ title }}</span>
-      <span> -> </span>
-      <span class="r cur-pointer f-z-16 custom-hover">
-        <i class="el-icon-close" @click="closeAddPage"></i>
-      </span>
-      <!-- <el-button v-if="isLeaf" icon="el-icon-plus" class="r" type="primary" size="mini">{{ $t('menuList.addChildMenu') }}</el-button> -->
-    </div>
-    <!-- form -->
+  <el-dialog
+    width="300px"
+    :title="dialogTitle"
+    :visible.sync="dialogVisible"
+  >
     <menu-form mode="add" :parent-name="title"></menu-form>
-  </el-card>
+    <span slot="footer" class="dialog-footer">
+      <el-button type="primary" class="cancel" @click="dialogVisible=false">取 消</el-button>
+      <el-button type="primary" @click="dialogVisible=false">新 增</el-button>
+    </span>
+  </el-dialog>
 </template>
 
 <script>
@@ -22,7 +21,7 @@ export default {
     MenuForm
   },
   props: {
-    title: {
+    dialogTitle: {
       type: String,
       default: ''
     },
@@ -34,6 +33,7 @@ export default {
   directive: {},
   data() {
     return {
+      dialogVisible: false,
     }
   },
   computed: {},

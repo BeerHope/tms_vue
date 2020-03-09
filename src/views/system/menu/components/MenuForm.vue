@@ -1,10 +1,6 @@
 <template>
   <div class="menu-form common-form">
-    <el-form ref="form" :model="formData" :rules="rules" label-width="120px">
-      <!-- parent field only shown in add mode -->
-      <el-form-item v-if="mode==='add'" :label="$t('menu.form.label.parent')" prop="parent">
-        <el-input v-model="formData.parent" readonly></el-input>
-      </el-form-item>
+    <el-form ref="form" :model="formData" :rules="rules" label-width="100px">
       <el-form-item :label="$t('menu.form.label.name')" prop="name">
         <el-input v-model="formData.name"></el-input>
       </el-form-item>
@@ -33,15 +29,6 @@
       </el-form-item>
       <template v-if="mode==='edit'">
         <el-button class="r m-t-30" type="primary" size="mini">{{ $t('function.modify') }}</el-button>
-      </template>
-      <template v-if="mode==='add'">
-        <el-button
-          class="r m-t-30 m-l-20"
-          type="primary"
-          size="mini"
-          @click="closeAddPage"
-        >{{ $t('function.add') }}</el-button>
-        <el-button class="r m-t-30" type="default" size="mini">{{ $t('function.cancel') }}</el-button>
       </template>
     </el-form>
   </div>

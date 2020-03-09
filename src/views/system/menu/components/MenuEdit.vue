@@ -7,10 +7,9 @@
       <el-button
         v-if="isLeaf"
         icon="el-icon-plus"
-        class="r"
+        class="r green-btn"
         type="primary"
-        size="mini"
-        @click="showAddPage"
+        @click="$emit('open-add-dialog')"
       >{{ $t('menu.addSubMenu') }}</el-button>
     </div>
     <!-- form -->
@@ -48,11 +47,7 @@ export default {
   mounted() { },
   beforeDestroy() { },
   destroyed() { },
-  methods: {
-    showAddPage() {
-      this.$emit('showAddPage')
-    }
-  }
+  methods: {}
 }
 </script>
 

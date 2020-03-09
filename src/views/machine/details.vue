@@ -22,7 +22,7 @@
               <span>TPOS/G2</span>
             </el-col>
             <el-col :span="12">
-              <span>心跳周期(秒)</span>
+              <span>心跳周期(秒): </span>
               <span>SN243240734273421</span>
             </el-col>
           </el-row>

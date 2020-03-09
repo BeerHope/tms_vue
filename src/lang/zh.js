@@ -35,21 +35,21 @@ export default {
     switchLang: '语言选择',
     langs: {
       zh: '中文',
-      en: '英文'
+      en: 'English'
     }
   },
   /* 公共功能点 */
   function: {
-    add: '新增',
+    add: '新 增',
     delete: '删除',
     edit: '编辑',
     details: '详情',
     search: '搜索',
-    save: '保存',
-    update: '更新',
-    modify: '修改',
-    cancel: '取消',
-    reset: '重置'
+    save: '保 存',
+    update: '更 新',
+    modify: '修 改',
+    cancel: '取 消',
+    reset: '重 置'
   },
   /* 字典 */
   dictionary: {
@@ -70,7 +70,7 @@ export default {
     configInfo: '信息',
     tipsInfo: ' 点击左侧菜单对其操作(添加子菜单、编辑、删除)',
     menuTree: {
-      rootMenu: '根节点',
+      root: '根节点',
       terminalManagement: '终端管理',
       terminalList: '终端列表',
       addTerminal: '新增终端',
@@ -81,11 +81,11 @@ export default {
     },
     form: {
       label: {
-        parent: '父级名称',
-        name: '菜单名称',
-        state: '状 态',
-        type: '菜单类型',
-        url: '链接地址'
+        parent: '父级',
+        name: '名称',
+        state: '状态',
+        type: '类型',
+        url: 'URL'
       },
       tips: {
         name: '支持中文、数字、英文字母、空格，且字符长度不能大于15',

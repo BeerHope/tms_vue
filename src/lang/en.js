@@ -36,7 +36,7 @@ export default {
     },
     switchLang: 'Language',
     langs: {
-      zh: 'Chinese',
+      zh: '中文',
       en: 'English'
     }
   },
@@ -60,7 +60,7 @@ export default {
     configInfo: 'Information',
     tipsInfo: 'Click Left Menu to Operate(Add,Edit and Delete Submenu)',
     menuTree: {
-      rootMenu: 'Root Menu',
+      root: 'Root Menu',
       terminalManagement: 'Terminal Management',
       terminalList: 'Terminal List',
       addTerminal: 'Add New Terminal',

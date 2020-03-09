@@ -4,8 +4,8 @@
       <el-col :span="5" class="p-10 h-100 shadow">
         <div class="category-opt">
           <template v-if="isNodeDragged">
-            <el-button size="mini" @click="resetMenuList">{{ $t('function.reset') }}</el-button>
-            <el-button size="mini" type="primary" @click="saveMenuList">{{ $t('function.save') }}</el-button>
+            <el-button @click="resetMenuList">{{ $t('function.reset') }}</el-button>
+            <el-button type="primary" @click="saveMenuList">{{ $t('function.save') }}</el-button>
           </template>
         </div>
         <el-tree
@@ -20,7 +20,8 @@
           :expand-on-click-node="false"
           @node-drop="dropNode"
         >
-          <span slot-scope="{node, data}">
+          <span slot-scope="{node, data}" class="custom-tree-node">
+            <i :class="['m-l-6 m-r-4', data.type === 'catalog' ? 'el-icon-folder-opened' : 'el-icon-document']"></i>
             <span class="f-z-14">{{ $t(`menu.menuTree.${data.label}`) }}</span>
           </span>
         </el-tree>
@@ -28,25 +29,19 @@
       <el-col :span="19" class="p-l-10 h-100 pos-relative">
         <menu-edit
           v-loading="isLoading"
-          v-if="isTreeNodeClicked && !isAddPageVisible && !isLoading"
+          v-if="isTreeNodeClicked && !isLoading"
           :title="menuTitle"
           :is-leaf="isLeaf"
-          @showAddPage="showAddPage"
+          @open-add-dialog="openAddDialog"
         ></menu-edit>
-        <transition name="el-zoom-in-bottom">
-          <menu-add
-            v-if="isAddPageVisible"
-            :title="menuTitle"
-            :is-leaf="isLeaf"
-            @closeAddPage="isAddPageVisible = false"
-          ></menu-add>
-        </transition>
         <div v-if="!isTreeNodeClicked" class="text-color-666 p-20">
           <i class="el-icon-info text-color-999"></i>
           {{ $t('menu.tipsInfo') }}
         </div>
       </el-col>
     </el-row>
+    <!-- ${currentNode.label}  -->
+    <menu-add ref="addDialog" :dialog-title="`${currentNode && currentNode.label}->新增子菜单`"></menu-add>
   </div>
 </template>
 
@@ -73,7 +68,6 @@ export default {
       isTreeNodeClicked: false,
       menuTitle: '',
       isLeaf: false,
-      isAddPageVisible: false,
       isLoading: false,
       isNodeDragged: false,
       currentNode: null
@@ -97,11 +91,11 @@ export default {
     /* 点击树 */
     handleNodeClick(data) {
       this.isTreeNodeClicked = true
-      this.isAddPageVisible = false
       // 后期添加中英文转换
       this.menuTitle = this.$t(`menu.menuTree.${data.label}`)
       this.isLeaf = !!(data.children && data.children.length)
       this.currentNode = data
+      console.log(this.currentNode, 'currentNode!!!!')
       this.$refs.menuTree.setCurrentKey(data.id)
       /* 模拟异步调用 */
       this.isLoading = true
@@ -132,8 +126,8 @@ export default {
         }
       })
     },
-    showAddPage() {
-      this.isAddPageVisible = true
+    openAddDialog() {
+      this.$refs.addDialog.dialogVisible = true
     }
   }
 }
@@ -143,15 +137,29 @@ export default {
 .menu-list {
   .category-opt {
     text-align: right;
-    height: 36px;
+    height: 46px;
     margin-bottom: 10px;
     border-bottom: 1px solid #eee;
+    text-align: center;
   }
   .menu-edit,
   .menu-add {
     line-height: 30px;
     .el-card__header {
       height: 29px;
+    }
+  }
+  .el-tree{
+    color: #172B4D;
+    
+  }
+}
+</style>
+<style lang="scss">
+.menu-list{
+  .el-tree{
+    .el-tree-node__expand-icon:not(.is-leaf){
+      color: #172B4D;
     }
   }
 }

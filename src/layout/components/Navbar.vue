@@ -10,7 +10,7 @@
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
-          <svg-icon icon-class="username" style="font-size: 32px"></svg-icon>
+          <svg-icon icon-class="username" style="font-size: 32px;color:#87A7D6;"></svg-icon>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -108,13 +108,12 @@ $navBorderColor: #F0F3F4;
 
     .avatar-container {
       margin-right: 30px;
-
+      cursor: pointer;
       .avatar-wrapper {
         margin-top: 5px;
         position: relative;
 
         .user-avatar {
-          cursor: pointer;
           width: 40px;
           height: 40px;
           border-radius: 10px;
