@@ -1,7 +1,8 @@
 <template>
   <div class="dashboard-container">
+    <div>首页</div>
     <div class="dashboard-text">name: {{ name }}</div>
-    <div class="dashboard-text">test: {{ $t('login.submit') }}</div>
+    <!-- <div class="dashboard-text">test: {{ $t('login.submit') }}</div> -->
   </div>
 </template>
 

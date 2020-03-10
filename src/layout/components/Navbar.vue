@@ -30,6 +30,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { Loading } from 'element-ui'
 
 export default {
   components: {
@@ -39,7 +40,6 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
-      'avatar'
     ])
   },
   methods: {
@@ -47,8 +47,13 @@ export default {
       this.$store.dispatch('app/toggleSideBar')
     },
     async logout() {
-      await this.$store.dispatch('user/logout')
-      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+      const loading = Loading.service({ fullscreen: true })
+      this.$store.dispatch('user/logout').then(() => {
+        this.$router.push('/login')
+        setTimeout(() => {
+          loading.close()
+        }, 200);
+      })
     }
   }
 }
@@ -85,6 +90,7 @@ $navBorderColor: #F0F3F4;
   .right-menu {
     float: right;
     height: 100%;
+    padding-right: 20px;
     &:focus {
       outline: none;
     }
@@ -95,11 +101,9 @@ $navBorderColor: #F0F3F4;
       font-size: 18px;
       color: #5a5e66;
       vertical-align: text-bottom;
-
       &.hover-effect {
         cursor: pointer;
         transition: background 0.3s;
-
         &:hover {
           background: rgba(0, 0, 0, 0.025);
         }

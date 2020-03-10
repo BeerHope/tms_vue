@@ -2,23 +2,26 @@
   <el-card class="menu-edit h-100">
     <div slot="header" class="clearfix f-z-14">
       <span class="b">{{ title }}</span>
-      <span>-> {{ $t('menu.configInfo') }}</span>
-      <!-- <i class="el-icon-"></i> -->
+      <span>-> {{ $t('menu.edit.info') }}</span>
+      <!-- type: 3 表示功能 -->
       <el-button
-        v-if="isLeaf"
+        v-if="menuDetails.type < 2"
         icon="el-icon-plus"
         class="r green-btn"
         type="primary"
         @click="$emit('open-add-dialog')"
-      >{{ $t('menu.addSubMenu') }}</el-button>
+      >{{ $t('menu.list.add') }}</el-button>
     </div>
     <!-- form -->
-    <menu-form mode="edit" class="m-t-30"></menu-form>
+    <menu-form mode="edit" class="m-t-30" :form-data="menuDetails">
+      <el-button slot="operation" class="r m-t-30" type="primary" size="mini" @click="updateMenu">{{ $t('menu.edit.modify') }}</el-button>
+    </menu-form>
   </el-card>
 </template>
 
 <script>
 import MenuForm from './MenuForm'
+import { updateMenu } from '@/api/menu'
 
 export default {
   name: '',
@@ -30,9 +33,9 @@ export default {
       type: String,
       default: ''
     },
-    isLeaf: {
-      type: Boolean,
-      default: false
+    menuDetails: {
+      type: Object,
+      default: null,
     }
   },
   directive: {},
@@ -47,7 +50,18 @@ export default {
   mounted() { },
   beforeDestroy() { },
   destroyed() { },
-  methods: {}
+  methods: {
+    updateMenu() {
+      const { id } = this.menuDetails
+      const reqData = _.omit(this.menuDetails, ['id', 'level', 'parentId'])
+      /* 菜单标识，暂写定 */
+      reqData.className= 'menu.list.query'
+      updateMenu(id, reqData).then(res => {
+        this.$message.success('修改成功！！！')
+        console.log(res, '修改后！！！！')
+      })
+    }
+  }
 }
 </script>
 

@@ -46,16 +46,17 @@ export default {
   destroyed() {},
   methods: {
     addMenu() {
-      const reqData ={
+      const reqData = {
         link: '/merchant',
         name: '商户管理',
-        parentId: 1,
+        parentId: 3,
         remark: '此处填写备注',
         showOrder: 1,
         type: 1
       }
-      addMenu(reqData) .then(res => {
+      addMenu(reqData).then(res => {
         console.log(res, 'res!!!!!!')
+        this.dialogVisible = false
       }) 
     },
     closeAddPage() {

@@ -6,8 +6,8 @@
   >
     <span>查看层级！！！！！</span>
     <p v-for="item in levels" :key="item.id">
-      <span :style="{marginLeft: `${100+10}`}">{{item.level}}</span>
-      <span>{{item.label}}</span>
+      <span :style="{marginLeft: `${100+10}`}">{{ item.level }}</span>
+      <span>{{ item.label }}</span>
     </p>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>

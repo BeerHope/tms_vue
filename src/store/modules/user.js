@@ -5,10 +5,14 @@ import { resetRouter } from '@/router'
 const state = {
   token: getToken(),
   name: '',
-  avatar: ''
+  avatar: '',
+  user: null
 }
 
 const mutations = {
+  SET_USER: (state, user) => {
+    state.user = user
+  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
@@ -23,12 +27,14 @@ const mutations = {
 const actions = {
   // user login
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username: account, password } = userInfo
+    /* 对密码进行rsa加密传输 */
     return new Promise((resolve, reject) => {
-      login({ username: username.trim(), password: password }).then(response => {
-        const { data } = response
-        commit('SET_TOKEN', data.token)
-        setToken(data.token)
+      login({ account, password }).then(res => {
+        const { data: token } = res
+        commit('SET_TOKEN', token)
+        commit('SET_USER', userInfo)
+        setToken(token)
         resolve()
       }).catch(error => {
         reject(error)
@@ -36,10 +42,11 @@ const actions = {
     })
   },
 
-  // get user info
-  getInfo({ commit, state }) {
+  // get user info and auth
+  getInfo({ commit }) {
     return new Promise((resolve, reject) => {
-      getInfo(state.token).then(response => {
+      getInfo().then(response => {
+        console.log(response, 'currentuser response！！！！')
         const { data } = response
         if (!data) {
           reject('Verification failed, please Login again.')
@@ -57,7 +64,7 @@ const actions = {
   // user logout
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      logout(state.token).then(() => {
+      logout(state.user).then((res) => {
         commit('SET_TOKEN', '')
         removeToken()
         resetRouter()

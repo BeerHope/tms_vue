@@ -29,13 +29,13 @@
 
 <script>
 import SmartApp from './SmartApp'
-import TraditionalApp from './TraditionalApp'
+// import TraditionalApp from './TraditionalApp'
 
 export default {
   name: 'PackageDialog',
   components: {
     SmartApp,
-    TraditionalApp
+    // TraditionalApp
   },
   props: {},
   directive: {},

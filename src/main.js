@@ -25,10 +25,10 @@ import '@/permission' // permission control
  * Currently MockJs will be used in the production environment,
  * please remove it before going online! ! !
  */
-console.log(process.env, 'env!!!!')
+
 /* 本地mock 暂时屏蔽*/
 import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'development') {
+if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_BASE_URL === '/mock-api') {
   mockXHR()
 }
 _.assign(window, {

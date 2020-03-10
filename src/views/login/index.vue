@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="logo">
       <img src="@/assets/images/logo.png" alt="logo">
-      <span class="m-l-20">终端管理系统</span>
+      <span class="m-l-20">{{ $t('login.systemName') }}</span>
     </div>
     <div class="login-body">
       <div class="system-title">
@@ -11,7 +11,7 @@
       <el-form
         ref="loginForm" :model="loginForm" :rules="loginRules"
         class="login-form" auto-complete="on" label-position="left">
-        <h4 class="login-title">登 录</h4>
+        <h4 class="login-title">{{ $t('login.title') }}</h4>
         <el-form-item prop="username" class="m-b-34">
           <span class="svg-container">
             <svg-icon icon-class="user" />
@@ -19,7 +19,7 @@
           <el-input
             ref="username"
             v-model="loginForm.username"
-            :placeholder="$t('login.username')"
+            :placeholder="$t('login.form.label.username')"
             name="username"
             type="text"
             tabindex="1"
@@ -35,7 +35,7 @@
             ref="password"
             v-model="loginForm.password"
             :type="passwordType"
-            :placeholder="$t('login.password')"
+            :placeholder="$t('login.form.label.password')"
             name="password"
             tabindex="2"
             auto-complete="on"
@@ -48,17 +48,19 @@
         <div class="lang-select">
           <LangSelect />
         </div>
-        <span class="forget-pass">忘记密码</span>
-        <el-button class="submit" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{ $t('login.submit') }}</el-button>
+        <span class="forget-pass">{{ $t('login.forgotPsd') }}</span>
+        <el-button class="submit" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{ $t('login.signIn') }}</el-button>
       </el-form>
     </div>
-    <el-footer>Copyright © 2020 NEXGO Inc. All Rights Reserved</el-footer>
+    <el-footer>{{ $t('login.copyright') }}</el-footer>
   </div>
 </template>
 
 <script>
-import { validUsername } from '@/utils/validate'
+// import { validUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect'
+import { JSEncrypt } from 'jsencrypt'
+
 // import TimezonePicker from '@/components/TimezonePicker'
 
 export default {
@@ -68,24 +70,17 @@ export default {
     // TimezonePicker
   },
   data() {
+    /* 密码校验后期增加 */
     const validateUsername = (rule, value, callback) => {
-      if (!validUsername(value)) {
-        callback(new Error(this.$t('login.tips.username')))
-      } else {
-        callback()
-      }
+      callback()
     }
     const validatePassword = (rule, value, callback) => {
-      if (value.length < 8) {
-        callback(new Error(this.$t('login.tips.password')))
-      } else {
-        callback()
-      }
+      callback()
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '11111145'
+        username: 'root',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -119,8 +114,12 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          // 将登陆切换到mock环境
-          this.$store.dispatch('user/login', this.loginForm).then(() => {
+          const publicKey = 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQC5simUmTb1cbAaXLKUerWD+0BVsvLPW8FYryQnEFyqOFoA1P2SZXWkcv92eeodWvbonQGU9m3EL50o7W5s0EVvhDIo7kFKVlUmgCCL87SM67NFyy387db4EwR9TQkrBo3inxKp6TnFHlcbfeYuocfx1jqxUQsdn3lQ5C8K4qRIVQIDAQAB'
+          const loginData = _.cloneDeep(this.loginForm)
+          _.assign(loginData, {
+            password: this.encryptedData(publicKey, loginData.password)
+          })
+          this.$store.dispatch('user/login', loginData).then(() => {
             this.$router.push({ path: this.redirect || '/' })
             this.loading = false
           }).catch(() => {
@@ -130,6 +129,14 @@ export default {
           return false
         }
       })
+    },
+    /* 加密 */
+    encryptedData(publicKey, data) {
+      const encryptor = new JSEncrypt()
+      // 设置公钥
+      encryptor.setPublicKey(publicKey)
+      // 加密数据
+      return encryptor.encrypt(data);
     }
   }
 }
@@ -154,6 +161,11 @@ $cursor: #fff;
     align-items: center;
     justify-content: space-between;
     width: 80%;
+  }
+  .login-form{
+    .el-form-item--small.el-form-item{
+      margin-bottom: 34px;
+    }
   }
   .el-input {
     display: inline-block;
@@ -252,6 +264,7 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
       width: 100%;
       margin-top: 50px;
       height: 42px;
+      font-size: 18px;
     }
   }
   .tips {
@@ -293,6 +306,7 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     background-color: #F4F5F7;
   }
 }
+
 @media screen and (max-width: 1680px){
   .login-container{
     background-position-y: -40px;
@@ -306,7 +320,6 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     }
   }
 }
-
 
 @media screen and (max-width: 1600px){
   .login-container{
@@ -350,14 +363,6 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
         width: 66%;
       }
     }
-  }
-}
-
-</style>
-<style lang="scss">
-.login-form{
-  .el-form-item--small.el-form-item{
-    margin-bottom: 34px;
   }
 }
 </style>

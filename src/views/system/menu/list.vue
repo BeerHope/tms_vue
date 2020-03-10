@@ -21,34 +21,34 @@
           @node-drop="dropNode"
         >
           <span slot-scope="{node, data}" class="custom-tree-node">
-            <i :class="['m-l-6 m-r-4', data.type === 'catalog' ? 'el-icon-folder-opened' : 'el-icon-document']"></i>
-            <span class="f-z-14">{{ $t(`menu.menuTree.${data.label}`) }}</span>
+            <i :class="['m-l-6 m-r-4', data.child.length ? 'el-icon-folder-opened' :'el-icon-document']"></i>
+            <span class="f-z-14">{{ data.name }}</span>
           </span>
         </el-tree>
       </el-col>
       <el-col :span="19" class="p-l-10 h-100 pos-relative">
         <menu-edit
+          :menu-details="menuDetails"
           v-loading="isLoading"
-          v-if="isTreeNodeClicked && !isLoading"
-          :title="menuTitle"
+          v-if="isTreeNodeClicked"
+          :title="currentNode.name"
           :is-leaf="isLeaf"
           @open-add-dialog="openAddDialog"
         ></menu-edit>
         <div v-if="!isTreeNodeClicked" class="text-color-666 p-20">
           <i class="el-icon-info text-color-999"></i>
-          {{ $t('menu.tipsInfo') }}
+          {{ $t('menu.list.tipsInfo') }}
         </div>
       </el-col>
     </el-row>
-    <!-- ${currentNode.label}  -->
-    <menu-add ref="addDialog" :dialog-title="`${currentNode && currentNode.label}->新增子菜单`"></menu-add>
+    <menu-add ref="addDialog" :dialog-title="`${currentNode && currentNode.name}->${$t('menu.list.add')}`"></menu-add>
   </div>
 </template>
 
 <script>
 import MenuEdit from './components/MenuEdit'
 import MenuAdd from './components/MenuAdd'
-import { getMenus } from '@/api/menu'
+import { getMenus, getMenuDetails } from '@/api/menu'
 
 export default {
   name: 'MenuList',
@@ -61,8 +61,8 @@ export default {
   data() {
     return {
       defaultProps: {
-        children: 'children',
-        label: 'label'
+        children: 'child',
+        label: 'name'
       },
       menuData: [],
       isTreeNodeClicked: false,
@@ -70,7 +70,8 @@ export default {
       isLeaf: false,
       isLoading: false,
       isNodeDragged: false,
-      currentNode: null
+      currentNode: null,
+      menuDetails: null,
     }
   },
   computed: {},
@@ -85,32 +86,27 @@ export default {
   methods: {
     getMenuList() {
       getMenus().then(res => {
-        console.log(res, '####')
-        this.menuData = res.data
+        this.menuData = [res.data]
       })
     },
     /* 点击树 */
     handleNodeClick(data) {
       this.isTreeNodeClicked = true
       // 后期添加中英文转换
-      this.menuTitle = this.$t(`menu.menuTree.${data.label}`)
       this.isLeaf = !!(data.children && data.children.length)
       this.currentNode = data
-      console.log(this.currentNode, 'currentNode!!!!')
       this.$refs.menuTree.setCurrentKey(data.id)
-      /* 模拟异步调用 */
       this.isLoading = true
-      setTimeout(() => {
-        this.isLoading = false
-      }, 100)
+      getMenuDetails(data.id).then((res) => {
+        this.menuDetails = res.data
+        setTimeout(() => {
+          this.isLoading = false
+        }, 100);
+      })
     },
-    /* 拖拽成功完成时触发的事件 */
+    /* 拖拽 */
     dropNode(before, after, inner, event) {
-      console.log('成功拖拽节点了！！！')
-      console.log(before, 'before!!!')
-      console.log(after, 'after!!!')
-      console.log(inner, 'inner!!!')
-      console.log(event, 'event!!!')
+      console.log('树节点拖拽了')
       this.isNodeDragged = true
       this.$refs.menuTree.setCurrentKey(this.currentNode.id)
     },

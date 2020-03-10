@@ -24,11 +24,11 @@
           ></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item :label="$t('menu.form.label.url')" prop="url">
-        <el-input v-model="formData.url"></el-input>
+      <el-form-item :label="$t('menu.form.label.url')" prop="link">
+        <el-input v-model="formData.link"></el-input>
       </el-form-item>
-      <template v-if="mode==='edit'">
-        <el-button class="r m-t-30" type="primary" size="mini">{{ $t('function.modify') }}</el-button>
+      <template>
+        <slot name="operation"></slot>
       </template>
     </el-form>
   </div>
@@ -46,6 +46,18 @@ export default {
     parentName: {
       type: String,
       default: ''
+    },
+    formData: {
+      type: Object,
+      default: () => {
+        return {
+          parent: '',
+          name: '',
+          state: 0,
+          type: 1,
+          link: ''
+        }
+      }
     }
   },
   directive: {},
@@ -65,13 +77,7 @@ export default {
       callback()
     }
     return {
-      formData: {
-        parent: '',
-        name: '',
-        state: 0,
-        type: 1,
-        url: ''
-      },
+     
       /* 规则配置和校验 */
       rules: {
         name: [

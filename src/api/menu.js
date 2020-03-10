@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // get menu
 export function getMenus() {
   return request({
-    url: '/menu/list',
+    url: '/menu',
     method: 'get'
   })
 }
@@ -11,28 +11,25 @@ export function getMenus() {
 /* add menu */
 export function addMenu(data) {
   return request({
-    url: '/menu/create',
+    url: '/menu',
     method: 'post',
     data
   })
 }
 
 /* menu details */
-export function editMenu(id) {
+export function getMenuDetails(id) {
   return request({
-    url: '/menu/detail',
+    url: `/menu/${id}`,
     method: 'get',
-    params: {
-      id
-    }
   })
 }
 
 /* update menu */
-export function updateMenu(data) {
+export function updateMenu(id, data) {
   return request({
-    url: '/menu/update',
-    method: 'post',
+    url: `/menu/${id}`,
+    method: 'put',
     data
   })
 }
