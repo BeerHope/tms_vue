@@ -155,7 +155,7 @@
 }
 
 .f-z-0 {
-  font-size: 0px;
+  font-size: 0px !important;
 }
 
 .m-2 {
@@ -219,7 +219,7 @@
 }
 
 .f-z-2 {
-  font-size: 2px;
+  font-size: 2px !important;
 }
 
 .m-4 {
@@ -283,7 +283,7 @@
 }
 
 .f-z-4 {
-  font-size: 4px;
+  font-size: 4px !important;
 }
 
 .m-6 {
@@ -347,7 +347,7 @@
 }
 
 .f-z-6 {
-  font-size: 6px;
+  font-size: 6px !important;
 }
 
 .m-8 {
@@ -411,7 +411,7 @@
 }
 
 .f-z-8 {
-  font-size: 8px;
+  font-size: 8px !important;
 }
 
 .m-10 {
@@ -475,7 +475,7 @@
 }
 
 .f-z-10 {
-  font-size: 10px;
+  font-size: 10px !important;
 }
 
 .m-12 {
@@ -519,7 +519,7 @@
 }
 
 .f-z-12 {
-  font-size: 12px;
+  font-size: 12px !important;
 }
 
 .m-14 {
@@ -563,7 +563,7 @@
 }
 
 .f-z-14 {
-  font-size: 14px;
+  font-size: 14px !important;
 }
 
 .m-16 {
@@ -607,7 +607,7 @@
 }
 
 .f-z-16 {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 .m-18 {
@@ -651,7 +651,7 @@
 }
 
 .f-z-18 {
-  font-size: 18px;
+  font-size: 18px !important;
 }
 
 .m-20 {
@@ -695,7 +695,7 @@
 }
 
 .f-z-20 {
-  font-size: 20px;
+  font-size: 20px !important;
 }
 
 .m-22 {
@@ -739,7 +739,7 @@
 }
 
 .f-z-22 {
-  font-size: 22px;
+  font-size: 22px !important;
 }
 
 .m-24 {
@@ -783,7 +783,7 @@
 }
 
 .f-z-24 {
-  font-size: 24px;
+  font-size: 24px !important;
 }
 
 .m-26 {
@@ -827,7 +827,7 @@
 }
 
 .f-z-26 {
-  font-size: 26px;
+  font-size: 26px !important;
 }
 
 .m-28 {
@@ -871,7 +871,7 @@
 }
 
 .f-z-28 {
-  font-size: 28px;
+  font-size: 28px !important;
 }
 
 .m-30 {
@@ -915,7 +915,7 @@
 }
 
 .f-z-30 {
-  font-size: 30px;
+  font-size: 30px !important;
 }
 
 .m-32 {
@@ -959,7 +959,7 @@
 }
 
 .f-z-32 {
-  font-size: 32px;
+  font-size: 32px !important;
 }
 
 .m-34 {
@@ -1003,7 +1003,7 @@
 }
 
 .f-z-34 {
-  font-size: 34px;
+  font-size: 34px !important;
 }
 
 .m-36 {
@@ -1047,7 +1047,7 @@
 }
 
 .f-z-36 {
-  font-size: 36px;
+  font-size: 36px !important;
 }
 
 .m-38 {
@@ -1091,7 +1091,7 @@
 }
 
 .f-z-38 {
-  font-size: 38px;
+  font-size: 38px !important;
 }
 
 .m-40 {
@@ -1135,7 +1135,7 @@
 }
 
 .f-z-40 {
-  font-size: 40px;
+  font-size: 40px !important;
 }
 
 .m-42 {
@@ -1179,7 +1179,7 @@
 }
 
 .f-z-42 {
-  font-size: 42px;
+  font-size: 42px !important;
 }
 
 .m-44 {
@@ -1223,7 +1223,7 @@
 }
 
 .f-z-44 {
-  font-size: 44px;
+  font-size: 44px !important;
 }
 
 .m-46 {
@@ -1267,7 +1267,7 @@
 }
 
 .f-z-46 {
-  font-size: 46px;
+  font-size: 46px !important;
 }
 
 .m-48 {
@@ -1311,7 +1311,7 @@
 }
 
 .f-z-48 {
-  font-size: 48px;
+  font-size: 48px !important;
 }
 
 .m-50 {
@@ -1355,7 +1355,7 @@
 }
 
 .f-z-50 {
-  font-size: 50px;
+  font-size: 50px !important;
 }
 
 /* mixin style */
@@ -1794,7 +1794,7 @@
 .common-title {
   padding: 2px 20px;
   border-left: 4px solid #1ece9a;
-  font-size: 20px;
+  font-size: 18px;
   color: #172B4D;
 }
 

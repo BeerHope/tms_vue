@@ -55,7 +55,7 @@ export default {
       const { id } = this.menuDetails
       const reqData = _.omit(this.menuDetails, ['id', 'level', 'parentId'])
       /* 菜单标识，暂写定 */
-      reqData.className= 'menu.list.query'
+      reqData.className = 'menu.list.query'
       updateMenu(id, reqData).then(res => {
         this.$message.success('修改成功！！！')
         console.log(res, '修改后！！！！')

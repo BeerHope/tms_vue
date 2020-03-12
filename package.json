@@ -7,8 +7,9 @@
     "scripts": {
         "run:dev": "vue-cli-service serve --mode dev",
         "run:mock": "vue-cli-service serve --mode mock",
-        "build:prod": "vue-cli-service build",
-        "build:stage": "vue-cli-service build --mode staging",
+        "build:prod": "vue-cli-service build --mode prod",
+        "build:test": "vue-cli-service build --mode test",
+        "build:mock": "vue-cli-service build --mode mock",
         "preview": "node build/index.js --preview",
         "lint": "eslint --ext .js,.vue src",
         "test:unit": "jest --clearCache && vue-cli-service test:unit",

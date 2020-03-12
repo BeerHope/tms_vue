@@ -33,15 +33,15 @@ export default [
       const token = tokens[username]
 
       // mock error
-      if (!token) {
-        return {
-          code: 60204,
-          message: 'Account and password are incorrect.'
-        }
-      }
+      // if (!token) {
+      //   return {
+      //     code: 60204,
+      //     message: 'Account and password are incorrect.'
+      //   }
+      // }
 
       return {
-        code: 0,
+        code: 200,
         data: token
       }
     }
@@ -49,23 +49,25 @@ export default [
 
   // get user info
   {
-    url: '/user/info\.*',
+    url: '/user/currentUser\.*',
     type: 'get',
     response: config => {
       const { token } = config.query
       const info = users[token]
-
+      console.log(info, '132323232323!')
       // mock error
-      if (!info) {
-        return {
-          code: 50008,
-          message: 'Login failed, unable to get user details.'
-        }
-      }
+      // if (!info) {
+      //   return {
+      //     code: 50008,
+      //     message: 'Login failed, unable to get user details.'
+      //   }
+      // }
 
       return {
-        code: 0,
-        data: info
+        code: 200,
+        data: {
+          
+        }
       }
     }
   },

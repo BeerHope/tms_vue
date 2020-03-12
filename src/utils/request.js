@@ -7,7 +7,7 @@ import { getToken } from '@/utils/auth'
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL, // url = base url + request url
   // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 100000 // request timeout
 })
 
 // request interceptor
@@ -41,6 +41,7 @@ service.interceptors.response.use(
    * You can also judge the status by HTTP Status Code
    */
   response => {
+    console.log(response, 'NODE_ENV!!!!!')
     const res = response.data
     // if the custom code is not 200, it is judged as an error.
     if (res.code !== 200) {

@@ -1,32 +1,23 @@
 <template>
   <div class="user-management-list">
-    <h4 class="common-title">管理用户</h4>
+    <h4 class="common-title">${系统包名称}已删除信息</h4>
     <section class="content">
       <el-table
         :data="userList"
         style="width: 100%"
-        class="f-z-14"
+        class="f-z-14 m-t-50"
         :header-cell-style="headerStyle">
         <el-table-column
-          prop="account"
-          :label="$t('role.userManagement.thead.account')"
+          prop="version"
+          label="版本"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" :label="$t('role.userManagement.thead.name')" align="center"></el-table-column>
+        <el-table-column prop="operator" label="删除操作人" align="center"></el-table-column>
         <el-table-column
-          prop="channel"
-          :label="$t('role.userManagement.thead.channel')"
+          prop="deletedTime"
+          label="删除时间"
           align="center"
         ></el-table-column>
-        <el-table-column
-          prop="operation"
-          :label="$t('role.userManagement.thead.operation')"
-          align="center"
-        >
-          <template slot-scope="scope">
-            <span class="delete" @click="deleteUser(scope)">剔除</span>
-          </template>
-        </el-table-column>
       </el-table>
       <el-pagination
         class="common-pagination"
@@ -52,14 +43,14 @@ export default {
     return {
       userList: [
         {
-          account: 'account111111111111',
-          name: 'test111',
-          channel: '所属渠道商111',
+          version: 'V1.20.12',
+          operator: 'test111',
+          deletedTime: '2020-02-03 12:12:00',
         },
         {
-          account: 'account111111111111',
-          name: 'test111',
-          channel: '所属渠道商111',
+          version: 'V1.22.12',
+          operator: 'test111',
+          deletedTime: '2020-02-03 12:12:00',
         }
       ],
       currentPage: 1,

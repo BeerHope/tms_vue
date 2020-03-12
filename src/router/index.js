@@ -209,6 +209,13 @@ export const constantRoutes = [
         meta: { title: 'packageDetails' }
       },
       {
+        path: 'application/version/recycle',
+        name: 'versionRecycle',
+        component: () => import('@/views/system-package/versionRecycle'),
+        hidden: true,
+        meta: { title: 'versionRecycle' }
+      },
+      {
         path: 'application/list',
         name: 'applicationList',
         component: () => import('@/views/application/list'),
@@ -228,6 +235,7 @@ export const constantRoutes = [
 const createRouter = () => new Router({
   mode: 'history', // require service support
   scrollBehavior: () => ({ y: 0 }),
+  base: '/tms/',
   routes: constantRoutes
 })
 

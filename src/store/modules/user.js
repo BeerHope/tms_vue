@@ -46,7 +46,6 @@ const actions = {
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getInfo().then(response => {
-        console.log(response, 'currentuser response！！！！')
         const { data } = response
         if (!data) {
           reject('Verification failed, please Login again.')

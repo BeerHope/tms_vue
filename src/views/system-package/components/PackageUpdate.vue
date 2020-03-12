@@ -1,17 +1,19 @@
 <template>
   <el-dialog
+    custom-class="package-update"
     v-loading="isLoading"
     title="新增系统包"
     width="40%"
     @close="handleClose"
     :visible.sync="dialogVisible">
     <div class="package-name">
-      <p :class="currentStep === 'firstStep' ? ' m-a' : 'm-l-a'">
+      <p class="m-l-a">
         <span>名称：</span>
-        <el-input v-model="packageDetails.name" disabled></el-input>
+        <span>{{ packageDetails.name }}</span>
+        <!-- <el-input v-model="packageDetails.name" disabled></el-input> -->
       </p>
     </div>
-    <div class="first-step t-c" v-if="currentStep === 'firstStep'">
+    <div class="first-step">
       <el-upload
         class="upload-demo"
         drag
@@ -20,51 +22,44 @@
         :on-success="handleUploadSuccess">
         <i class="el-icon-upload"></i>
         <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip m-t-10" slot="tip">只支持zip文件格式，且不超过1G</div>
+        <div class="el-upload__tip m-t-18 m-b-18" slot="tip">只支持zip文件格式，且不超过1G</div>
       </el-upload>
     </div>
-    <div class="second-step" v-if="currentStep === 'secondStep'">
-      <div class="package-info">
-        <div class="name m-b-18">
-          <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
-          <span class="m-l-20">文件名称</span>
-          <el-button type="primary" style="margin-left: auto;" @click="handleReUpload">重 传</el-button>
-        </div>
-        <el-form :model="packageDetails" label-width="80px">
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="版本">
-                <el-input v-model="packageDetails.version" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="支持版本">
-                <el-input v-model="packageDetails.supportVersion" disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="12">
-              <el-form-item label="大小">
-                <el-input v-model="packageDetails.size" disabled></el-input>
-              </el-form-item>
-            </el-col>
-            <el-col :span="12">
-              <el-form-item label="文件MD5">
-                <el-input v-model="packageDetails.fileMD5" disabled></el-input>
-              </el-form-item>
-            </el-col>
-          </el-row>
-          <el-form-item label="解压下发">
-            <el-input v-model="packageDetails.unzipDispatch" disabled></el-input>
-          </el-form-item>
-          <el-form-item label="更新内容">
-            <el-input type="textarea" v-model="packageDetails.updateContent" disabled></el-input>
-          </el-form-item>
-        </el-form>
-      </div>
+    <div class="package-info">
+      <el-row>
+        <el-col :span="12">
+          <span>版本：</span>
+          <span>{{ packageDetails.version }}</span>
+        </el-col>
+        <el-col :span="12">
+          <span>支持版本：</span>
+          <span>{{ packageDetails.supportVersion }}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <span>大小：</span>
+          <span>{{ packageDetails.size }}</span>
+        </el-col>
+        <el-col :span="12">
+          <span>文件MD5：</span>
+          <span>{{ packageDetails.fileMD5 }}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <span>解压下发：</span>
+          <span>{{ packageDetails.unzipDispatch }}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="24">
+          <span>更新内容：</span>
+          <span>{{ packageDetails.updateContent }}</span>
+        </el-col>
+      </el-row>
     </div>
-    <span slot="footer" class="dialog-footer" v-if="currentStep==='secondStep'">
+    <span slot="footer" class="dialog-footer">
       <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleAdd">更 新</el-button>
     </span>
@@ -124,7 +119,6 @@ export default {
     },
     handleAdd() {
       this.dialogVisible = false
-      this.$message.success('新增成功！')
       console.log('此处为新增系统包处理')
     },
     // 重传
@@ -137,28 +131,14 @@ export default {
 </script>
 
 <style lang="scss">
-.package-dialog{
+.package-update{
   &.m-b-3vh{
     margin-top: 3vh !important;
   }
-  .el-dialog__body{
-    padding: 20px;
-  }
-  
-  .el-form-item--small.el-form-item{
-    margin-bottom: 14px;
-  }
-  .editable-form{
-    .el-form-item--small.el-form-item{
-      margin-bottom: 18px;
-    }
-  }
-}
-.model{
-  .el-form-item__content{
-    border: 1px solid #DCDFE6;
-    border-radius: 6px;
-    padding: 10px;
+  .el-upload-dragger,
+  .upload-demo,
+  .el-upload {
+    width: 100%;
   }
 }
 </style>
@@ -170,13 +150,15 @@ export default {
   border-radius: 6px;
 }
 .package-info{
-  @include common-box(14px);
   .name{
     @include common-box(10px);
     display: flex;
     align-items: center;
   }
-  margin-bottom: 30px;
+  .el-row {
+    height: 46px;
+    line-height: 46px;
+  }
 }
 .editable-form{
   @include common-box(14px);

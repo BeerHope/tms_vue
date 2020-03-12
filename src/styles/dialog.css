@@ -5,7 +5,7 @@
 }
 
 .el-dialog .el-dialog__body {
-  width: 80%;
+  width: calc(100% - 200px);
   margin: auto;
 }
 

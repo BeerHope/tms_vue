@@ -50,7 +50,7 @@ export default {
       ],
       currentPage: 1,
       headerStyle() {
-        return "background: #F6F6F6; color: #172B4D;height: 42px;"
+        return "background: #E2E4E9; color: #172B4D;height: 42px;"
       },
     }
   },

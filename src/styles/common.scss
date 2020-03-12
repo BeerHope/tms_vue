@@ -107,7 +107,7 @@ $size: 0;
     }
 
     .f-z-#{$size} {
-        font-size: 1px * $size;
+        font-size: 1px * $size !important;
     }
 
     $size: $size + 2;
@@ -384,7 +384,7 @@ $disabledTextColor: #FB2434;
 /* title */
 $titleBorderWidth: 4px;
 $titleBorderColor: #1ece9a;
-$titleFontSize: 20px;
+$titleFontSize: 18px;
 
 .common-title {
     padding: 2px 20px;
