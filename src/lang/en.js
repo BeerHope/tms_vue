@@ -23,10 +23,11 @@ export default {
     machineDetails: 'Machine Details',
     machineControl: 'Machine Remote Control',
     machineAllocation: 'Machines batch allocation',
-    file: '文件管理',
-    systemPackage: '我的系统包',
-    application: '我的应用',
-    fileStorage: '文件仓库'
+    file: 'Files Management',
+    systemPackage: 'System Packages',
+    application: 'Applications',
+    appDetails: 'Application Details',
+    fileStorage: 'Files Storage'
   },
   /* 公共功能点 */
   function: {
@@ -41,59 +42,6 @@ export default {
     cancel: 'Cancel',
     reset: 'Reset'
   },
-  /* 用户权限 -> 菜单列表 */
-  //   updateCategory: 'Update Category',
-  //   addSubMenu: 'Add submenu',
-  //   configInfo: 'Information',
-  //   tipsInfo: 'Click Left Menu to Operate(Add,Edit and Delete Submenu)',
-  //   menuTree: {
-  //     root: 'Root Menu',
-  //     terminalManagement: 'Terminal Management',
-  //     terminalList: 'Terminal List',
-  //     addTerminal: 'Add New Terminal',
-  //     editTerminal: 'Edit Terminal',
-  //     deleteTerminal: 'Delete Terminal',
-  //     importTerminal: 'Import Terminal',
-  //     terminalDetails: 'Terminal Details'
-  //   },
-  //   form: {
-  //     label: {
-  //       parent: 'Parent Name',
-  //       name: 'Menu Name',
-  //       state: 'State',
-  //       type: 'Type',
-  //       url: 'URL'
-  //     },
-  //     tips: {
-  //       name: 'Support Chinese, Numbers, English letters, Spaces, and character length not more than 15',
-  //       url: 'Support English letters, Numbers and partial symbols including :-/.?#_, and the length shall not be greater than 100'
-  //     }
-  //   },
-  //   states: [
-  //     {
-  //       value: 0,
-  //       label: 'Enabled'
-  //     },
-  //     {
-  //       value: 1,
-  //       label: 'Disabled'
-  //     }
-  //   ],
-  //   types: [
-  //     {
-  //       value: 1,
-  //       label: 'Catalog'
-  //     },
-  //     {
-  //       value: 2,
-  //       label: 'Menu'
-  //     },
-  //     {
-  //       value: 3,
-  //       label: 'Function'
-  //     }
-  //   ]
-  // },
   role: {
     userManage: {
       thead: {

@@ -1,5 +1,5 @@
 <template>
-  <el-tabs class="machine-details" v-model="activeName" @tab-click="handleClick">
+  <el-tabs class="machine-details common-tabs" v-model="activeName" @tab-click="handleClick">
     <el-tab-pane label="机具详情" name="details">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix basic-info">
@@ -163,18 +163,7 @@ export default {
 </style>
 <style lang='scss'>
 .machine-details{
-  position: absolute;
-  width: 100%;
-  left: 0;
-  top: 0;
-  .el-tabs__nav-wrap{
-    padding: 0 56px;
-    height: 60px;
-    line-height: 60px;
-  }
-
   .el-tabs__content{
-    padding: 0 56px;
     .el-card + .el-card{
       margin-top: 40px;
     }

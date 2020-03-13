@@ -202,24 +202,31 @@ export const constantRoutes = [
         meta: { title: 'systemPackage' }
       },
       {
-        path: 'application/details',
+        path: 'package/details',
         name: 'packageDetails',
         component: () => import('@/views/system-package/details'),
         hidden: true,
         meta: { title: 'packageDetails' }
       },
       {
-        path: 'application/version/recycle',
+        path: 'package/version/recycle',
         name: 'versionRecycle',
         component: () => import('@/views/system-package/versionRecycle'),
         hidden: true,
         meta: { title: 'versionRecycle' }
       },
       {
-        path: 'application/list',
-        name: 'applicationList',
+        path: 'app/list',
+        name: 'appList',
         component: () => import('@/views/application/list'),
         meta: { title: 'application' }
+      },
+      {
+        path: 'app/details',
+        name: 'appDetails',
+        component: () => import('@/views/application/details'),
+        hidden: true,
+        meta: { title: 'appDetails' }
       },
       {
         path: 'file-storage/list',

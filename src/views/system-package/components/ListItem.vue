@@ -38,7 +38,7 @@ export default {
   destroyed() {},
   methods: {
     toDetails() {
-      this.$router.push('/file/application/details')
+      this.$router.push('./details')
     }
   }
 }

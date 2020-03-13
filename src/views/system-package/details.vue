@@ -1,5 +1,8 @@
 <template>
   <div class="package-details">
+    <div class="del">
+      <el-button type="primary" class="r" @click="deletePackages">删除</el-button>
+    </div>
     <section :class="['basic-info', {'isEditing': isEditing}]">
       <h4>
         <span class="common-title f-z-16">基本信息</span>
@@ -69,7 +72,14 @@
       <el-table class="update-list" :data="updateList" :header-cell-style="headerCellStyle" :cell-style="cellStyle">
         <el-table-column label="上传时间" prop="uploadTime"></el-table-column>
         <el-table-column label="版本号" prop="version"></el-table-column>
-        <el-table-column label="更新内容" prop="updatedContent"></el-table-column>
+        <el-table-column label="更新内容" prop="updatedContent">
+          <template slot-scope="scope">
+            <el-tooltip placement="bottom" :hide-after="0" effect="light" popper-class="custom-tooltip">
+              <div slot="content">{{ scope.row.updatedContent }}</div>
+              <el-button type="text" style="color: #5087E5">查看</el-button>
+            </el-tooltip>
+          </template>
+        </el-table-column>
         <el-table-column label="支持版本" prop="supportVersion"></el-table-column>
         <el-table-column label="解压下发" prop="unzipIssue"></el-table-column>
         <el-table-column label="文件大小" prop="fileSize"></el-table-column>
@@ -77,7 +87,7 @@
         <el-table-column width="200">
           <template>
             <el-button type="primary">推送</el-button>
-            <el-button class="green-btn" type="primary" v-if="false">删除</el-button>
+            <el-button class="green-btn" type="primary" @click="handleDelete">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -153,11 +163,29 @@ export default {
         {
           uploadTime: '2020-03-10 12:30:12',
           version: 'V1.0.0',
-          updatedContent: '更新内容22',
+          updatedContent: '此处为更新内容详细信息111111111111',
           supportVersion: '支持版本XXX',
           unzipIssue: '解压下发',
           fileSize: '120MB',
           uploadUser: '张三'
+        },
+        {
+          uploadTime: '2020-03-10 14:30:12',
+          version: 'V1.0.1',
+          updatedContent: '更新内容，更新内容详情11111111122',
+          supportVersion: '支持版本XXXX',
+          unzipIssue: '解压下发',
+          fileSize: '120MB',
+          uploadUser: '李四'
+        },
+        {
+          uploadTime: '2020-03-10 14:30:12',
+          version: 'V1.0.1',
+          updatedContent: '更新内容22',
+          supportVersion: '支持版本XXXX',
+          unzipIssue: '解压下发',
+          fileSize: '120MB',
+          uploadUser: '李四'
         },
         {
           uploadTime: '2020-03-10 14:30:12',
@@ -192,6 +220,13 @@ export default {
     toEdit() {
       this.isEditing = true
     },
+    updatePackage() {
+      const updatePackage = this.$refs.update
+      updatePackage.dialogVisible = true
+    },
+    toRecyclePage() {
+      this.$router.push('version/recycle')
+    },
     handleCancel() {
       this.isEditing = false
     },
@@ -214,12 +249,31 @@ export default {
         /* 展示对应类型下的具体pos */
       }
     },
-    updatePackage() {
-      const updatePackage = this.$refs.update
-      updatePackage.dialogVisible = true
+    /* 删除记录包 */
+    handleDelete() {
+      this.$confirm('删除版本${版本号}后，将无法继续推送安装改版本系统包，并同时取消对外共享该版本。请确认是否删除？', '提示', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        customClass: 'delete-confirm'
+      }).then(() => {
+        // 进行删除操作
+        this.$message.success('删除成功')
+      }).catch(() => {
+        console.log('取消删除操作！')
+      })
     },
-    toRecyclePage() {
-      this.$router.push('version/recycle')
+    /* 删除所有的底层包 */
+    deletePackages() {
+      this.$confirm('删除版本${版本号}后，将无法继续推送该系统包的任何版本，并同时取消对外共享该版本。请确认是否删除？', '提示', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        customClass: 'delete-confirm'
+      }).then(() => {
+        // 进行删除操作
+        this.$message.success('删除成功')
+      }).catch(() => {
+        console.log('取消删除操作！')
+      })
     }
   }
 }
@@ -235,8 +289,18 @@ export default {
   width: 90%;
   max-width: 1200px;
   min-width: 1000px;
-  
-  margin: 50px auto auto;
+  margin: 10px auto auto;
+  .del{
+    position: absolute;
+    width: 100%;
+    line-height: 70px;
+    left: 0;
+    top: 0;
+    overflow: hidden;
+    padding: 16px 100px;
+    margin-bottom: 80px;
+    box-shadow:0 2px 2px 0 rgba(158, 159, 162, 0.15);
+  }
   section{
     padding: 30px;
     &.isEditing{
@@ -244,7 +308,8 @@ export default {
     }
   }
   .basic-info{
-    margin-bottom: 40px;
+    margin: 80px auto 40px;
+    clear: both;
     .edit-btn{
       font-size: 14px;
       color: #3B78FC;
@@ -288,11 +353,34 @@ export default {
     }
     /* end: 适用机型 */
   }
-
   .update-record{
     .el-table{
       margin-top: 40px;
     }
+  }
+  .content{
+    .el-form{
+      width: 580px;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.custom-tooltip{
+  width: 160px;
+  height: 100px;
+  line-height: 18px;
+  background: #fff !important;
+  box-shadow: 0 5px 8px 2px #ddd;
+  color: #666 !important;
+  border-color: transparent !important;
+  .popper__arrow {
+    border-width: 0 !important;
+    background-color: #fff !important;
+  }
+  .popper__arrow::after{
+    background-color: transparent !important;
   }
 }
 </style>

@@ -33,6 +33,7 @@
     </div>
     <application-add ref="applicationAdd"></application-add>
     <delete-history ref="deleteHistory"></delete-history>
+    <app-update ref="appUpdate"></app-update>
   </div>
 </template>
 
@@ -40,13 +41,15 @@
 import ListItem from './components/ListItem'
 import ApplicationAdd from './components/ApplicationAdd'
 import DeleteHistory from './components/DeleteHistory'
+import AppUpdate from './components/AppUpdate'
 
 export default {
   name: 'PackageList',
   components: {
     ListItem,
     ApplicationAdd,
-    DeleteHistory
+    DeleteHistory,
+    AppUpdate
   },
   props: {},
   directive: {},
@@ -58,22 +61,26 @@ export default {
       appList: [
         {
           id: 123,
-          name: '系统包名称1',
+          type: 1, // type标识智能和传统，传统的待zip，智能的待apk，1智能，0传统
+          name: '应用名称1',
           model: '机型1111'
         },
         {
           id: 112,
-          name: '系统包名称2',
+          type: 0,
+          name: '应用名称2',
           model: '机型222'
         },
         {
           id: 1231,
-          name: '系统包名称3',
+          type: 0,
+          name: '应用名称3',
           model: '机型333'
         },
         {
           id: 1132,
-          name: '系统包名称4',
+          type: 0,
+          name: '应用名称4',
           model: '机型6666'
         }
       ],
@@ -94,13 +101,14 @@ export default {
     handleCurrentChange() {
       console.log('handleCurrentChange!!!')
     },
-    openAddDialog() {
+    /* posType: 区分传统和智能 */
+    openAddDialog(posType) {
       const applicationAdd = this.$refs.applicationAdd
       applicationAdd.dialogVisible = true
     },
     openUpdateDialog() {
-      const packageUpdate = this.$refs.packageUpdate
-      packageUpdate.dialogVisible = true
+      const appUpdate = this.$refs.appUpdate
+      appUpdate.dialogVisible = true
     },
     viewDeleteHistory() {
       this.$refs.deleteHistory.dialogVisible = true

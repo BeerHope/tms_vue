@@ -26,6 +26,7 @@ export default {
     file: '文件管理',
     systemPackage: '我的系统包',
     application: '我的应用',
+    appDetails: '应用详情',
     fileStorage: '文件仓库'
   },
   /* 公共功能点 */

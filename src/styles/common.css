@@ -1728,9 +1728,61 @@
   color: #5087E5;
 }
 
-/* tooltips style */
+/* tooltip style */
 .el-tooltip__popper.is-light {
   border-color: #cdcdcd;
+}
+
+/* custom tooltip */
+.custom-tooltip {
+  width: 160px;
+  height: 100px;
+  line-height: 18px;
+  background: #fff !important;
+  box-shadow: 0 5px 8px 2px #ddd;
+  color: #666 !important;
+  border-color: transparent !important;
+}
+
+.custom-tooltip .popper__arrow {
+  border-width: 0 !important;
+  background-color: #fff !important;
+}
+
+.custom-tooltip .popper__arrow::after {
+  background-color: transparent !important;
+}
+
+/* common tabs */
+.common-tabs {
+  position: absolute;
+  width: 100%;
+  left: 0;
+  top: 0;
+}
+
+.common-tabs .el-tabs__active-bar {
+  background-color: #5087E5;
+}
+
+.common-tabs .el-tabs__item {
+  font-family: 'SourceHanSansCN-Normal';
+  color: #172B4D;
+  font-size: 18px;
+}
+
+.common-tabs .el-tabs__item.is-active {
+  color: #5087E5;
+}
+
+.common-tabs .el-tabs__nav-wrap.is-top {
+  padding: 0 56px;
+  height: 60px;
+  line-height: 60px;
+}
+
+.common-tabs .el-tabs__content {
+  padding: 0 56px;
 }
 
 /* 状态颜色值 */
@@ -1798,6 +1850,25 @@
   color: #172B4D;
 }
 
+/* common avatar styles */
+.common-avatar-uploader .el-upload {
+  width: 90px;
+  height: 90px;
+  line-height: 90px;
+  text-align: center;
+  border: 1px solid #DCDFE6;
+}
+
+.common-avatar-uploader .el-icon-plus {
+  font-size: 32px;
+  color: #BCC0C7;
+}
+
+.common-avatar-uploader .el-upload__tip {
+  margin-top: 0;
+  color: #8c8c8c;
+}
+
 /* 删除对话框 */
 .delete-confirm {
   width: 632px;
@@ -1811,12 +1882,17 @@
 
 .delete-confirm .el-message-box__content {
   height: 150px;
-  text-align: center;
+  width: 380px;
   color: #172B4D;
+  margin: auto;
 }
 
 .delete-confirm .el-message-box__btns {
   text-align: center;
+}
+
+.el-card {
+  color: #172B4D;
 }
 
 .shadow {

@@ -90,25 +90,25 @@ export default {
       ],
       roleList: [
         {
-          name: '角色1',
+          name: '开发者人员',
           state: 0,
           createdTime: '2019-01-01',
           remark: '备注内容，说明文字'
         },
         {
-          name: '角色2',
+          name: '管理员',
           state: 0,
           createdTime: '2019-01-01',
           remark: '备注内容，说明文字'
         },
         {
-          name: '角色1',
+          name: '测试',
           state: 0,
           createdTime: '2019-01-01',
           remark: '备注内容，说明文字'
         },
         {
-          name: '角色2',
+          name: '商户',
           state: 1,
           createdTime: '2019-01-01',
           remark: '备注内容，说明文字'

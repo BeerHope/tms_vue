@@ -3,24 +3,19 @@
     title="添加应用"
     width="40%"
     @close="handleClose"
-    :custom-class="currentStep === 'secondStep' ? 'package-dialog m-b-3vh' : 'package-dialog'"
+    custom-class="package-dialog m-b-3vh"
     :visible.sync="dialogVisible">
-    <div class="first-step t-c" v-if="currentStep === 'firstStep'">
-      <el-upload
-        class="upload-demo"
-        drag
-        action="https://jsonplaceholder.typicode.com/posts/"
-        :on-success="handleUploadSuccess">
-        <i class="el-icon-upload"></i>
-        <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-        <div class="el-upload__tip m-t-10" slot="tip">只支持zip文件格式，且不超过1G</div>
-      </el-upload>
-    </div>
-    <div class="second-step" v-if="currentStep === 'secondStep'">
-      <!-- <traditional-app></traditional-app> -->
-      <smart-app></smart-app>
-    </div>
-    <span slot="footer" class="dialog-footer" v-if="currentStep==='secondStep'">
+    <el-upload
+      class="upload-demo"
+      drag
+      action="https://jsonplaceholder.typicode.com/posts/"
+      :on-success="handleUploadSuccess">
+      <i class="el-icon-upload"></i>
+      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+      <div class="el-upload__tip m-t-10" slot="tip">只支持zip文件格式，且不超过1G</div>
+    </el-upload>
+    <component :is="posType"></component>
+    <span slot="footer" class="dialog-footer">
       <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
       <el-button type="primary" @click="handleAdd">新 增</el-button>
     </span>
@@ -29,20 +24,21 @@
 
 <script>
 import SmartApp from './SmartApp'
-// import TraditionalApp from './TraditionalApp'
+import TraditionalApp from './TraditionalApp'
 
 export default {
   name: 'PackageDialog',
   components: {
     SmartApp,
-    // TraditionalApp
+    TraditionalApp
   },
   props: {},
   directive: {},
   data() {
     return {
       dialogVisible: false,
-      currentStep: 'secondStep',
+      posType: 'smartApp'
+      // posType: 'traditionalApp'
     }
   },
   computed: {},
@@ -79,18 +75,19 @@ export default {
     margin-top: 3vh !important;
   }
   .el-dialog__body{
-    padding: 20px;
+    padding:16px 40px;
   }
-}
-</style>
-
-<style lang='scss' scoped>
-.line{
-  width: 100%;
-  height: 1px;
-  background-color: #DCDFE6;
-}
-.el-checkbox-group{
-  padding: 10px 10px 0;
+  .upload-demo{
+    margin-bottom: 20px;
+    .el-upload,.el-upload-dragger{
+      width: 100%;
+    }
+  }
+  .el-row{
+    height: 34px;
+  }
+  .el-upload__tip{
+    color: #b8b8b8;
+  }
 }
 </style>

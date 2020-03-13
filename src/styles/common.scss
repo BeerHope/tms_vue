@@ -155,6 +155,7 @@ $color-f5: #f5f5f5;
 $white: #ffffff;
 $color-5087E5: #5087E5;
 $color-1ECE9A: #1ECE9A;
+$color-172B4D: #172B4D;
 
 @each $colorName,
 $color in(color-333, $color-333),
@@ -317,11 +318,56 @@ $hoverOpacity: 0.78;
     }
 }
 
-/* tooltips style */
+/* tooltip style */
 
 .el-tooltip__popper.is-light{
     border-color: #cdcdcd;
 }
+/* custom tooltip */
+.custom-tooltip{
+    width: 160px;
+    height: 100px;
+    line-height: 18px;
+    background: #fff !important;
+    box-shadow: 0 5px 8px 2px #ddd;
+    color: #666 !important;
+    border-color: transparent !important;
+    .popper__arrow {
+        border-width: 0 !important;
+        background-color: #fff !important;
+    }
+    .popper__arrow::after{
+        background-color: transparent !important;
+    }
+}
+
+/* common tabs */
+.common-tabs{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    .el-tabs__active-bar{
+        background-color: $color-5087E5;
+    }
+    .el-tabs__item{
+        font-family: 'SourceHanSansCN-Normal';
+        color: $color-172B4D;
+        font-size: 18px;
+        &.is-active{
+            color: $color-5087E5;
+        }
+    }
+    .el-tabs__nav-wrap.is-top{
+        padding: 0 56px;
+        height: 60px;
+        line-height: 60px;
+    }
+    .el-tabs__content{
+        padding: 0 56px;
+    }
+}
+
 /* 状态颜色值 */
 $enabledBg: #E5F1FB;
 $enabledTextColor: #016ECA;
@@ -393,23 +439,42 @@ $titleFontSize: 18px;
     color: $customBlackFont;
 }
 
+/* common avatar styles */
+.common-avatar-uploader{
+    .el-upload{
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        border: 1px solid #DCDFE6;
+    }
+   .el-icon-plus{
+       font-size: 32px;
+       color: #BCC0C7;
+   }
+   .el-upload__tip{
+       margin-top: 0;
+       color: #8c8c8c;
+   }
+}
+
 /* 删除对话框 */
-$deleteConfirmWidth: 632px;
-$deleteConfirmHeight: 304px;
-
+$delConfirmWidth: 632px;
+$delConfirmContWidth: 380px;
+$delConfirmHeight: 304px;
 .delete-confirm {
-    width: $deleteConfirmWidth;
-    height: $deleteConfirmHeight;
+    width: $delConfirmWidth;
+    height: $delConfirmHeight;
     padding: 4px 25px;
-
     .el-message-box__header {
         margin-bottom: 50px;
     }
 
     .el-message-box__content {
         height: 150px;
-        text-align: center;
+        width: $delConfirmContWidth;
         color: $customBlackFont;
+        margin: auto;
     }
 
     .el-message-box__btns {
@@ -417,6 +482,9 @@ $deleteConfirmHeight: 304px;
     }
 }
 
+.el-card{
+    color: $color-172B4D;
+}
 .shadow {
     box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }

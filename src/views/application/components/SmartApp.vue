@@ -1,38 +1,28 @@
 <template>
   <div class="smart-app">
-    <div class="app-info">
-      <div class="name m-b-18">
-        <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
-        <span class="m-l-20">文件名称(含后缀)</span>
-      </div>
-      <el-form :model="appDetails" label-width="80px">
+    <el-form class="app-info" :model="appDetails" label-width="80px">
         <el-row>
           <el-col :span="12">
-            <el-form-item label="应用包名">
-              <el-input v-model="appDetails.displayName" disabled></el-input>
-            </el-form-item>
+            <span>应用名称：</span>
+            <span>{{ appDetails.displayName }}</span>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="版本">
-              <el-input v-model="appDetails.version" disabled></el-input>
-            </el-form-item>
+            <span>版本：</span>
+            <span>{{ appDetails.version}}</span>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="大小">
-              <el-input v-model="appDetails.size" disabled></el-input>
-            </el-form-item>
+            <span>大小：</span>
+            <span>{{ appDetails.size}}</span>
           </el-col>
           <el-col :span="12">
-            <el-form-item label="文件MD5">
-              <el-input v-model="appDetails.fileMD5" disabled></el-input>
-            </el-form-item>
+            <span>文件MD5：</span>
+            <span>{{ appDetails.fileMD5}}</span>
           </el-col>
         </el-row>
       </el-form>
-    </div>
-    <el-form class="editable-form" :model="formData" label-width="80px">
+    <el-form class="editable-form" :model="formData" label-width="80px" label-position="left">
       <el-form-item label="应用名称" required>
         <el-input v-model="formData.appname"></el-input>
       </el-form-item>
@@ -46,7 +36,7 @@
       </el-form-item>
       <el-form-item label="应用icon">
         <el-upload
-          class="avatar-uploader"
+          class="avatar-uploader common-avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
           :show-file-list="false"
           :on-success="handleAvatarSuccess"
@@ -59,10 +49,8 @@
         <el-input type="textarea" v-model="formData.abstract"></el-input>
       </el-form-item>
       <el-form-item label="应用截图">
-        <!-- 
-          :on-preview="handlePictureCardPreview"
-        -->
         <el-upload
+          class="common-avatar-uploader"
           action="https://jsonplaceholder.typicode.com/posts/"
           list-type="picture-card">
           <i class="el-icon-plus"></i>
@@ -86,7 +74,7 @@ import SPOS from "@/assets/images/spos.png"
 import MPOS from "@/assets/images/mpos.png"
 
 export default {
-  name: '',
+  name: 'smartApp',
   components: {},
   props: {},
   directive: {},
@@ -144,22 +132,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-.smart-app{
-  .editable-form{
-    .avatar-uploader .el-upload{
-      border: 1px dashed #d9d9d9 !important;
-    }
-    
-    .el-upload-list--picture-card,
-    .el-upload--picture-card{
-      width: 128px;
-      height: 128px;
-      line-height: 126px;
-    }
-  }
-}
-</style>
 <style lang='scss' scoped>
 @mixin common-box ($pad){
   border: 1px solid #DCDFE6;
@@ -167,41 +139,9 @@ export default {
   border-radius: 6px;
 }
 .app-info{
-  @include common-box(14px);
   .name{
-    @include common-box(10px);
     display: flex;
     align-items: center;
-  }
-  margin-bottom: 30px;
-}
-.editable-form{
-  @include common-box(14px);
-
-  .avatar-uploader.el-upload--text {
-    height: 70px;
-    .el-upload {
-      border-radius: 6px;
-      cursor: pointer;
-      position: relative;
-      overflow: hidden;
-    }
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 128px;
-    height: 68px;
-    line-height: 68px;
-    text-align: center;
-  }
-  .avatar {
-    width: 128px;
-    height: 68px;
-    display: block;
   }
 }
 </style>

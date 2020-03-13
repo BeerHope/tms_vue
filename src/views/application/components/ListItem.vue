@@ -1,9 +1,10 @@
 <template>
   <div class="list-item">
     <el-card shadow="hover">
-      <div class="info">
-        <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
+      <div class="info" @click="toDetails">
+        <img :src="appImg" alt="应用包">
         <p class="name">{{ itemData.name }}</p>
+        <p class="model">{{ itemData.model }}</p>
       </div>
       <div class="operation">
         <span @click="$emit('open-update-dialog')">更新</span>
@@ -15,6 +16,9 @@
 </template>
 
 <script>
+import apkImg from '@/assets/images/apk.png'
+import zipImg from '@/assets/images/zip.png'
+
 export default {
   name: 'PackageListItem',
   components: {},
@@ -29,14 +33,22 @@ export default {
     return {
     }
   },
-  computed: {},
+  computed: {
+    appImg() {
+      return this.itemData.type ? apkImg: zipImg
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    toDetails() {
+      this.$router.push('./details')
+    }
+  }
 }
 </script>
 
@@ -46,7 +58,7 @@ $hoverTextColor: #3b78fc;
 .list-item {
   display: inline-block;
   width: 228px;
-  height: 196px;
+  height: 220px;
   margin: 10px 26px 10px 0;
   margin-right: 20px;
   cursor: pointer;
@@ -59,6 +71,12 @@ $hoverTextColor: #3b78fc;
     .info{
       height: calc(100% - 35px);
       padding-top: 10px;
+      .name{
+        font-size: 16px;
+      }
+      .model{
+        color: #666;
+      }
     }
     .operation{
       display: flex;
