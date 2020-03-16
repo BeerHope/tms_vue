@@ -2,7 +2,7 @@
   <el-dialog
     custom-class="package-update"
     v-loading="isLoading"
-    title="新增系统包"
+    title="更新"
     width="40%"
     @close="handleClose"
     :visible.sync="dialogVisible">

@@ -195,6 +195,7 @@ export const constantRoutes = [
     name: 'file',
     meta: { title: 'file', icon: 'terminal' },
     children: [
+      /* 我的系统包模块 */
       {
         path: 'package/list',
         name: 'packageList',
@@ -215,6 +216,7 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'versionRecycle' }
       },
+      /* 我的应用模块 */
       {
         path: 'app/list',
         name: 'appList',
@@ -229,11 +231,51 @@ export const constantRoutes = [
         meta: { title: 'appDetails' }
       },
       {
+        path: 'app/recycle',
+        name: 'appRecycle',
+        component: () => import('@/views/application/recycle'),
+        hidden: true,
+        meta: { title: 'appRecycle' }
+      },
+      /* 文件仓库模块 */
+      {
         path: 'file-storage/list',
         name: 'fileStorage',
         component: () => import('@/views/file-storage/list'),
         meta: { title: 'fileStorage' }
-      }
+      },
+      // 新增共享——应用包详情
+      {
+        path: 'file-storage/new-share/details/app/:state',
+        name: 'fileAppDetails',
+        component: () => import('@/views/file-storage/appDetails'),
+        hidden: true,
+        meta: { title: 'fileAppDetails' }
+      },
+      /* 新增共享——系统包详情 */
+      {
+        path: 'file-storage/new-share/details/system/:state',
+        name: 'systemDetails',
+        component: () => import('@/views/file-storage/systemDetails'),
+        hidden: true,
+        meta: { title: 'systemDetails' }
+      },
+      {
+        /* 系统包-详情-来源于我的文件 */
+        path: 'file-storage/my-file/details/system',
+        name: 'systemDetailsFromFile',
+        component: () => import('@/views/file-storage/systemDetailsFromFile'),
+        hidden: true,
+        meta: { title: 'systemDetailsFromFile' }
+      },
+      {
+        /* 应用包-详情-来源于我的文件 */
+        path: 'file-storage/my-file/details/app',
+        name: 'appDetailsFromFile',
+        component: () => import('@/views/file-storage/appDetailsFromFile'),
+        hidden: true,
+        meta: { title: 'appDetailsFromFile' }
+      },
     ]
   },
   // 404 page must be placed at the end !!!

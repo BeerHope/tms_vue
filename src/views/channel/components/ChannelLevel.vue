@@ -2,12 +2,10 @@
   <el-dialog
     title="查看层级"
     :visible.sync="dialogVisible"
-    width="40%"
-  >
-    <span>查看层级！！！！！</span>
-    <p v-for="item in levels" :key="item.id">
-      <span :style="{marginLeft: `${100+10}`}">{{ item.level }}</span>
-      <span>{{ item.label }}</span>
+    width="40%">
+    <p class="level" v-for="(item, index) in levels" :key="item.id">
+      <span :style="{marginRight: `${110+60*index}px`}">{{ item.level }}</span>
+      <span :class="['shortname', {'active': index===levels.length-1}]">{{ item.shortName }}</span>
     </p>
     <span slot="footer" class="dialog-footer">
       <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
@@ -61,5 +59,19 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-
+.level{
+  line-height: 80px;
+  color: #172B4D;
+  .shortname{
+    &.active{
+      line-height: 30px;
+      display: inline-block;
+      border-radius: 4px;
+      padding: 2px 10px;
+      color: #5087E5;
+      border: 1px solid #5087E5;
+      background-color: #EDF7FF;
+    }
+  }
+}
 </style>

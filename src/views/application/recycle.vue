@@ -1,6 +1,6 @@
 <template>
   <div class="user-management-list">
-    <h4 class="common-title">${系统包名称}已删除信息</h4>
+    <h4 class="common-title">${应用名称}已删除版本信息</h4>
     <section class="content">
       <el-table
         :data="userList"
@@ -30,16 +30,16 @@
         :total="400"
       ></el-pagination>
     </section>
-    <package-details ref="details"></package-details>
+    <app-details ref="details"></app-details>
   </div>
 </template>
 
 <script>
-import PackageDetails from './components/PackageDetails'
+import AppDetails from './components/AppDetails'
 export default {
   name: '',
   components: {
-    PackageDetails
+    AppDetails
   },
   props: {},
   directive: {},
@@ -90,6 +90,7 @@ export default {
       console.log('handleCurrentChnage!!!')
     },
     toViewDetails() {
+      console.log('点击了！！！！！！')
       this.$refs.details.dialogVisible = true
     }
   }

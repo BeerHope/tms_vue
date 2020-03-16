@@ -325,8 +325,8 @@ $hoverOpacity: 0.78;
 }
 /* custom tooltip */
 .custom-tooltip{
-    width: 160px;
-    height: 100px;
+    min-width: 160px;
+    min-height: 100px;
     line-height: 18px;
     background: #fff !important;
     box-shadow: 0 5px 8px 2px #ddd;
@@ -515,4 +515,7 @@ $delConfirmHeight: 304px;
 
 .h-100 {
     height: 100%;
+}
+.clear-fix{
+    @include clearfix();
 }

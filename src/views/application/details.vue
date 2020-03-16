@@ -38,7 +38,7 @@
         <h4>
           <span class="common-title f-z-16">更新记录</span>
           <div class="r">
-            <el-button class="line-type blue-btn" @click="updatePackage">发布新版</el-button>
+            <el-button class="line-type blue-btn" @click="updateApp">发布新版</el-button>
             <el-button class="line-type blue-btn" @click="toRecyclePage">版本垃圾桶</el-button>
           </div>
         </h4>
@@ -68,18 +68,21 @@
     </el-tab-pane>
     <details-edit ref="detailsEdit"></details-edit>
     <version-edit ref="versionEdit"></version-edit>
+    <app-update ref="update"></app-update>
   </el-tabs>
 </template>
 
 <script>
 import DetailsEdit from './components/DetailsEdit'
 import VersionEdit from './components/VersionEdit'
+import AppUpdate from './components/AppUpdate'
 
 export default {
   name: '',
   components: {
     DetailsEdit,
-    VersionEdit
+    VersionEdit,
+    AppUpdate
   },
   props: {},
   directive: {},
@@ -166,6 +169,17 @@ export default {
       }).catch(() => {
         console.log('取消删除操作！')
       })
+    },
+    toRecyclePage() {
+      this.$router.push('./recycle')
+    },
+    updateApp() {
+      const updateApp = this.$refs.update
+      const appType = 2
+      _.assign(updateApp, {
+        dialogVisible: true,
+        appType
+      })
     }
   }
 }
@@ -173,7 +187,7 @@ export default {
 
 <style lang='scss'>
 .app-details{
-  .el-form{
+  .el-form.app-details-form{
     width: 400px;
     margin: auto;
     clear: both;

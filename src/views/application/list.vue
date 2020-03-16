@@ -1,5 +1,5 @@
 <template>
-  <div class="common-list package-list">
+  <div class="common-list app-list">
     <div class="filter-box p-t-6 p-b-6 m-b-10">
       <el-input class="filter-item" v-model="filter.name" placeholder="应用名称"></el-input>
       <el-button type="primary">
@@ -33,7 +33,7 @@
     </div>
     <application-add ref="applicationAdd"></application-add>
     <delete-history ref="deleteHistory"></delete-history>
-    <app-update ref="appUpdate"></app-update>
+    <app-edit ref="appEdit"></app-edit>
   </div>
 </template>
 
@@ -41,15 +41,15 @@
 import ListItem from './components/ListItem'
 import ApplicationAdd from './components/ApplicationAdd'
 import DeleteHistory from './components/DeleteHistory'
-import AppUpdate from './components/AppUpdate'
+import AppEdit from './components/AppEdit'
 
 export default {
-  name: 'PackageList',
+  name: 'AppList',
   components: {
     ListItem,
     ApplicationAdd,
     DeleteHistory,
-    AppUpdate
+    AppEdit
   },
   props: {},
   directive: {},
@@ -107,8 +107,8 @@ export default {
       applicationAdd.dialogVisible = true
     },
     openUpdateDialog() {
-      const appUpdate = this.$refs.appUpdate
-      appUpdate.dialogVisible = true
+      const appEdit = this.$refs.appEdit
+      appEdit.dialogVisible = true
     },
     viewDeleteHistory() {
       this.$refs.deleteHistory.dialogVisible = true
@@ -118,7 +118,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.package-list{
+.app-list{
   .del-history{
     margin-left: auto;
   }

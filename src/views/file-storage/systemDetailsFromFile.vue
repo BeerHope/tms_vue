@@ -1,64 +1,30 @@
 <template>
-  <div class="package-details">
+  <div class="file-details">
     <div class="del">
-      <el-button type="primary" class="r" @click="deletePackages">删除</el-button>
+      <el-button type="primary" class="r" @click="closeSharing">关闭共享</el-button>
     </div>
     <div class="main">
       <section :class="['basic-info', {'isEditing': isEditing}]">
         <h4>
           <span class="common-title f-z-16">基本信息</span>
-          <span class="edit-btn" @click="toEdit" v-if="!isEditing">
-            <i class="el-icon-edit-outline m-r-6"></i>
-            编辑
-          </span>
         </h4>
         <div class="content">
           <el-form class="common-form" :model="formData" :rules="rules" label-width="100px" label-position="right">
             <el-row>
               <el-col :span="12">
                 <el-form-item label="名称：" prop="name">
-                  <span v-if="!isEditing">{{ formData.name }}</span>
-                  <el-input v-else v-model="formData.name"></el-input>
+                  <span>{{ formData.name }}</span>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="更新时间：" prop="createdTime">
-                  <span v-if="!isEditing">{{ formData.createdTime }}</span>
-                  <el-date-picker
-                    v-else v-model="formData.createdTime"
-                    type="datetime" placeholder="请选择创建时间">
-                  </el-date-picker>
+                <el-form-item label="适用机型：" prop="model">
+                  <span>{{ checkedModels }}</span>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="适用机型：" prop="model">
-              <span v-if="!isEditing">{{ checkedModels }}</span>
-              <div class="model" v-else>
-                <ul class="model-row" @click="changeSelectedPos">
-                  <li v-for="item in posList" :key="item.textDesc">
-                    <img
-                      :src="item.imgPath" :alt="item.textDesc"
-                      :class="{'active': selectedPosType==item.type}"
-                      :data-type="item.type">
-                    <p>{{ item.textDesc }}</p>
-                  </li>
-                </ul>
-                <el-select v-model="formData.model" multiple>
-                  <el-option
-                    v-for="item in modelList" :key="item.label"
-                    :value="item.value" :label="item.label">
-                  </el-option>
-                </el-select>
-              </div>
-            </el-form-item>
             <el-form-item label="备注：" prop="remark">
-              <span v-if="!isEditing">{{ formData.remark }}</span>
-              <el-input v-else v-model="formData.remark" type="textarea"></el-input>
+              <span>{{ formData.remark }}</span>
             </el-form-item>
-            <div v-if="isEditing" class="t-c m-t-30">
-              <el-button class="cancel" type="primary" @click="handleCancel">取消</el-button>
-              <el-button type="primary" @click="handleSave">保存</el-button>
-            </div>
           </el-form>
         </div>
       </section>
@@ -66,36 +32,48 @@
         <h4>
           <span class="common-title f-z-16">更新记录</span>
           <div class="r">
-            <el-button class="line-type blue-btn" @click="updatePackage">发布新版</el-button>
-            <el-button class="line-type blue-btn" @click="toRecyclePage">版本垃圾桶</el-button>
+            <el-button class="line-type blue-btn" @click="shareNewVersion">共享新版本</el-button>
           </div>
         </h4>
         <el-table class="update-list" :data="updateList" :header-cell-style="headerCellStyle" :cell-style="cellStyle">
-          <el-table-column label="上传时间" prop="uploadTime"></el-table-column>
-          <el-table-column label="版本号" prop="version"></el-table-column>
-          <el-table-column label="更新内容" prop="updatedContent">
+          <el-table-column label="共享时间" prop="sharedTime"></el-table-column>
+          <el-table-column label="版本" prop="version">
             <template slot-scope="scope">
               <el-tooltip placement="bottom" :hide-after="0" effect="light" popper-class="custom-tooltip">
-                <div slot="content">{{ scope.row.updatedContent }}</div>
-                <el-button type="text" style="color: #5087E5">查看</el-button>
+                <div slot="content">
+                  <p>
+                    <span>支持版本</span>
+                    <span>xxxxxx</span>
+                  </p>
+                  <p>
+                    <span>解压下发</span>
+                    <span>xxxxxx</span>
+                  </p>
+                  <p>
+                    <span>大小</span>
+                    <span>xxxxxx</span>
+                  </p>
+                  <p>
+                    <span>更新内容</span>
+                    <span>xxxxxxxxxxxxxxxxxx</span>
+                  </p>
+                </div>
+                <el-button type="text" style="color: #5087E5">{{ scope.row.version }}</el-button>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column label="支持版本" prop="supportVersion"></el-table-column>
-          <el-table-column label="解压下发" prop="unzipIssue"></el-table-column>
-          <el-table-column label="文件大小" prop="fileSize"></el-table-column>
-          <el-table-column label="上传操作用户" prop="uploadUser"></el-table-column>
+          <el-table-column label="状态" prop="state"></el-table-column>
+          <el-table-column label="操作人" prop="operator"></el-table-column>
           <el-table-column width="200">
             <template>
-              <el-button type="primary">推送</el-button>
-              <el-button class="green-btn" type="primary" @click="handleDelete">删除</el-button>
+              <el-button type="primary" @click="handleCancelSharing">取消共享</el-button>
+              <el-button v-if="false" type="primary" @click="handleRecoverySharing">恢复共享</el-button>
             </template>
           </el-table-column>
         </el-table>
       </section>
     </div>
-   
-    <package-update ref="update"></package-update>
+    <file-share ref="share"></file-share>
   </div>
 </template>
 
@@ -103,11 +81,12 @@
 import TPOS from '@/assets/images/tpos.png'
 import SPOS from '@/assets/images/spos.png'
 import MPOS from '@/assets/images/mpos.png'
-import PackageUpdate from './components/PackageUpdate'
+import FileShare from './components/FileShare'
+
 export default {
   name: '',   
   components: {
-    PackageUpdate
+    FileShare,
   },
   props: {},
   directive: {},
@@ -164,40 +143,28 @@ export default {
       // 模拟更新记录数据
       updateList: [
         {
-          uploadTime: '2020-03-10 12:30:12',
+          sharedTime: '2020-03-10 12:30:12',
           version: 'V1.0.0',
-          updatedContent: '此处为更新内容详细信息111111111111',
-          supportVersion: '支持版本XXX',
-          unzipIssue: '解压下发',
-          fileSize: '120MB',
-          uploadUser: '张三'
+          state: '可用',
+          operator: '张三'
         },
         {
-          uploadTime: '2020-03-10 14:30:12',
+          sharedTime: '2020-03-10 14:30:12',
           version: 'V1.0.1',
-          updatedContent: '更新内容，更新内容详情11111111122',
-          supportVersion: '支持版本XXXX',
-          unzipIssue: '解压下发',
-          fileSize: '120MB',
-          uploadUser: '李四'
+          state: '失效',
+          operator: '李四'
         },
         {
-          uploadTime: '2020-03-10 14:30:12',
+          sharedTime: '2020-03-10 14:30:12',
           version: 'V1.0.1',
-          updatedContent: '更新内容22',
-          supportVersion: '支持版本XXXX',
-          unzipIssue: '解压下发',
-          fileSize: '120MB',
-          uploadUser: '李四'
+          state: '失效',
+          operator: '李四'
         },
         {
-          uploadTime: '2020-03-10 14:30:12',
+          sharedTime: '2020-03-10 14:30:12',
           version: 'V1.0.1',
-          updatedContent: '更新内容22',
-          supportVersion: '支持版本XXXX',
-          unzipIssue: '解压下发',
-          fileSize: '120MB',
-          uploadUser: '李四'
+          state: '可用',
+          operator: '李四'
         },
       ],
       cellStyle: {
@@ -223,9 +190,9 @@ export default {
     toEdit() {
       this.isEditing = true
     },
-    updatePackage() {
-      const updatePackage = this.$refs.update
-      updatePackage.dialogVisible = true
+    shareNewVersion() {
+      const shareVersion = this.$refs.share
+      shareVersion.dialogVisible = true
     },
     toRecyclePage() {
       this.$router.push('version/recycle')
@@ -252,9 +219,22 @@ export default {
         /* 展示对应类型下的具体pos */
       }
     },
-    /* 删除记录包 */
-    handleDelete() {
-      this.$confirm('删除版本${版本号}后，将无法继续推送安装改版本系统包，并同时取消对外共享该版本。请确认是否删除？', '提示', {
+    /* 恢复共享 */
+    handleRecoverySharing() {
+      this.$confirm('恢复对外共享版本${版本号}后，其他用户将可继续推送安装该版本。请确认是否恢复共享？', '提示', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        customClass: 'delete-confirm'
+      }).then(() => {
+        // 进行删除操作
+        this.$message.success('删除成功')
+      }).catch(() => {
+        console.log('取消删除操作！')
+      })
+    },
+    /* 取消共享 */
+    handleCancelSharing() {
+      this.$confirm('取消对外共享版本${版本号}后，将无法继续推送安装改版本系统包，并同时取消对外共享该版本。请确认是否删除？', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
         customClass: 'delete-confirm'
@@ -266,8 +246,8 @@ export default {
       })
     },
     /* 删除所有的底层包 */
-    deletePackages() {
-      this.$confirm('删除版本${版本号}后，将无法继续推送该系统包的任何版本，并同时取消对外共享该版本。请确认是否删除？', '提示', {
+    closeSharing() {
+      this.$confirm('取消对外共享系统包{系统包}后，其他用户将将无法继续推送该系统包的任何版本。请确认是否取消共享？', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
         customClass: 'delete-confirm'
@@ -288,11 +268,11 @@ export default {
   padding: $padding;
   border-radius: 6px;
 }
-.package-details{
+.file-details{
   position: absolute;
   width: 100%;
-  top: 0;
   left: 0;
+  top: 0;
   .del{
     position: absolute;
     width: 100%;
@@ -316,7 +296,7 @@ export default {
     }
   }
   .basic-info{
-    margin: 80px auto 40px;
+    margin: 60px auto 0px;
     clear: both;
     .edit-btn{
       font-size: 14px;
@@ -332,33 +312,6 @@ export default {
         width: calc(66.66% + 100px);
       }
     }
-    .model-row{
-      padding: 0;
-      display: flex;
-      margin: 10px 0 10px;
-      color: #505F79;
-      li{
-        list-style-type: none;
-        flex: 1;
-        text-align: center;
-        img{
-          @include common-box(10px);
-          &:hover, &.active{
-            border-color: #538AE6;
-            cursor: pointer;
-          }
-        }
-        p{
-          pointer-events: none;
-        }
-        p {
-          height: 20px;
-          line-height: 20px;
-          margin: 0;
-        }
-      }
-    }
-    /* end: 适用机型 */
   }
   .update-record{
     .el-table{
