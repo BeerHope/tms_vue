@@ -1,21 +1,24 @@
 export default {
   menu: {
     list: {
-      add: '添加子菜单',
+      add: '新增子菜单',
       tipsInfo: ' 点击左侧菜单对其操作(添加子菜单、编辑、删除)',
     },
     edit: {
       modify: '修 改',
-      info: 'Information',
+      info: '新增子菜单',
     },
     /* 用于新增或编辑的公共表单 */
     form: {
       label: {
         parent: '父级',
+        className: '菜单标识',
+        showOrder: '优先级',
         name: '名称',
         state: '状态',
         type: '类型',
-        url: 'URL'
+        url: 'URL',
+        remark: '备注'
       },
       tips: {
         name: '支持中文、数字、英文字母、空格，且字符长度不能大于15',

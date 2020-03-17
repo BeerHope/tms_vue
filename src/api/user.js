@@ -26,11 +26,65 @@ export function logout(data) {
   })
 }
 
-/* 用户列表 */
-export function getUsers(data) {
+/* 重置密码 */
+export function resetPassword(data) {
   return request({
-    url: '/user/logout',
+    url: `/user/resetPassword`,
+    method: 'put',
+    data
+  })
+}
+
+/* 修改密码 */
+export function updatePassword(data) {
+  return request({
+    url: `/user/updatePassword`,
+    method: 'put',
+    data
+  })
+}
+
+/* 用户列表 */
+export function getUserList(params) {
+  return request({
+    url: '/user',
+    method: 'get',
+    params
+  })
+}
+
+/* 新增用户 */
+export function addUser(data) {
+  return request({
+    url: '/user',
+    method: 'post',
+    data
+  })
+}
+
+/* 用户详情 */
+export function getUserDetails(userId) {
+  return request({
+    url: `/user/${userId}`,
+    method: 'get',
+  })
+}
+
+/* 编辑用户信息 */
+export function EditUser(userId, data) {
+  return request({
+    url: `/user/${userId}`,
     method: 'get',
     data
   })
 }
+
+/* 更新用户权限 */
+export function updateUserAuth(userId, data) {
+  return request({
+    url: `/user/${userId}`,
+    method: 'put',
+    data
+  })
+}
+

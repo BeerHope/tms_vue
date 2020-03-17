@@ -3,14 +3,17 @@
     <div class="header">
       <!-- 图片暂时写成这样 -->
       <span class="m-r-20"><svg-icon icon-class="package"></svg-icon></span>
-      <div>
+      <div class="pos-relative">
         <h5 class="title">抖音短视频</h5>
         <p class="desc">
           <span>版本号：V1.2</span>
-          <span>日期：2020-02-24</span>
-          <span>大小：35M</span>
+          <span class="m-l-10">日期：2020-02-24</span>
+          <span class="m-l-10">大小：35M</span>
         </p>
         <p class="desc">适用机型: N3  N5   ......</p>
+        <div class="disabled-img" v-if="origin==='fromNewShare' && curState === 1">
+          <img src="@/assets/images/app-disabled-zh.png" alt="失效">
+        </div>
       </div>
       <el-button 
         v-if="origin==='fromNewShare' && curState === 0" class="add-btn"
@@ -24,10 +27,10 @@
         关闭共享
       </el-button>
       <!-- 来源于共享且无效 -->
-      <div v-if="origin==='fromNewShare' && curState === 1" style="margin-left:auto;">
-        <el-button class="add-btn" type="primary">推送</el-button>
+      <div class="diabled-btn-opt" v-if="origin==='fromNewShare' && curState === 1" style="margin-left:auto;">
+        <el-button type="primary">推送</el-button>
         <el-button class="green-btn" type="primary" @click="checkVersion">检查更新</el-button>
-        <el-button class="add-btn" type="primary" @click="handleRemove">移除</el-button>
+        <el-button type="primary" @click="handleRemove">移除</el-button>
       </div>
     </div>
     <div class="content">
@@ -159,9 +162,6 @@ export default {
       padding: 0;
       margin: 6px 0;
     }
-    .add-btn{
-      margin-left: auto;
-    }
   }
   .svg-icon{
     font-size: 60px;
@@ -191,13 +191,22 @@ export default {
     margin: 0;
     text-align: center;
   }
-
   .el-carousel__item:nth-child(2n) {
      background-color: #99a9bf;
   }
-  
   .el-carousel__item:nth-child(2n+1) {
      background-color: #d3dce6;
+  }
+  .disabled-img{
+    position: absolute;
+    left: 56%;
+    top: 0;
+  }
+  .diabled-btn-opt{
+    font-size: 0;
+    .el-button{
+      margin: 0 10px 0 0;
+    }
   }
 }
 </style>

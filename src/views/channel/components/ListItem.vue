@@ -48,6 +48,7 @@ export default {
       this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
+        // customClass: 'delete-confirm'
       }).then(() => {
         // 进行删除操作
         this.$message.success('账号已经被冻结')

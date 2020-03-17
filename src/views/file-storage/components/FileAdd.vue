@@ -6,10 +6,11 @@
     custom-class="file-add">
     <ul class="file-type clear-fix" @click="changeSelectedFile">
       <li v-for="item in fileTypes" :key="item.textDesc">
-        <img
-          :src="item.imgPath" :alt="item.textDesc"
-          :class="{'active': selectedFileType==item.type}"
+        <span
+          :class="['custom-icon', {'active': selectedFileType==item.type}]"
           :data-type="item.type">
+          <svg-icon :icon-class="item.icon"></svg-icon>
+        </span>
         <p>{{ item.textDesc }}</p>
       </li>
     </ul>
@@ -28,11 +29,6 @@
 </template>
 
 <script>
-/* 包图片暂时先这样引入，后期调整 */
-import TPOS from '@/assets/images/tpos.png'
-import SPOS from '@/assets/images/spos.png'
-import MPOS from '@/assets/images/mpos.png'
-
 export default {
   name: '',
   components: {},
@@ -48,17 +44,17 @@ export default {
       fileTypes: [
         {
           type: 1,
-          imgPath: TPOS,
+          icon: 'my-app',
           textDesc: '我的应用',
         },
         {
           type: 2,
-          imgPath: SPOS,
+          icon: 'my-package',
           textDesc: '我的系统包',
         },
         {
           type: 3,
-          imgPath: MPOS,
+          icon: 'shared-lib',
           textDesc: '共享库',
         }
       ],
@@ -119,9 +115,8 @@ export default {
 
 <style lang='scss' scoped>
 @mixin common-box ($padding){
-  border: 1px solid #DCDFE6;
+  border: 1px solid #B4C2CD;
   padding: $padding;
-  border-radius: 6px;
 }
 .file-add{
   .file-type{
@@ -135,12 +130,20 @@ export default {
         margin-right: 26px;
       }
       float: left;
-      img{
+      .custom-icon{
+        display: inline-block;
         @include common-box(10px);
+        padding: 16px 20px;
+        margin-bottom: 10px;
         &:hover, &.active{
           border-color: #538AE6;
           cursor: pointer;
         }
+      }
+      .svg-icon{
+        font-size: 40px;
+        pointer-events: none;
+        color: #787878;
       }
       p{
         pointer-events: none;
@@ -156,13 +159,10 @@ export default {
     li {
       line-height: 30px;
       list-style-type: none;
-      color: #90BDEB;
+      color: #5296dc;
       padding-left: 10px;
       margin-bottom: 10px;
       cursor: pointer;
-      &:hover{
-        color: #7CABCD;
-      }
     }
   }
 }

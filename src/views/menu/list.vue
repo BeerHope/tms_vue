@@ -21,7 +21,7 @@
           @node-drop="dropNode"
         >
           <span slot-scope="{node, data}" class="custom-tree-node">
-            <i :class="['m-l-6 m-r-4', data.child.length ? 'el-icon-folder-opened' :'el-icon-document']"></i>
+            <svg-icon :class="['m-l-6 m-r-4']" :icon-class="data.type===1? 'directory' :'document'"></svg-icon>
             <span class="f-z-14">{{ data.name }}</span>
           </span>
         </el-tree>
@@ -41,7 +41,7 @@
         </div>
       </el-col>
     </el-row>
-    <menu-add ref="addDialog" :dialog-title="`${currentNode && currentNode.name}->${$t('menu.list.add')}`"></menu-add>
+    <menu-add ref="addDialog" :parent="menuDetails" :dialog-title="`${currentNode && currentNode.name}->${$t('menu.list.add')}`"></menu-add>
   </div>
 </template>
 
@@ -91,17 +91,16 @@ export default {
     },
     /* 点击树 */
     handleNodeClick(data) {
-      this.isTreeNodeClicked = true
-      // 后期添加中英文转换
       this.isLeaf = !!(data.children && data.children.length)
       this.currentNode = data
       this.$refs.menuTree.setCurrentKey(data.id)
       this.isLoading = true
       getMenuDetails(data.id).then((res) => {
         this.menuDetails = res.data
+        this.isTreeNodeClicked = true
         setTimeout(() => {
           this.isLoading = false
-        }, 100);
+        }, 100)
       })
     },
     /* 拖拽 */
@@ -176,6 +175,7 @@ export default {
   .el-card__header {
     padding: 13px 16px;
     box-shadow: 0 1px 10px 0 rgba(0,0,0,0.1);
+    height: 59px;
   }
   .el-card{
     border-color: transparent;

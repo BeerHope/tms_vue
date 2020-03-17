@@ -62,13 +62,13 @@
       </el-row>
       <el-row>
         <el-col :span="16">
-          <span class="field">版本</span>
+          <span class="field">版 本</span>
           <span>2020-03-12 12:20:00</span>
           <el-button size="mini" class="m-l-10 line-type blue-btn" @click="checkVersion">检查版本</el-button>
         </el-col>
         <el-col :span="8">
           <span class="field">版本状态</span>
-          <span class="unvalid">失效</span>
+          <span class="state right disabled">失效</span>
         </el-col>
       </el-row>
       <el-row>

@@ -352,7 +352,7 @@ export default {
           pointer-events: none;
         }
         p {
-          height: 20px;
+          height: 24px;
           line-height: 20px;
           margin: 0;
         }

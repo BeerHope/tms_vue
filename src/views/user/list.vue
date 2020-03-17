@@ -11,7 +11,7 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary">
+      <el-button type="primary" @click="getUserList">
         <svg-icon icon-class="search"></svg-icon>
         搜索
       </el-button>
@@ -29,25 +29,24 @@
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getUserList"
+        @current-change="getUserList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 50, 100]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
     <add-dialog ref="addDialog"></add-dialog>
-    <edit-dialog ref="editDialog"></edit-dialog>
     <password-dialog ref="passwordDialog"></password-dialog>
   </div>
 </template>
 
 <script>
+import { getUserList } from '@/api/user'
 import ListItem from './components/ListItem'
 import AddDialog from './components/UserAdd'
-import EditDialog from './components/UserEdit'
 import PasswordDialog from './components/PasswordDialog'
 
 export default {
@@ -55,7 +54,6 @@ export default {
   components: {
     ListItem,
     AddDialog,
-    EditDialog,
     PasswordDialog
   },
   props: {},
@@ -66,7 +64,10 @@ export default {
         account: '',
         name: '',
         state: '',
+        page: 1,
+        pageSize: 20,
       },
+      total: 10,
       state: [
         {
           value: 0,
@@ -79,34 +80,35 @@ export default {
       ],
       userList: [
         {
-          username: '张三11111',
+          name: '张三11111',
           account: 2323264324327,
           state: 0,
-          createdTime: '2020-02-10',
-          channelProvider: '李四11111'
+          createTime: '2020-02-10',
+          companyName: '李四11111'
         },
         {
-          username: '张三11111111',
+          name: '张三11111111',
           account: 2323264324327,
           state: 0,
-          createdTime: '2020-02-10',
-          channelProvider: '李四2222222'
+          createTime: '2020-02-10',
+          companyName: '李四2222222'
         },
         {
-          username: '张三11111111',
+          name: '张三11111111',
           account: 2323264324327,
           state: 1,
-          createdTime: '2020-02-10',
-          channelProvider: '李四2222222'
+          createTime: '2020-02-10',
+          companyName: '李四2222222'
         }
       ],
-      currentPage: 1,
       total: 50
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getUserList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -118,6 +120,11 @@ export default {
     handleCurrentChange() {
       console.log('handleCurrentChange')
     },
+    getUserList() {
+      getUserList(this.filter).then((res) => {
+        cosnole.log(res, 'res!!!!!!!!!!!!!!')
+      })
+    },
     openAddDialog(flag = 0, userId = -1, dialogVisible = true) {
       const addDialog = this.$refs.addDialog
       _.assign(addDialog, {
@@ -125,10 +132,6 @@ export default {
         userId,
         dialogVisible
       })
-    },
-    openEditDialog() {
-      const editDialog = this.$refs.editDialog
-      editDialog.dialogVisible = true
     },
     openPasswordDialog() {
       const passwordDialog = this.$refs.passwordDialog

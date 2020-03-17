@@ -6,16 +6,19 @@ export default {
     },
     edit: {
       modify: 'Modify',
-      info: '信息',
+      info: 'Add Submenu',
     },
     /* common form, used for editing or adding menu */
     form: {
       label: {
-        parent: '父级',
-        name: '名称',
-        state: '状态',
-        type: '类型',
-        url: 'URL'
+        parent: 'Parent',
+        className: 'ClassName',
+        showOrder: 'ShowOrder',
+        name: 'Name',
+        state: 'State',
+        type: 'Type',
+        url: 'URL',
+        remark: 'Remark'
       },
       tips: {
         name: '支持中文、数字、英文字母、空格，且字符长度不能大于15',

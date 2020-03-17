@@ -28,8 +28,6 @@ import '@/permission' // permission control
 
 /* 本地mock 暂时屏蔽*/
 import { mockXHR } from '../mock'
-console.log(process.env.NODE_ENV, 'NODE_ENV')
-console.log(process.env.VUE_APP_BASE_URL, 'VUE_APP_BASE_URL')
 if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_BASE_URL === '/mock-api') {
   console.log('111111111111111')
   mockXHR()

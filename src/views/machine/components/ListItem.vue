@@ -74,6 +74,7 @@ export default {
       this.$confirm('请确认是否解除 设备${设备SN号} 与 ${商户名称}(终端号${终端号})的绑定关系?', '提示', {
         confirmButtonText: '是',
         cancelButtonText: '否',
+        customClass: 'delete-confirm'
       }).then(() => {
         // 进行删除操作
         this.$message.success('解绑成功')

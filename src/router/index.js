@@ -5,6 +5,8 @@ Vue.use(Router)
 
 /* Layout */
 import Layout from '@/layout'
+/* commonIndex */
+import Index from '@/components/CommonIndex/index'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -37,7 +39,6 @@ export const constantRoutes = [
     component: () => import('@/views/login/index'),
     hidden: true
   },
-
   {
     path: '/404',
     component: () => import('@/views/error/404'),
@@ -48,15 +49,15 @@ export const constantRoutes = [
     component: () => import('@/views/error/401'),
     hidden: true
   },
-
+  /* 首页 */
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/home',
     hidden: true,
     children: [{
-      path: 'dashboard',
-      name: 'Dashboard',
+      path: 'home',
+      name: 'home',
       component: () => import('@/views/dashboard/index'),
       meta: { title: 'dashboard', icon: 'dashboard' }
     }]
@@ -65,38 +66,65 @@ export const constantRoutes = [
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/user/list',
+    redirect: '/system/role/list',
     name: 'system',
-    meta: {
-      title: 'system',
-      icon: 'system'
-    },
+    meta: { title: 'system', icon: 'system' },
     children: [
       {
         path: 'menu/list',
-        component: () => import('@/views/system/menu/list'),
+        name: 'menu',
+        component: () => import('@/views/menu/list'),
         meta: { title: 'menu' }
       },
       {
-        path: 'role/list',
-        component: () => import('@/views/system/role/list'),
+        path: 'role',
+        redirect: 'role/list',
         meta: { title: 'role' },
+        component: Index,
+        name: 'role',
+        children: [
+          {
+            path: 'list',
+            name: 'roleList',
+            component: () => import('@/views/role/list'),
+            meta: { activeMenu: '/system/role' },
+            hidden: true
+          },
+          {
+            path: 'user',
+            name: 'roleUser',
+            component: () => import('@/views/role/roleUserList'),
+            meta: { title: 'roleUser', activeMenu: '/system/role' },
+            hidden: true
+          }
+        ]
       },
       {
-        path: 'role/user-management',
-        component: () => import('@/views/system/role/user-management-list'),
-        meta: { title: 'roleUser' },
-        hidden: true
-      },
-      {
-        path: 'user/list',
-        component: () => import('@/views/system/user/list'), // Parent router-view
+        path: 'user',
+        redirect: 'user/list',
+        component: Index, // Parent router-view
         name: 'user',
-        meta: { title: 'user' }
+        meta: { title: 'user' },
+        children: [
+          {
+            path: 'list',
+            component: () => import('@/views/user/list'), // Parent router-view
+            name: 'userList',
+            meta: { activeMenu: '/system/user' },
+            hidden: true
+          },
+          {
+            path: 'details',
+            component: () => import('@/views/user/details'), // Parent router-view
+            name: 'userDetails',
+            meta: { title: 'userEdit', activeMenu: '/system/user' },
+            hidden: true
+          }
+        ]
       }
     ]
   },
-  /* 渠道商管理 */
+  // 渠道商管理
   {
     path: '/channel',
     component: Layout,
@@ -112,7 +140,7 @@ export const constantRoutes = [
       },
     ]
   },
-  /* 设备配置管理 */
+  // 设备配置管理
   {
     path: '/equipment',
     component: Layout,
@@ -137,7 +165,7 @@ export const constantRoutes = [
       }
     ]
   },
-  /* 商户终端管理 */
+  // 商户终端管理
   {
     path: '/merchant',
     component: Layout,
@@ -178,7 +206,7 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'machineControl' }
       },
-      /* 机具批量调拨 */
+      // 机具批量调拨
       {
         path: 'allocation/list',
         name: 'allocation',
@@ -187,15 +215,15 @@ export const constantRoutes = [
       }
     ]
   },
-  /* 文件管理 */
+  // 文件管理
   {
     path: '/file',
     component: Layout,
     redirect: '/file/package/list',
     name: 'file',
-    meta: { title: 'file', icon: 'terminal' },
+    meta: { title: 'file', icon: 'file' },
     children: [
-      /* 我的系统包模块 */
+      // 我的系统包模块
       {
         path: 'package/list',
         name: 'packageList',
@@ -216,7 +244,7 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'versionRecycle' }
       },
-      /* 我的应用模块 */
+      // 我的应用模块
       {
         path: 'app/list',
         name: 'appList',
@@ -237,7 +265,7 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'appRecycle' }
       },
-      /* 文件仓库模块 */
+      // 文件仓库模块
       {
         path: 'file-storage/list',
         name: 'fileStorage',
@@ -252,7 +280,7 @@ export const constantRoutes = [
         hidden: true,
         meta: { title: 'fileAppDetails' }
       },
-      /* 新增共享——系统包详情 */
+      //  新增共享——系统包详情
       {
         path: 'file-storage/new-share/details/system/:state',
         name: 'systemDetails',
@@ -261,7 +289,7 @@ export const constantRoutes = [
         meta: { title: 'systemDetails' }
       },
       {
-        /* 系统包-详情-来源于我的文件 */
+        // 系统包-详情-来源于我的文件
         path: 'file-storage/my-file/details/system',
         name: 'systemDetailsFromFile',
         component: () => import('@/views/file-storage/systemDetailsFromFile'),
@@ -269,7 +297,7 @@ export const constantRoutes = [
         meta: { title: 'systemDetailsFromFile' }
       },
       {
-        /* 应用包-详情-来源于我的文件 */
+        // 应用包-详情-来源于我的文件
         path: 'file-storage/my-file/details/app',
         name: 'appDetailsFromFile',
         component: () => import('@/views/file-storage/appDetailsFromFile'),

@@ -182,8 +182,7 @@ export default {
       this.$refs.dialog.dialogVisible = true
     },
     manageUser() {
-      this.$router.push('/system/role/user-management')
-      // this.isShowUserManagement = true
+      this.$router.push('/system/role/user')
     },
     /* 暂时将该功能删除 */
     deleteRole() {
