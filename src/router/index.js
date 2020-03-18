@@ -91,7 +91,7 @@ export const constantRoutes = [
             hidden: true
           },
           {
-            path: 'user',
+            path: '/system/role/:roleId/user',
             name: 'roleUser',
             component: () => import('@/views/role/roleUserList'),
             meta: { title: 'roleUser', activeMenu: '/system/role' },

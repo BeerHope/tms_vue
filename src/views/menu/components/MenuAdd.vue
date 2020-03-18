@@ -4,16 +4,16 @@
     :title="dialogTitle"
     :visible.sync="dialogVisible"
     @close="closeDialog">
-    <div class="menu-form common-form">
+    <div class="menu-form">
       <el-form ref="form" :model="formData" :rules="rules" label-width="80px">
         <el-form-item :label="$t('menu.form.label.className')" prop="className">
           <el-input v-model="formData.className"></el-input>
         </el-form-item>
-         <el-form-item :label="$t('menu.form.label.showOrder')" prop="showOrder">
-          <el-input v-model="formData.showOrder"></el-input>
+        <el-form-item :label="$t('menu.form.label.showOrder')" prop="showOrder">
+          <el-input-number v-model="formData.showOrder" :min="1" :max="1000"></el-input-number>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.name')" prop="name">
-          <el-input v-model="formData.name"></el-input>
+          <el-input v-model="formData.name" maxlength="15"></el-input>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.type')" prop="type">
           <el-select v-model="formData.type" placeholder>
@@ -26,7 +26,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.url')" prop="link">
-          <el-input v-model="formData.link"></el-input>
+          <el-input v-model="formData.link" maxlength="100"></el-input>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.remark')" prop="remark">
           <el-input type="textarea" v-model="formData.remark"></el-input>
@@ -70,7 +70,7 @@ export default {
       callback()
     }
     const validateUrl = (rule, value, callback) => {
-      const regExp = /^[0-9A-Za-z\.\?#:-_/]{1,100}$/
+      const regExp = /^[0-9A-Za-z\.\?#:-_/]{0,100}$/
       if (!regExp.test(value)) {
         return callback(new Error(this.$t('menu.form.tips.url')))
       }
@@ -113,7 +113,6 @@ export default {
         ],
         link: [
           {
-            required: true,
             trigger: 'blur',
             validator: validateUrl
           }
@@ -123,9 +122,7 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {
-    console.log(this.parent, '父级菜单信息')
-  },
+  created() {},
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -138,13 +135,11 @@ export default {
             ...this.formData,
             parentId: this.parent.id
           }
-          console.log(reqData, 'reqData!!!!!')
           addMenu(reqData).then(res => {
-            console.log(res, 'res!!!!!!')
             this.dialogVisible = false
+            this.$emit('refresh-menu')
+            this.$message.success(`${this.$t('menu.add.tips.0')}`)
           }) 
-        } else {
-          conole.log('校验失败！')
         }
       })
     },
@@ -160,5 +155,13 @@ export default {
     position: absolute;
     top: 0;
     width: calc(100% - 10px);
+  }
+
+  .menu-form{
+    text-align: left;
+    .el-input-number,
+    .el-select{
+      width: 100%;
+    }
   }
 </style>

@@ -2,17 +2,17 @@
   <div class="common-list role-list">
     <div>
       <div class="filter-box p-t-6 p-b-6 m-b-10">
-        <el-select v-model="roleName" placeholder="角色名称" clearable class="filter-item">
-          <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
+        <el-input v-model="filter.name" class="filter-item" :placeholder="$t('role.list.filter.name')" clearable></el-input>
+        <el-select v-model="filter.state" class="filter-item" :placeholder="$t('role.list.filter.state')" clearable>
+          <el-option v-for="item in $t('base.states')" :key="item.value" :label="item.label" :value="item.value"></el-option>
         </el-select>
-        <el-select v-model="roleName" placeholder="状态" clearable class="filter-item">
-          <el-option v-for="item in roles" :key="item.value" :label="item.label" :value="item.value"></el-option>
-        </el-select>
-        <el-button type="primary">
-          <svg-icon icon-class="search" class="m-r-4"></svg-icon>搜索
+        <el-button type="primary" @click="getRoleList">
+          <svg-icon icon-class="search" class="m-r-4"></svg-icon>
+          {{ $t('role.list.search') }}
         </el-button>
         <el-button type="primary" class="green-btn" @click="openDialog(0, -1, true)">
-          <svg-icon icon-class="add" class="m-r-4"></svg-icon>新增
+          <svg-icon icon-class="add" class="m-r-4"></svg-icon>
+          {{ $t('role.list.add') }}
         </el-button>
       </div>
       <div class="common-table">
@@ -20,28 +20,29 @@
           v-for="(item, index) in roleList"
           :key="index"
           :item-data="item"
-          @edit="openDialog(1, 0, true)"
-          @manageUser="manageUser"
+          @edit="openDialog(1, item.id, true)"
         ></list-item>
         <!-- 分页 -->
         <el-pagination
           class="common-pagination"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          @size-change="getRoleList"
+          @current-change="getRoleList"
+          :current-page.sync="filter.page"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size.sync="filter.pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
+          :total="total"
         ></el-pagination>
       </div>
     </div>
     <!-- 新增/编辑 角色 -->
-    <role-add ref="dialog"></role-add>
+    <role-add ref="dialog" @refresh="getRoleList"></role-add>
   </div>
 </template>
 
 <script>
+import * as roleService from '@/api/role'
+import { Loading } from 'element-ui'
 import RoleAdd from './components/RoleAdd'
 import ListItem from './components/ListItem'
 
@@ -56,106 +57,21 @@ export default {
   data() {
     return {
       roleName: '',
-      roles: [
-        {
-          value: 1,
-          label: '角色1'
-        },
-        {
-          value: 2,
-          label: '角色2'
-        },
-        {
-          value: 3,
-          label: '角色3'
-        }
-      ],
-      tableHead: [
-        {
-          prop: 'name',
-          label: '角色名称'
-        },
-        {
-          prop: 'state',
-          label: '是否锁定'
-        },
-        {
-          prop: 'createdTime',
-          label: '创建时间'
-        },
-        {
-          prop: 'remark',
-          label: '备注'
-        }
-      ],
-      roleList: [
-        {
-          name: '开发者人员',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '管理员',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '测试',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '商户',
-          state: 1,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色1',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色2',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色1',
-          state: 1,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色2',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色1',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        },
-        {
-          name: '角色2',
-          state: 0,
-          createdTime: '2019-01-01',
-          remark: '备注内容，说明文字'
-        }
-      ],
-      currentPage: 1
+      filter: {
+        name: '',
+        state: '',
+        page: 1,
+        pageSize: 10,
+      },
+      roleList: [],
+      total: 0,
     }
   },
   computed: {},
   watch: {},
-  created() { },
+  created() {
+    this.getRoleList()
+  },
   beforeMount() { },
   mounted() { },
   beforeDestroy() { },
@@ -166,6 +82,14 @@ export default {
     },
     handleCurrentChange() {
       console.log('curren change!!!')
+    },
+    getRoleList() {
+      const loading = Loading.service({ fullscreen: true })
+      roleService.getRoleList(this.filter).then(res => {
+        this.roleList = res.data && res.data.rows
+        this.total = res.data.totalRecord
+        loading.close()
+      })
     },
     /* 
       flag: 新增（0）、编辑（1）
@@ -180,9 +104,6 @@ export default {
         dialogVisible
       })
       this.$refs.dialog.dialogVisible = true
-    },
-    manageUser() {
-      this.$router.push('/system/role/user')
     },
     /* 暂时将该功能删除 */
     deleteRole() {

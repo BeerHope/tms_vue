@@ -2,7 +2,7 @@ export default {
   login: {
     systemName: 'Terminal Management System',
     title: 'Login Form',
-    signIn: 'Sign In',
+    signIn: 'Sign in',
     forgotPsd: 'Forgot password',
     langs: {
       zh: '中文',

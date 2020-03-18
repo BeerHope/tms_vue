@@ -7,6 +7,15 @@ export default {
     edit: {
       modify: 'Modify',
       info: 'Add Submenu',
+      tips: {
+        0: 'Modified successfully',
+        1: 'No changes, no commit required',
+      }
+    },
+    add: {
+      tips: {
+        0: 'Added successfully'
+      }
     },
     /* common form, used for editing or adding menu */
     form: {
@@ -21,8 +30,8 @@ export default {
         remark: 'Remark'
       },
       tips: {
-        name: '支持中文、数字、英文字母、空格，且字符长度不能大于15',
-        url: '支持英文字母、数字和部分符号（:-/.?#_）, 且长度不能大于100'
+        name: 'Support for Chinese, Numbers, English letters, Spaces',
+        url: 'Support for English letters, Numbers and partial symbols(:-/.?#_)'
       }
     },
     states: [

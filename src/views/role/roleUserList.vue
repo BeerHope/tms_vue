@@ -1,6 +1,6 @@
 <template>
   <div class="user-management-list">
-    <h4 class="common-title">管理用户</h4>
+    <h4 class="common-title">{{ $t('role.manageUser.title') }}</h4>
     <section class="content">
       <el-table
         :data="userList"
@@ -9,40 +9,45 @@
         :header-cell-style="headerStyle">
         <el-table-column
           prop="account"
-          :label="$t('role.userManagement.thead.account')"
+          :label="$t('role.manageUser.thead.account')"
           align="center"
         ></el-table-column>
-        <el-table-column prop="name" :label="$t('role.userManagement.thead.name')" align="center"></el-table-column>
         <el-table-column
-          prop="channel"
-          :label="$t('role.userManagement.thead.channel')"
-          align="center"
-        ></el-table-column>
+          prop="name" :label="$t('role.manageUser.thead.name')"
+          align="center">
+        </el-table-column>
+        <el-table-column
+          prop="companyName"
+          :label="$t('role.manageUser.thead.companyName')"
+          align="center">
+        </el-table-column>
         <el-table-column
           prop="operation"
-          :label="$t('role.userManagement.thead.operation')"
-          align="center"
-        >
+          :label="$t('role.manageUser.thead.operation')"
+          align="center">
           <template slot-scope="scope">
-            <span class="delete" @click="deleteUser(scope)">剔除</span>
+            <span class="delete" @click="deleteUser(scope)">
+              {{ $t('role.manageUser.remove') }}
+            </span>
           </template>
         </el-table-column>
       </el-table>
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getRoleUser"
+        @current-change="getRoleUser"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
       ></el-pagination>
     </section>
   </div>
 </template>
 
 <script>
+import { getRoleUser, deleteUser } from '@/api/role'
 export default {
   name: '',
   components: {},
@@ -50,24 +55,23 @@ export default {
   directive: {},
   data() {
     return {
-      userList: [
-        {
-          account: 'account111111111111',
-          name: 'test111',
-          channel: '所属渠道商111',
-        },
-        {
-          account: 'account111111111111',
-          name: 'test111',
-          channel: '所属渠道商111',
-        }
-      ],
-      currentPage: 1,
+      filter: {
+        page: 1,
+        pageSize: 10,
+      },
+      userList: [],
+      total: 0,
     }
   },
-  computed: {},
+  computed: {
+    roleId() {
+      return this.$route.params.roleId
+    }
+  },
   watch: {},
-  created() { },
+  created() { 
+    this.getRoleUser()
+  },
   beforeMount() { },
   mounted() { },
   beforeDestroy() { },
@@ -76,23 +80,30 @@ export default {
     headerStyle() {
       return "background: #E2E4E9; color: #172B4D;height: 42px;"
     },
-    deleteUser() {
-      this.$confirm('此操作将剔除该角色下的用户，是否继续?', '剔除', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
-        // customClass: 'delete-confirm'
-      }).then(() => {
-        // 进行删除操作
-        this.$message.success('删除成功')
+    deleteUser(userId) {
+      const { $t, roleId } = this
+      this.$confirm(
+        $t('manageUser.removeContent'),
+        $t('manageUser.remove'),
+        {
+          confirmButtonText: $t('base.buttons.confirm'),
+          cancelButtonText: $t('base.buttons.cancel'),
+          // customClass: 'delete-confirm'
+        }).then(() => {
+        deleteUser(roleId, userId).then(res => {
+          console.log(res, 'res deleteuser!!!!!!!')
+          this.$message.success($t('base.tips.removeSuccess'))
+        })
       }).catch(() => {
-        console.log('取消删除操作')
+        console.log($t('base.tips.cancelRemove'))
       })
     },
-    handleSizeChange() {
-      console.log('handleSizeChange!!!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChnage!!!')
+    getRoleUser() {
+      const { roleId, filter } = this
+      getRoleUser(roleId, filter).then(res => {
+        this.userList = res.data.rows
+        this.total = res.data.totalRecord
+      })
     }
   }
 }
@@ -103,7 +114,7 @@ export default {
   padding: 0 120px;
   .content {
     font-size: 14px !important;
-    max-width: 1090px;
+    max-width: 1000px;
     margin: auto;
     .el-table__row {
       height: 42px;

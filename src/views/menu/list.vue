@@ -1,7 +1,8 @@
 <template>
   <div class="menu-list common-container">
     <el-row class="w-100 h-100">
-      <el-col :span="5" class="h-100 content-left">
+      <el-col :span="4" class="h-100 content-left">
+        <!-- drag operation -->
         <div class="category-opt">
           <template v-if="isNodeDragged">
             <el-button @click="resetMenuList">{{ $t('function.reset') }}</el-button>
@@ -17,7 +18,7 @@
           node-key="id"
           :props="defaultProps"
           @node-click="handleNodeClick"
-          :expand-on-click-node="false"
+          :expand-on-click-node="true"
           @node-drop="dropNode"
         >
           <span slot-scope="{node, data}" class="custom-tree-node">
@@ -26,14 +27,16 @@
           </span>
         </el-tree>
       </el-col>
-      <el-col :span="19" class="p-l-10 h-100 pos-relative">
+      <el-col :span="20" class="p-l-10 h-100 pos-relative">
         <menu-edit
           :menu-details="menuDetails"
+          :backup-data="backupData"
           v-loading="isLoading"
           v-if="isTreeNodeClicked"
           :title="currentNode.name"
           :is-leaf="isLeaf"
           @open-add-dialog="openAddDialog"
+          @refresh-menu="refreshMenu"
         ></menu-edit>
         <div v-if="!isTreeNodeClicked" class="text-color-666 p-20">
           <i class="el-icon-info text-color-999"></i>
@@ -41,7 +44,11 @@
         </div>
       </el-col>
     </el-row>
-    <menu-add ref="addDialog" :parent="menuDetails" :dialog-title="`${currentNode && currentNode.name}->${$t('menu.list.add')}`"></menu-add>
+    <menu-add
+      ref="addDialog" :parent="menuDetails"
+      @refresh-menu="refreshMenu"
+      :dialog-title="addDialogTitle">
+    </menu-add>
   </div>
 </template>
 
@@ -72,9 +79,14 @@ export default {
       isNodeDragged: false,
       currentNode: null,
       menuDetails: null,
+      backupData: null,
     }
   },
-  computed: {},
+  computed: {
+    addDialogTitle() {
+      return `${this.currentNode && this.currentNode.name}->${this.$t('menu.list.add')}`
+    }
+  },
   watch: {},
   created() {
     this.getMenuList()
@@ -84,9 +96,19 @@ export default {
   beforeDestroy() { },
   destroyed() { },
   methods: {
+    refreshMenu() {
+      this.getMenuList().then(() => {
+        this.$nextTick(() => {
+          this.handleNodeClick(this.currentNode)
+        })
+      })
+    },
     getMenuList() {
-      getMenus().then(res => {
-        this.menuData = [res.data]
+      return new Promise((resolve) => {
+        getMenus().then(res => {
+          this.menuData = [res.data]
+          resolve()
+        })
       })
     },
     /* 点击树 */
@@ -97,6 +119,7 @@ export default {
       this.isLoading = true
       getMenuDetails(data.id).then((res) => {
         this.menuDetails = res.data
+        this.backupData = _.cloneDeep(res.data)
         this.isTreeNodeClicked = true
         setTimeout(() => {
           this.isLoading = false
@@ -179,6 +202,26 @@ export default {
   }
   .el-card{
     border-color: transparent;
+  }
+  /* 目录树的样式 */
+  .el-tree-node__content{
+    margin-bottom: 10px;
+  }
+  .el-tree--highlight-current .el-tree-node.is-current{
+    &>.el-tree-node__content {
+      background-color: #5087E5 !important;
+      color: #ffffff !important;
+    }
+    &>.el-tree-node__content .el-tree-node__expand-icon:not(.is-leaf){
+      color: #ffffff !important;
+    }
+  }
+  .el-tree--highlight-current .el-tree-node.is-current.is-expanded{
+    &>.el-tree-node__children{
+      .el-tree-node__content{
+        background-color: #EBECEF;
+      }
+    }
   }
 }
 </style>

@@ -4,43 +4,50 @@
       :title="dialogTitle"
       :visible.sync="dialogVisible"
       width="40%"
-      :before-close="handleClose"
+      @open="handleOpen"
+      @close="handleClose"
     >
-      <el-form class="common-form" ref="form" :rules="rules" :model="formData" label-width="80px">
-        <el-form-item label="角色名称" prop="name">
+      <el-form
+        v-loading="loading" class="common-form"
+        ref="form" :rules="rules" :model="formData"
+        label-width="80px">
+        <el-form-item :label="$t('role.form.label.name')" prop="name">
           <el-input v-model="formData.name"></el-input>
         </el-form-item>
-        <el-form-item v-if="flag!==0" label="状态" prop="state">
+        <el-form-item v-if="flag!==0" :label="$t('role.form.label.state')" prop="state">
           <el-select v-model="formData.state" class="w-100">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
+            <el-option 
+              v-for="item in roleStates" :key="item.value" 
+              :label="item.label" :value="item.value">
+            </el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="说明" prop="desc">
-          <el-input type="textarea" v-model="formData.desc"></el-input>
-        </el-form-item>
-        <el-form-item label="选择权限" prop="auth" :class="['tree-wrapper']">
+        <el-form-item :label="$t('role.form.label.menus')" prop="menus" :class="['tree-wrapper']">
           <el-tree
             show-checkbox
             node-key="id"
             ref="authTree"
-            :data="authData"
+            :data="menuList"
             :default-expand-all="true"
             :props="defaultProps"
+            @check="changeCheck"
           ></el-tree>
-          <!-- <el-input type="textarea" v-model="formData.auth"></el-input> -->
+        </el-form-item>
+        <el-form-item :label="$t('role.form.label.remark')" prop="remark">
+          <el-input type="textarea" v-model="formData.remark"></el-input>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
-        <el-button v-if="flag === 0" type="primary" @click="dialogVisible = false">新 增</el-button>
-        <el-button v-if="flag === 1" type="primary" @click="dialogVisible = false">保 存</el-button>
+        <el-button type="primary" class="cancel" @click="dialogVisible = false">{{ $t('role.add.cancel') }}</el-button>
+        <el-button v-if="flag === 0" type="primary" @click="addRole">{{ $t('role.add.add') }}</el-button>
+        <el-button v-if="flag === 1" type="primary" @click="updateRole">{{ $t('role.edit.save') }}</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 
 <script>
+import { getRoleTree, addRole, getRoleDetails, updateRole } from '@/api/role'
 export default {
   name: "",
   components: {},
@@ -50,96 +57,128 @@ export default {
     return {
       flag: 0,
       roleId: '',
+      loading: false,
       dialogVisible: false,
       formData: {
-        name: "",
-        state: "",
-        desc: "",
-        auth: ""
+        name: '',
+        state: '',
+        remark: '',
+        menus: []
       },
       rules: {
         name: [
           {
             required: true,
-            message: "请输入角色名称",
+            message: this.$t('role.form.tips.name'),
             trigger: "blur"
           }
         ],
         state: [
           {
             required: true,
-            message: "请勾选状态",
+            message: this.$t('role.form.tips.state'),
+            trigger: "blur"
+          }
+        ],
+        menus: [
+          {
+            required: true,
+            message: this.$t('role.form.tips.menus'),
             trigger: "blur"
           }
         ]
       },
-      authData: [
-        {
-          id: '1',
-          label: '权限1',
-          children: [
-            {
-              id: '1-1',
-              label: '权限1-1',
-              children: []
-            },
-            {
-              id: '1-2',
-              label: '权限1-2',
-              children: []
-            }
-          ]
-        },
-        {
-          id: '2',
-          label: '权限2',
-          children: [
-            {
-              id: '2-1',
-              label: '权限2-1',
-              children: []
-            },
-            {
-              id: '2-2',
-              label: '权限2-2',
-              children: []
-            }
-          ]
-        }
-      ],
+      menuList: [],
       defaultProps: {
-        children: 'children',
-        label: 'label'
+        children: 'child',
+        label: 'name'
       }
     };
   },
   computed: {
     dialogTitle() {
-      return this.flag === 0 ? '新增角色' : '编辑角色'
+      return !this.flag ? this.$t('role.add.dialogTitle') : this.$t('role.edit.dialogTitle')
+    },
+    roleStates() {
+      const states = this.$t('base.states')
+      return _.filter(states, (item) => {
+        return item.value
+      })
     }
   },
   watch: {},
-  created() {},
+  created() {
+    this.getRoleAuthData()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    getRoleAuthData() {
+      getRoleTree().then(res => {
+        this.menuList = [res.data]
+      })
+    },
     handleClose() {
+      this.$refs.form.resetFields()
+      this.$refs.authTree.setCheckedKeys([])
       this.dialogVisible = false;
-      console.log("关闭了弹窗！！！！");
+    },
+    handleOpen() {
+      /* 编辑 */
+      if (this.roleId !== -1) {
+        this.loading = true
+        getRoleDetails(this.roleId).then(res => {
+          this.formData = _.cloneDeep(res.data)
+          this.$refs.authTree.setCheckedKeys(this.formData.menus)
+          setTimeout(() => {
+            this.loading = false
+          }, 150)
+        })
+      }
+    },
+    changeCheck(curData, checkedData) {
+      if (!checkedData.checkedKeys.length) {
+        this.$refs.form.validateField('menus')
+      }
+    },
+    // 新增角色
+    addRole() {
+      this.formData.menus = this.$refs.authTree.getCheckedKeys()
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          addRole(this.formData).then(res => {
+            this.$emit('refresh')
+            this.dialogVisible = false
+            this.$message.success(this.$t('base.tips.addSuccess'))
+          })
+        }
+      })
+    },
+    // 更新角色
+    updateRole() {
+      const { roleId } = this
+      const reqData = _.cloneDeep(this.formData)
+      reqData.menus = this.$refs.authTree.getCheckedKeys()
+      updateRole(roleId, reqData).then(res => {
+        this.$emit('refresh')
+        this.dialogVisible = false
+        this.$message.success(this.$t('base.tips.editSuccess'))
+      })
     }
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .role-dialog{
   .tree-wrapper{
     .el-form-item__content{
-      height: 150px !important;
+      height: 200px !important;
       border: 1px solid #DCDFE6;
       border-radius: 4px;
+      padding: 12px;
     }
   }
 }

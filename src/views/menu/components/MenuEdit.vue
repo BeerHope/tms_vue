@@ -16,10 +16,10 @@
           <el-input v-model="menuDetails.className"></el-input>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.showOrder')" prop="showOrder">
-          <el-input v-model="menuDetails.showOrder"></el-input>
+          <el-input-number v-model="menuDetails.showOrder" :min="1" :max="1000"></el-input-number>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.name')" prop="name">
-          <el-input v-model="menuDetails.name"></el-input>
+          <el-input v-model="menuDetails.name" maxlength="15"></el-input>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.state')" prop="state">
           <el-select v-model="menuDetails.state">
@@ -42,7 +42,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.url')" prop="link">
-          <el-input v-model="menuDetails.link"></el-input>
+          <el-input v-model="menuDetails.link" maxlength="100"></el-input>
         </el-form-item>
         <el-form-item :label="$t('menu.form.label.remark')" prop="remark">
           <el-input type="textarea" v-model="menuDetails.remark"></el-input>
@@ -55,6 +55,7 @@
 
 <script>
 import { updateMenu } from '@/api/menu'
+import { Loading } from 'element-ui'
 
 export default {
   name: '',
@@ -65,6 +66,10 @@ export default {
       default: ''
     },
     menuDetails: {
+      type: Object,
+      default: null,
+    },
+    backupData: {
       type: Object,
       default: null,
     }
@@ -79,23 +84,13 @@ export default {
       callback()
     }
     const validateUrl = (rule, value, callback) => {
-      const regExp = /^[0-9A-Za-z\.\?#:-_/]{1,100}$/
+      const regExp = /^[0-9A-Za-z\.\?#:-_/]{0,100}$/
       if (!regExp.test(value)) {
         return callback(new Error(this.$t('menu.form.tips.url')))
       }
       callback()
     }
     return {
-      formData: {
-        parent: '',
-        className: '',
-        name: '',
-        state: 1,
-        type: 1,
-        link: '',
-        showOrder: '',
-        remark: ''
-      },
       rules: {
         className: [
           {
@@ -130,31 +125,36 @@ export default {
         ],
         link: [
           {
-            required: true,
             trigger: 'blur',
             validator: validateUrl
           }
         ]
-      }
+      },
     }
   },
   computed: {},
   watch: {},
-  created() {
-    console.log(this.menuDetails, 'details!!!!')
-  },
+  created() {},
   beforeMount() { },
   mounted() { },
   beforeDestroy() { },
   destroyed() { },
   methods: {
     updateMenu() {
-      const { id } = this.menuDetails
-      const reqData = _.omit(this.menuDetails, ['id', 'level', 'parentId'])
+      /* 检测是否修改 */
+      if (_.isEqual(this.backupData, this.menuDetails)) {
+        this.$message(`${this.$t('menu.edit.tips.1')}`)
+        return
+      }
       this.$refs.form.validate((valid) => {
         if (valid) {
+          const { id } = this.menuDetails
+          const reqData = _.omit(this.menuDetails, ['id', 'level', 'parentId'])
+          const loading = Loading.service({ fullscreen: true })
           updateMenu(id, reqData).then(res => {
-            this.$message.success('修改成功！！！')
+            this.$emit('refresh-menu')
+            loading.close();
+            this.$message.success(`${this.$t('menu.edit.tips.0')}`)
           })
         }
       })
@@ -166,7 +166,10 @@ export default {
 <style lang='scss' scoped>
 .menu-form {
   margin-top: 20px;
-  max-width: 460px;
+  max-width: 400px;
   text-align: center;
+  .el-input-number{
+    width: 100%;
+  }
 }
 </style>

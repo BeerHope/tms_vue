@@ -1,49 +1,61 @@
 import request from '@/utils/request'
 
-/* add role */
+/* 增加角色 */
 export function addRole(data) {
   return request({
-    url: '/role/add',
-    method: 'add',
+    url: '/role',
+    method: 'post',
     data
   })
 }
 
-/* role details */
-export function getRoleDetails(data) {
+/* 角色详情 */
+export function getRoleDetails(roleId) {
   return request({
-    url: '/role/detail',
+    url: `/role/${roleId}`,
     method: 'get',
+  })
+}
+
+/* 角色列表 */
+export function getRoleList(params) {
+  return request({
+    url: '/role',
+    method: 'get',
+    params
+  })
+}
+
+/* 修改角色 */
+export function updateRole(roleId, data) {
+  return request({
+    url: `/role/${roleId}`,
+    method: 'put',
     data
   })
 }
 
-// get role list
-export function getRoles(data) {
+/* 获取管理用户列表 */
+export function getRoleUser(roleId, params) {
   return request({
-    url: '/role/list',
-    method: 'post',
-    data
+    url: `/role/${roleId}/user`,
+    method: 'get',
+    params
   })
 }
 
-
-/* delete users of a role  */
-export function deleteUserOfRole(data) {
+/* 移除用户 */
+export function deleteUser(roleId, userId) {
   return request({
-    url: '/role/delete',
+    url: `/role/${roleId}/user/${userId}`,
     method: 'delete',
-    data
   })
 }
 
-/* update role */
-export function updateMenu(data) {
+/* 新增时，菜单树获取 */
+export function getRoleTree() {
   return request({
-    url: '/role/update',
-    method: 'post',
-    data
+    url: '/role/tree',
+    method: 'get',
   })
 }
-
-
