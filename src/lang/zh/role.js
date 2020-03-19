@@ -9,7 +9,21 @@ export default {
       search: '搜索',
       edit: '编辑',
       manageUser: '管理用户',
-      addUser: '新增用户'
+      addUser: '新增用户',
+      states: [
+        {
+          value: '',
+          label: '全部'
+        },
+        {
+          value: 1,
+          label: '启用'
+        },
+        {
+          value: 2,
+          label: '禁用'
+        },
+      ],
     },
     add: {
       dialogTitle: '新增角色',

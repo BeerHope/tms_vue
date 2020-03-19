@@ -9,7 +9,21 @@ export default {
       search: 'Search',
       edit: 'Edit',
       manageUser: 'Manage User',
-      addUser: 'Add User'
+      addUser: 'Add User',
+      states: [
+        {
+          value: '',
+          label: 'All'
+        },
+        {
+          value: 1,
+          label: 'On'
+        },
+        {
+          value: 2,
+          label: 'Off'
+        },
+      ],
     },
     add: {
       dialogTitle: 'Add Role',

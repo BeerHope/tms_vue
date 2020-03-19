@@ -2,8 +2,8 @@
   <div class="list-item">
     <el-card shadow="hover">
       <div
-        :class="['state bottom', stateClass]"
-      >{{ itemState }}</div>
+        :class="['state bottom', stateClass(itemData)]"
+      >{{ itemState('role.list.states', itemData) }}</div>
       <div class="role-info">
         <el-avatar :size="72" :src="circleUrl"></el-avatar>
         <p class="name">{{ itemData.name }}</p>
@@ -19,9 +19,11 @@
 </template>
 
 <script>
+import mixin from '@/utils/mixin'
 export default {
   name: 'ListItem',
   components: {},
+  mixins: [mixin],
   props: {
     itemData: {
       type: Object,
@@ -36,16 +38,7 @@ export default {
       circleUrl: "https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png",
     }
   },
-  computed: {
-    stateClass() {
-      return this.itemData.state === 1 ? 'enabled' : 'disabled'
-    },
-    itemState() {
-      const states = this.$t('base.states')
-      const itemState = _.find(states, { value: this.itemData.state })
-      return itemState && itemState.label
-    }
-  },
+  computed: {},
   watch: {},
   created() { },
   beforeMount() { },

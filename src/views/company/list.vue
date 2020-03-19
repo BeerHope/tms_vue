@@ -1,7 +1,7 @@
 <template>
-  <div class="channel-list common-list">
+  <div class="company-list common-list">
     <div class="filter-box p-t-6 p-b-6 m-b-20">
-      <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
+      <treeselect class="filter-item" v-model="filter.company" :options="companyData" placeholder="渠道商"></treeselect>
       <el-select class="filter-item" v-model="filter.attribution" clearable placeholder="归属">
         <el-option
           v-for="item in attributions"
@@ -29,7 +29,7 @@
     </div>
     <div class="common-table">
       <list-item
-        v-for="(item, index) in channelList" :key="index"
+        v-for="(item, index) in companyList" :key="index"
         :item-data="item" @open-edit-dialog="openDialog(1, 123, true)"
         @view-level="viewLevel(1233)"
       ></list-item>
@@ -45,8 +45,8 @@
         :total="400">
       </el-pagination>
     </div>
-    <channel-dialog ref="channelDialog"></channel-dialog>
-    <channel-level ref="channelLevel"></channel-level>
+    <company-dialog ref="CompanyDialog"></company-dialog>
+    <company-level ref="CompanyLevel"></company-level>
   </div>
 </template>
 
@@ -54,16 +54,16 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import ListItem from './components/ListItem.vue'
-import ChannelDialog from './components/ChannelDialog'
-import ChannelLevel from './components/ChannelLevel'
+import CompanyDialog from './components/CompanyDialog'
+import CompanyLevel from './components/CompanyLevel'
 
 export default {
   name: 'ChannelList',
   components: {
     Treeselect,
     ListItem,
-    ChannelDialog, /* add or edit channel */ 
-    ChannelLevel
+    CompanyDialog, /* add or edit company */ 
+    CompanyLevel
   },
   props: {},
   directive: {},
@@ -72,12 +72,12 @@ export default {
       /* 查询条件 */
       selectedChannel: '',
       filter: {
-        channel: null,
+        company: null,
         attribution: '',
         state: '',
       },
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      channelData: [
+      companyData: [
         {
           id: '0',
           label: '全部渠道商'
@@ -135,7 +135,7 @@ export default {
           label: '冻结'
         }
       ],
-      channelList: [
+      companyList: [
         {
           number: 32432423423,
           abbreviation: '渠道商1',
@@ -165,19 +165,19 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    openDialog(flag = 0, channelId = -1, dialogVisible = true) {
-      const channelDialog = this.$refs.channelDialog
-      _.assign(channelDialog, {
+    openDialog(flag = 0, companyId = -1, dialogVisible = true) {
+      const CompanyDialog = this.$refs.CompanyDialog
+      _.assign(CompanyDialog, {
         flag,
-        channelId,
+        companyId,
         dialogVisible
       })
     },
-    viewLevel(channelId = 1, dialogVisible = true) {
+    viewLevel(companyId = 1, dialogVisible = true) {
       console.log('查看详情')
-      const channelLevel = this.$refs.channelLevel
-      _.assign(channelLevel, {
-        channelId,
+      const CompanyLevel = this.$refs.CompanyLevel
+      _.assign(CompanyLevel, {
+        companyId,
         dialogVisible
       })
     },

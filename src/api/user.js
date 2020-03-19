@@ -71,20 +71,28 @@ export function getUserDetails(userId) {
 }
 
 /* 编辑用户信息 */
-export function EditUser(userId, data) {
+export function editUser(userId, data) {
   return request({
     url: `/user/${userId}`,
-    method: 'get',
+    method: 'put',
     data
   })
 }
 
 /* 更新用户权限 */
-export function updateUserAuth(userId, data) {
+export function updateAuth(userId, data) {
   return request({
     url: `/user/${userId}`,
     method: 'put',
     data
+  })
+}
+
+/* 获取角色权限列表 */
+export function getUserRole() {
+  return request({
+    url: '/user/role',
+    method: 'get',
   })
 }
 

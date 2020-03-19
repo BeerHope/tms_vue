@@ -1,7 +1,7 @@
 <template>
   <div class="allocation-list common-list">
     <div class="filter-box p-t-6 p-b-6">
-      <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
+      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
       <el-button type="primary">
         <svg-icon icon-class="search"></svg-icon>
         搜索
@@ -18,7 +18,7 @@
         class="f-z-14"
         :header-cell-style="headerStyle">
         <el-table-column prop="allocatedTime" label="挑拨时间" align="center"></el-table-column>
-        <el-table-column prop="channel" label="接收机具渠道商" align="center"></el-table-column>
+        <el-table-column prop="companyInfo" label="接收机具渠道商" align="center"></el-table-column>
         <el-table-column prop="number" label="数量" align="center"></el-table-column>
         <el-table-column prop="batch" label="调拨批次" align="center"></el-table-column>
         <el-table-column label="操作" align="center">
@@ -62,13 +62,13 @@ export default {
   data() {
     return {
       filter: {
-        channel: null,
+        companyInfo: null,
       },
       alllocationList: [
         {
           id: 12323,
           allocatedTime: '2020-02-19 12:20:18',
-          channel: '1000645 渠道商简称',
+          companyInfo: '1000645 渠道商简称',
           number: 100,
           batch: '批次1',
           operator: '西欧奥明',
@@ -76,14 +76,14 @@ export default {
         {
           id: 332322,
           allocatedTime: '2020-02-19 12:20:18',
-          channel: '1000645 渠道商简称',
+          companyInfo: '1000645 渠道商简称',
           number: 100,
           batch: '批次1',
           operator: '西欧奥明',
         },
       ],
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      channelData: [
+      companyInfoData: [
         {
           id: '0',
           label: '全部渠道商'

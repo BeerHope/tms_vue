@@ -55,7 +55,6 @@
 
 <script>
 import { updateMenu } from '@/api/menu'
-import { Loading } from 'element-ui'
 
 export default {
   name: '',
@@ -153,8 +152,10 @@ export default {
           const loading = Loading.service({ fullscreen: true })
           updateMenu(id, reqData).then(res => {
             this.$emit('refresh-menu')
-            loading.close();
+            loading.close()
             this.$message.success(`${this.$t('menu.edit.tips.0')}`)
+          }).catch(() => {
+            loading.close()
           })
         }
       })

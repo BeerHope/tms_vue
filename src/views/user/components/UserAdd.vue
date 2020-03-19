@@ -7,16 +7,16 @@
   >
     <el-form class="common-form" ref="userForm" :model="formData" :rules="rules" label-width="100px">
       <!-- 如果为最下级渠道商，则不显示"归属渠道商"，后期根据接口返回字段判断是否为最下级，目前处理为全部展示 -->
-      <el-form-item label="账号归属" prop="channel">
-        <el-select v-model="formData.channel">
+      <el-form-item :label="$t('user.add.form.label.companyId')" prop="companyId">
+        <el-select v-model="formData.companyId">
           <el-option
-            v-for="(item, index) in channels" :key="index"
+            v-for="(item, index) in companyInfos" :key="index"
             :value="item.value" :label="item.label"
           >
           </el-option>
         </el-select>
       </el-form-item>
-      <el-form-item label="登录账号" prop="account">
+      <el-form-item :label="$t('user.add.form.label.account')" prop="account">
         <el-input v-model="formData.account" maxlength="50">
           <el-tooltip slot="suffix" class="item" effect="light" placement="top-end">
             <div slot="content">支持输入大小写英文字母、@、. 、数字；<br />长度1~50个字符</div>
@@ -24,7 +24,7 @@
           </el-tooltip>
         </el-input>
       </el-form-item>
-      <el-form-item label="登录密码" prop="password">
+      <el-form-item :label="$t('user.add.form.label.password')" prop="password">
         <el-input v-model="formData.password" :type="passwordType" maxlength="18">
           <i
             slot="suffix"
@@ -41,20 +41,20 @@
           </el-tooltip>
         </el-input>
       </el-form-item>
-      <el-form-item label="联系邮箱" prop="email">
+      <el-form-item :label="$t('user.add.form.label.email')" prop="email">
         <el-input v-model="formData.email" maxlength="50"></el-input>
       </el-form-item>
-      <el-form-item label="联系电话" prop="tel">
-        <el-input v-model="formData.tel" maxlength="25">
+      <el-form-item :label="$t('user.add.form.label.cellphone')" prop="cellphone">
+        <el-input v-model="formData.cellphone" maxlength="25">
           <el-tooltip slot="suffix" class="item" effect="light" placement="top-end">
             <div slot="content">eg: (86-755)888888888</div>
             <i class="el-input__icon el-icon-info"></i>
           </el-tooltip>
         </el-input>
       </el-form-item>
-      <el-form-item label="失效日期" prop="expiryDate">
+      <el-form-item label="失效日期" prop="expireTime">
         <el-date-picker
-          v-model="formData.expiryDate"
+          v-model="formData.expireTime"
           type="datetime"
           :picker-options="pickerOptions"
           placeholder="选择日期时间">
@@ -77,13 +77,13 @@
     </el-form>
     <span slot="footer" class="dialog-footer">
       <el-button class="cancel" type="primary" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">新 增</el-button>
+      <el-button type="primary" @click="addUser">新 增</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import moment from 'moment'
+import * as UserService from '@/api/user'
 export default {
   name: 'UserDialog',
   components: {},
@@ -133,18 +133,18 @@ export default {
       flag: 0,
       userId: false,
       formData: {
-        channel: 0,
+        companyId: 0,
         account: '',
         password: '',
         name: '',
-        tel: '',
-        mail: '',
+        cellphone: '',
+        email: '',
         roles: [],
-        expiryDate: '',
+        expireTime: '',
         remark: ''
       },
       rules: {
-        channel: [
+        companyInfo: [
           { required: true, message: '请选择渠道商', trigger: 'blur' }
         ],
         account: [
@@ -167,12 +167,12 @@ export default {
             validator: validateEmail, trigger: 'blur'
           }
         ],
-        tel: [
+        cellphone: [
           {
             validator: validateTel, trigger: 'blur'
           }
         ],
-        expiryDate: [
+        expireTime: [
           {
             required: true, message: '请选择失效日期', trigger: 'blur'
           }
@@ -184,7 +184,7 @@ export default {
         ]
       },
       /* 归属渠道商 */
-      channels: [
+      companyInfos: [
         {
           value: 0,
           label: '本司'
@@ -243,6 +243,12 @@ export default {
       } else {
         this.passwordType = 'password'
       }
+    },
+    addUser() {
+      const reqData = this.formData
+      UserService.addUser(reqData).then(res => {
+        console.log(res, 'res!!!!!!!!!!!')
+      })
     }
   }
 }

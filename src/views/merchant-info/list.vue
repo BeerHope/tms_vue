@@ -3,7 +3,7 @@
     <div class="filter-box p-t-6 p-b-6">
       <el-input class="filter-item" v-model="filter.merchantId" clearable placeholder="商户编号"></el-input>
       <el-input class="filter-item" v-model="filter.merchantName" clearable placeholder="商户名称"></el-input>
-      <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
+      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
       <el-button type="primary">
         <svg-icon icon-class="search"></svg-icon>
         搜索
@@ -63,7 +63,7 @@ export default {
       filter: {
         merchantId: '',
         merchantName: '',
-        channel: null,
+        companyInfo: null,
         terminalId: '',
         state: ''
       },
@@ -81,7 +81,7 @@ export default {
         }
       },
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      channelData: [
+      companyInfoData: [
         {
           id: '0',
           label: '全部渠道商'

@@ -114,10 +114,10 @@ export const constantRoutes = [
             hidden: true
           },
           {
-            path: 'details',
+            path: '/system/user/:userId/details',
             component: () => import('@/views/user/details'), // Parent router-view
             name: 'userDetails',
-            meta: { title: 'userEdit', activeMenu: '/system/user' },
+            meta: { title: 'details', activeMenu: '/system/user' },
             hidden: true
           }
         ]
@@ -126,17 +126,17 @@ export const constantRoutes = [
   },
   // 渠道商管理
   {
-    path: '/channel',
+    path: '/company',
     component: Layout,
-    redirect: '/channel/list',
-    name: 'channel',
-    meta: { title: 'channel', icon: 'channel' },
+    redirect: '/company/list',
+    name: 'company',
+    meta: { title: 'company', icon: 'channel' },
     children: [
       {
         path: 'information/list',
-        name: 'channelInfo',
-        component: () => import('@/views/channel/list'),
-        meta: { title: 'channelInfo' }
+        name: 'companyInfo',
+        component: () => import('@/views/company/list'),
+        meta: { title: 'companyInfo' }
       },
     ]
   },

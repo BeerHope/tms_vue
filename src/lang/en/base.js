@@ -9,9 +9,9 @@ export default {
     roleList: 'Role List',
     roleUser: 'User Management',
     user: 'User Management',
-    userEdit: 'Edit',
-    channel: 'Channel Management',
-    channelInfo: 'Channel Information Management',
+    details: 'Details',
+    company: 'Channel Management',
+    companyInfo: 'Channel Information Management',
     equipment: 'Equipment Configuration Management',
     vendor: 'Vendor Management',
     model: 'Model Management',
@@ -46,26 +46,28 @@ export default {
     states: [
       {
         value: '',
-        label: 'All'
+        label: '全部'
       },
       {
         value: 1,
-        label: 'On'
+        label: '启用'
       },
       {
         value: 2,
-        label: 'Off'
+        label: '禁用'
       },
     ],
     buttons: {
       confirm: 'Confirm',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
+      save: 'Save'
     },
     tips: {
       addSuccess: 'Add Successfully',
       editSuccess: 'Modify Successfully',
       deleteSuccess: 'Delete successfully',
       removeSuccess: 'Remove successfully',
+      saveSuccess: 'Save successfully',
       cancelRemove: 'Cancel to remove'
     }
   }

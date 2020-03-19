@@ -22,7 +22,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      channelId: '',
+      companyInfoId: '',
       levels: [
         {
           id: '122323',

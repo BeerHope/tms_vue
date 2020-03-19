@@ -8,9 +8,9 @@ export default {
     roleList: '角色列表',
     roleUser: '管理用户',
     user: '用户管理',
-    userEdit: '编辑',
-    channel: '渠道商管理',
-    channelInfo: '渠道商信息管理',
+    details: '详情',
+    company: '渠道商管理',
+    companyInfo: '渠道商信息管理',
     equipment: '设备配置管理',
     vendor: '产商管理',
     model: '机型管理',
@@ -57,11 +57,16 @@ export default {
     ],
     tips: {
       addSuccess: '新增成功',
-      editSuccess: '修改成功'
+      editSuccess: '修改成功',
+      deleteSuccess: '删除成功',
+      removeSuccess: '移除成功',
+      saveSuccess: '保存成功',
+      cancelRemove: '取消移除',
     },
     buttons: {
       confirm: '确定',
-      cancel: '取消'
+      cancel: '取消',
+      save: '保存',
     }
   }
 }

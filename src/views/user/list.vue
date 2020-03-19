@@ -1,11 +1,11 @@
 <template>
   <div class="user-list common-list">
     <div class="filter-box p-t-6 p-b-6 m-b-20">
-      <el-input v-model="filter.account" placeholder="登录账号" clearable class="filter-item"></el-input>
-      <el-input v-model="filter.name" placeholder="姓名" clearable class="filter-item"></el-input>
-      <el-select v-model="filter.state" placeholder="状态" clearable class="filter-item">
+      <el-input v-model="filter.account" :placeholder="$t('user.list.filter.account')" clearable class="filter-item"></el-input>
+      <el-input v-model="filter.name" :placeholder="$t('user.list.filter.name')" clearable class="filter-item"></el-input>
+      <el-select v-model="filter.state" :placeholder="$t('user.list.filter.state')" clearable class="filter-item">
         <el-option
-          v-for="item in state"
+          v-for="item in $t('base.states')"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -13,11 +13,11 @@
       </el-select>
       <el-button type="primary" @click="getUserList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('user.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openAddDialog">
         <svg-icon icon-class="add"></svg-icon>
-        新增
+        {{ $t('user.list.add') }}
       </el-button>
     </div>
     <div class="common-table">
@@ -44,10 +44,11 @@
 </template>
 
 <script>
-import { getUserList } from '@/api/user'
+import * as UserServive from '@/api/user'
 import ListItem from './components/ListItem'
 import AddDialog from './components/UserAdd'
 import PasswordDialog from './components/PasswordDialog'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'UserList',
@@ -67,41 +68,9 @@ export default {
         page: 1,
         pageSize: 20,
       },
-      total: 10,
-      state: [
-        {
-          value: 0,
-          label: '启用'
-        },
-        {
-          value: 1,
-          label: '禁用'
-        }
-      ],
-      userList: [
-        {
-          name: '张三11111',
-          account: 2323264324327,
-          state: 0,
-          createTime: '2020-02-10',
-          companyName: '李四11111'
-        },
-        {
-          name: '张三11111111',
-          account: 2323264324327,
-          state: 0,
-          createTime: '2020-02-10',
-          companyName: '李四2222222'
-        },
-        {
-          name: '张三11111111',
-          account: 2323264324327,
-          state: 1,
-          createTime: '2020-02-10',
-          companyName: '李四2222222'
-        }
-      ],
-      total: 50
+      userList: [],
+      total: 0,
+      isLoading: false,
     }
   },
   computed: {},
@@ -114,15 +83,14 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleSizeChange() {
-      console.log('handleSizeChange!!!!!!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange')
-    },
     getUserList() {
-      getUserList(this.filter).then((res) => {
-        cosnole.log(res, 'res!!!!!!!!!!!!!!')
+      const loading = Loading.service({ fullscreen: true })
+      UserServive.getUserList(this.filter).then((res) => {
+        this.userList = res.data.rows
+        this.total = res.data.totalRecord
+        loading.close()
+      }).catch(() => {
+        loading.close()
       })
     },
     openAddDialog(flag = 0, userId = -1, dialogVisible = true) {

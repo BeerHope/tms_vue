@@ -51,7 +51,7 @@ export default {
     return {
       dialogVisible: false,
       flag: 0, /* 0：add，1：edit */
-      channelId: -1,
+      companyInfoId: -1,
       formData: {
         number: '434343432432432', /* 添加渠道商无编号 */
         name: '',

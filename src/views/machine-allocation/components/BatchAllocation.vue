@@ -7,7 +7,7 @@
   >
     <el-form ref="form" :model="formData" label-width="66px" label-position="left">
       <el-form-item label="渠道商" required>
-        <treeselect class="filter-item" v-model="formData.channel" :options="channelList" placeholder="渠道商"></treeselect>
+        <treeselect class="filter-item" v-model="formData.companyInfo" :options="companyInfoList" placeholder="渠道商"></treeselect>
       </el-form-item>
     </el-form>
     <el-button type="text" class="download-text" @click="downloadTemplate">请先点击下载模板${模板名称}</el-button>
@@ -41,10 +41,10 @@ export default {
     return {
       dialogVisible: false,
       formData: {
-        channel: null
+        companyInfo: null
       },
       /* 下拉可搜索渠道商 */
-      channelList: [
+      companyInfoList: [
         {
           id: '0',
           label: '全部渠道商'

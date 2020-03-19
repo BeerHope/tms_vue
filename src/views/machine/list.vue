@@ -6,7 +6,7 @@
       <el-select class="filter-item" v-model="filter.state" placeholder="绑定状态" clearable>
         <el-option v-for="item in states" :key="item.value" :label="item.label" :value="item.prop"></el-option>
       </el-select>
-      <treeselect class="filter-item" v-model="filter.channel" :options="channelData" placeholder="渠道商"></treeselect>
+      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
       <!-- 商户编号：精确查询 -->
       <el-input class="filter-item" v-model="filter.marchantId" placeholder="商户编号" clearable></el-input>
       <el-input class="filter-item" v-model="filter.marchantName" placeholder="商户名称" clearable></el-input>
@@ -72,12 +72,12 @@ export default {
       filter: {
         sn: '',
         state: '',
-        channel: null,
+        companyInfo: null,
         merchantId: '', /* 商户编号 */
         merchantName: '', /* 商户名称 */
       },
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      channelData: [
+      companyInfoData: [
         {
           id: '0',
           label: '全部渠道商'

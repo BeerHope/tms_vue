@@ -7,26 +7,29 @@
       <h4 class="m-t-16 m-b-16">
         <span class="m-r-10">{{ itemData.name }}</span>
         <span class="m-r-20">({{ itemData.account }})</span>
-        <span :class="['state right', itemData.state === 0 ? 'enabled' : 'disabled']">
-          {{ itemData.state === 0 ? '启用': '禁用' }}
+        <span :class="['state right', stateClass(itemData)]">
+          {{ itemState('base.states', itemData) }}
         </span>
       </h4>
       <p class="details">
-        <span class="m-r-30">创建时间：{{ itemData.createTime }}</span>
-        <span>所属渠道商：{{ itemData.companyName }}</span>
+        <span class="m-r-30">{{ $t('user.list.createTime') }}{{ itemData.createTime }}</span>
+        <span>{{ $t('user.list.companyName') }}{{ itemData.companyName }}</span>
       </p>
     </div>
-    <div class="item-right" v-if="itemData.state === 0">
-      <el-button class="line-type blue-btn" @click="$emit('open-password-dialog')">重置密码</el-button>
-      <el-button class="line-type green-btn" type="primary" @click="toEdit()">编辑</el-button>
+    <div class="item-right" v-if="itemData.state === 1">
+      <el-button class="line-type blue-btn" @click="$emit('open-password-dialog')">{{ $t('user.list.resetPassword') }}</el-button>
+      <el-button class="line-type green-btn" type="primary" @click="toEdit(itemData.id)">{{ $t('user.list.edit') }}</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import mixin from '@/utils/mixin'
+
 export default {
   name: 'UserListItem',
   components: {},
+  mixins: [mixin],
   props: {
     itemData: {
       type: Object,
@@ -47,8 +50,8 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    toEdit() {
-      this.$router.push('./details')
+    toEdit(userId) {
+      this.$router.push(`./${userId}/details`)
     }
   }
 }
@@ -79,27 +82,6 @@ export default {
       .details{
         font-size: 14px;
         color: #9297A3;
-      }
-    }
-    .user-state {
-      display: inline-block;
-      margin-top: -20px;
-      width: 56px;
-      height: 28px;
-      line-height: 28px;
-      position: relative;
-      text-align: left;
-      text-indent: 10px;
-      font-size: 14px;
-      &:after {
-        content: '';
-        position: absolute;
-        width: 0;
-        border-top: 14px solid transparent;
-        border-right: 12px solid #fff;
-        border-bottom: 14px solid transparent;
-        right: 0;
-        bottom: 0;
       }
     }
   }

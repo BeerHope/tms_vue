@@ -42,9 +42,9 @@
 
 <script>
 import * as roleService from '@/api/role'
-import { Loading } from 'element-ui'
 import RoleAdd from './components/RoleAdd'
 import ListItem from './components/ListItem'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'RoleList',
@@ -88,6 +88,8 @@ export default {
       roleService.getRoleList(this.filter).then(res => {
         this.roleList = res.data && res.data.rows
         this.total = res.data.totalRecord
+        loading.close()
+      }).catch(() => {
         loading.close()
       })
     },
