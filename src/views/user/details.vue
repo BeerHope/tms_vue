@@ -182,24 +182,23 @@ export default {
     }
   },
   watch: {},
-  created() {
-    this.getUserDetails()
+  async created() {
     this.getRoleList()
+    this.getUserDetails()
   },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    getRoleList() {
-      getUserRole().then(res => {
-        this.roleList = res.data
-      }) 
+    async getRoleList() {
+      const resData = await getUserRole()
+      this.roleList = resData.data || []
     },  
     getUserDetails() {
       const { userId } = this
       const loading = Loading.service({ fullscreen: true })
-      getUserDetails(userId).then(res => {
+      getUserDetails(userId).then(async(res) => {
         const resData = res.data
         /* 用户信息 */
         this.userInfo = _.pick(resData, [
@@ -220,13 +219,20 @@ export default {
         this.authInfoBak = _.clone(this.authInfo)
         const { expireTime, roles } = this.authInfo
         this.expireTime = moment(expireTime).format('YYYY-MM-DD HH:mm:ss')
-        this.roles = _.join(roles, ',')
+        // 处理角色权限
+        const roleRes = []
+        _.forEach(_.filter(this.roleList, (item) => {
+          return _.includes(roles, item.id)
+        }), (pItem) => {
+          roleRes.push(pItem.name)
+        })
+        this.roles = (roleRes.length && _.join(roleRes, ', ')) || ''
         loading.close()
       }).catch(() => {
         loading.close()
       })
     },
-    saveAuth(){
+    saveAuth() {
       const { userId, authInfo } = this
       authInfo.expireTime = moment(authInfo.expireTime).format('YYYY-MM-DD HH:mm:ss')
       updateAuth(userId, authInfo).then(res => {
@@ -285,6 +291,9 @@ section{
   padding: 6px 10px;
   border-radius: 4px;
   color: #DCDFE6;
+  min-height: 60px;
+  max-height: 120px;
+  overflow-y: auto;
 }
 .el-form{
   width: 80%;

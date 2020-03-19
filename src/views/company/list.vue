@@ -2,7 +2,7 @@
   <div class="company-list common-list">
     <div class="filter-box p-t-6 p-b-6 m-b-20">
       <treeselect class="filter-item" v-model="filter.company" :options="companyData" placeholder="渠道商"></treeselect>
-      <el-select class="filter-item" v-model="filter.attribution" clearable placeholder="归属">
+      <el-select class="filter-item" v-model="filter.company" clearable placeholder="归属">
         <el-option
           v-for="item in attributions"
           :key="item.value"
@@ -18,13 +18,13 @@
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary">
+      <el-button type="primary" @click="getCompanyList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('company.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        添加渠道商
+        {{$t('company.list.add') }}
       </el-button>
     </div>
     <div class="common-table">
@@ -36,13 +36,13 @@
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getCompanyList"
+        @current-change="getCompanyList"
+        :current-page="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
     <company-dialog ref="CompanyDialog"></company-dialog>
@@ -56,6 +56,8 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import ListItem from './components/ListItem.vue'
 import CompanyDialog from './components/CompanyDialog'
 import CompanyLevel from './components/CompanyLevel'
+import { getCompanyList } from '@/api/company'
+import moment from 'moment'
 
 export default {
   name: 'ChannelList',
@@ -72,9 +74,12 @@ export default {
       /* 查询条件 */
       selectedChannel: '',
       filter: {
-        company: null,
-        attribution: '',
         state: '',
+        companyIds: [], // 设为数组只是为了后台方便赋值，无多选之意
+        companyId: '',
+        level: -1,
+        page: 1,
+        pageSize: 10,
       },
       /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
       companyData: [
@@ -139,18 +144,18 @@ export default {
         {
           number: 32432423423,
           abbreviation: '渠道商1',
-          createdTime: '2020-02-10 11:09:30',
+          createTime: '2020-02-10 11:09:30',
           state: 0, /* 0:激活，1：冻结 */
         },
         {
           number: 43244324321,
           abbreviation: '渠道商1',
-          createdTime: '2020-02-10 11:09:30',
+          createTime: '2020-02-10 11:09:30',
           state: 1,
         }
       ],
       currentPage: 1,
-      total: 10,
+      total: 0,
       defaultProps: {
         label: 'label',
         children: 'children'
@@ -159,7 +164,10 @@ export default {
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+
+    this.getCompanyList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -179,6 +187,15 @@ export default {
       _.assign(CompanyLevel, {
         companyId,
         dialogVisible
+      })
+    },
+    getCompanyList() {
+      getCompanyList(this.filter).then(res => {
+        this.companyList = _.map(res.data.rows, (item) => {
+          item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
+          return item
+        })
+        this.total = res.data.totalRecord
       })
     },
     handleSizeChange() {

@@ -2,14 +2,14 @@
   <div class="user-list-item">
     <div class="item-left">
       <h4 class="m-t-16 m-b-16">
-        <span class="first-line">【渠道商编号{{ itemData.number }}】</span>
-        <span class="m-r-10">{{ itemData.abbreviation }}</span>
-        <span :class="['state right', itemData.state === 0 ? 'enabled' : 'disabled']">
-          {{ itemData.state === 0 ? '激活': '冻结' }}
+        <span class="first-line">【渠道商编号{{ itemData.customerCode }}】</span>
+        <span class="m-r-10">{{ itemData.shortName }}</span>
+        <span :class="['state right', stateClass(itemData)]">
+          {{ itemState('base.states', itemData) }}
         </span>
       </h4>
       <p class="details">
-        <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
+        <span class="m-r-30">创建时间：{{ itemData.createTime }}</span>
       </p>
     </div>
     <div class="item-right">
@@ -21,9 +21,12 @@
 </template>
 
 <script>
+import mixin from '@/utils/mixin'
+
 export default {
   name: 'ChannelListItem',
   components: {},
+  mixins: [mixin],
   props: {
     itemData: {
       type: Object,

@@ -1,29 +1,33 @@
 <template>
   <el-dialog
     :visible.sync="dialogVisible"
-    title="修改密码"
+    :title="$t('user.password.title')"
     width="40%"
     class="password-dialog"
   >
     <el-form class="common-form" :model="formData" :rules="rules" label-width="100px">
-      <el-form-item label="输入新密码" prop="password">
-        <el-input v-model="formData.password" maxlength="18"></el-input>
+      <el-form-item :label="$t('user.password.label.originPassword')" prop="originPassword">
+        <el-input v-model="formData.originPassword" maxlength="18"></el-input>
       </el-form-item>
-      <el-form-item label="确认新密码" prop="againPassword">
-        <el-input v-model="formData.againPassword" maxlength="18"></el-input>
+      <el-form-item :label="$t('user.password.label.password')" prop="password">
+        <el-input v-model="formData.password" maxlength="18"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button class="cancel" type="primary" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">修 改</el-button>
+      <el-button class="cancel" type="primary" @click="dialogVisible = false">{{ $t('base.buttons.cancel') }}</el-button>
+      <el-button type="primary" @click="updatePassword">{{ $t('base.buttons.modify') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import mixin from '@/utils/mixin'
+import { updatePassword } from '@/api/user'
+
 export default {
   name: '',
   components: {},
+  mixins: [mixin],
   props: {},
   directive: {},
   data() {
@@ -35,27 +39,24 @@ export default {
       }
       callback()
     }
-    const checkPasswordAgain = (rule, value, callback) => {
-      if (this.formData.password !== value) {
-        callback(new Error('密码不一致，请检查后重置'))
-      }
-      callback()
-    }
     return {
       dialogVisible: false,
       formData: {
-        password: '',
-        againPassword: ''
+        originPassword: '',
+        password: ''
       },
       rules: {
+        originPassword: [
+          // {
+          //   required: true, validator: validatePassword, trigger: 'blur'
+          // },
+          {
+            required: true, message: this.$t('user.password.label.originPassword'), trigger: 'blur'
+          }
+        ],
         password: [
           {
             required: true, validator: validatePassword, trigger: 'blur'
-          }
-        ],
-        againPassword: [
-          {
-            required: true, validator: checkPasswordAgain, trigger: 'blur'
           }
         ]
       }
@@ -68,7 +69,18 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    updatePassword() {
+      const { originPassword, password } = this.formData
+      const reqData = {
+        originPassword: this.encryptText(originPassword),
+        password: this.encryptText(password)
+      }
+      updatePassword(reqData).then((res) => {
+        this.$message.success(this.$t('user.password.tips.modifySuccess'))
+      })
+    }
+  }
 }
 </script>
 

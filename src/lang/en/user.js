@@ -55,8 +55,19 @@ export default {
           roles: 'Roles Auth'
         },
         placeholder: {
-          expireTime: '失效日期'
+          expireTime: 'Expired time'
         },
+      }
+    },
+    password: {
+      title: 'Modify password',
+      modify: 'Modify',
+      label: {
+        newPass: 'Input new password',
+        newPassAgain: 'Input new password again'
+      },
+      tips: {
+        modifySuccess: 'Password modified successfully'
       }
     }
   }

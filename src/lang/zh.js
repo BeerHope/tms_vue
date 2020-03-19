@@ -4,6 +4,7 @@ import base from './zh/base'
 import menu from './zh/menu'
 import role from './zh/role'
 import user from './zh/user'
+import company from './zh/company'
 
 export default {
   ...login,
@@ -11,4 +12,5 @@ export default {
   ...menu,
   ...role,
   ...user,
+  ...company
 }

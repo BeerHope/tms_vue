@@ -62,10 +62,10 @@
       </el-form-item>
       <el-form-item label="角色权限" prop="roles">
         <el-checkbox-group v-model="formData.roles">
-          <el-checkbox v-for="item in roles" :key="item.prop" name="roles">
-            <span>{{ item.label }}</span>
-            <el-tooltip class="item" effect="light" placement="top-end">
-              <div slot="content">角色说明</div>
+          <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">
+            <span>{{ item.name }}</span>
+            <el-tooltip class="item" effect="light" placement="top-end" v-if="item.remark">
+              <div slot="content">{{item.remark}}</div>
               <i class="el-input__icon el-icon-question"></i>
             </el-tooltip>
           </el-checkbox>
@@ -76,14 +76,15 @@
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button class="cancel" type="primary" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="addUser">新 增</el-button>
+      <el-button class="cancel" type="primary" @click="dialogVisible = false">{{ $t('base.buttons.cancel') }}</el-button>
+      <el-button type="primary" @click="addUser">{{ $t('base.buttons.add') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
 import * as UserService from '@/api/user'
+
 export default {
   name: 'UserDialog',
   components: {},
@@ -209,29 +210,14 @@ export default {
         },
       },
       // 可授权的角色
-      roles: [
-        {
-          prop: 'role1',
-          label: 'role1'
-        },
-        {
-          prop: 'role2',
-          label: 'role2'
-        },
-        {
-          prop: 'role3',
-          label: 'role3'
-        },
-        {
-          prop: 'role4',
-          label: 'role4'
-        }
-      ]
+      roleList: []
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getRoleList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -248,6 +234,11 @@ export default {
       const reqData = this.formData
       UserService.addUser(reqData).then(res => {
         console.log(res, 'res!!!!!!!!!!!')
+      })
+    },
+    getRoleList() {
+      UserService.getUserRole().then(res => {
+        this.roleList = res.data || []
       })
     }
   }
@@ -269,5 +260,8 @@ export default {
   padding: 6px 10px;
   border-radius: 4px;
   color: #DCDFE6;
+  min-height: 60px;
+  max-height: 120px;
+  overflow-y: auto;
 }
 </style>

@@ -60,7 +60,9 @@ export default {
     buttons: {
       confirm: 'Confirm',
       cancel: 'Cancel',
-      save: 'Save'
+      save: 'Save',
+      add: 'Add',
+      modify: 'Modify'
     },
     tips: {
       addSuccess: 'Add Successfully',

@@ -60,6 +60,17 @@ export default {
         tips: {
         }
       }
+    },
+    password: {
+      title: '修改密码',
+      modify: '修改',
+      label: {
+        originPassword: '输入旧密码',
+        password: '输入新密码'
+      },
+      tips: {
+        modifySuccess: '密码修改成功'
+      }
     }
   }
 }
