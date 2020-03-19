@@ -15,7 +15,12 @@
       </el-form-item>
       <!-- 时区下拉插件 -->
       <el-form-item label="时区" prop="timezone">
-        <el-input v-model="formData.abbreviation" maxlength="20"></el-input>
+        <el-select v-model="formData.timezone">
+          <el-option 
+            v-for="item in timezoneList" :key="item.id"
+            :label="item.nameZh" :value="item.value">
+          </el-option>
+        </el-select>
       </el-form-item>
       <!-- 国家下拉插件 -->
       <el-form-item label="国家地区" prop="counrty">
@@ -39,6 +44,7 @@
 <script>
 import CountrySelector from '@/components/Country/CountrySelector'
 import { getLanguage } from '@/utils/cookies.js'
+import { getTimezone } from '@/api/timezone'
 
 export default {
   name: '',
@@ -77,7 +83,8 @@ export default {
             required: true, message: '请选择时区', trigger: 'blur'
           }
         ],
-      }
+      },
+      timezoneList: [],
     }
   },
   computed: {
@@ -89,7 +96,11 @@ export default {
     }
   },
   watch: {},
-  created() {},
+  created() {
+    getTimezone().then(res => {
+      this.timezoneList = res.data
+    })
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
