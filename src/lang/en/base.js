@@ -62,7 +62,9 @@ export default {
       cancel: 'Cancel',
       save: 'Save',
       add: 'Add',
-      modify: 'Modify'
+      modify: 'Modify',
+      yes: 'Yes',
+      no: 'No'
     },
     tips: {
       addSuccess: 'Add Successfully',
@@ -70,7 +72,7 @@ export default {
       deleteSuccess: 'Delete successfully',
       removeSuccess: 'Remove successfully',
       saveSuccess: 'Save successfully',
-      cancelRemove: 'Cancel to remove'
+      cancelRemove: 'Cancel to remove',
     }
   }
 }

@@ -115,7 +115,6 @@ export default {
     value: {
       type: String,
       default: () => ''
-      // required: true
     }
   },
   data() {
@@ -149,6 +148,7 @@ export default {
     }
   },
   created() {
+    console.log(this.value, '！！！')
     // 对传入的数据进行分组
     this.formatCountry();
     
@@ -158,7 +158,6 @@ export default {
   mounted() {
     // 设置dropdown的位置
     this.setDropdownPos();
-    
     // 设置点击文档隐藏弹出的国家选择器
     document.addEventListener('click', this.handleDocEvent, false);
   },

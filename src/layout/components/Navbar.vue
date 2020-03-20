@@ -30,6 +30,7 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import { Loading } from 'element-ui'
 
 export default {
   components: {

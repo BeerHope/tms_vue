@@ -1,19 +1,25 @@
 <template>
   <el-dialog
-    title="查看层级"
+    :title="$t('company.level.title')"
     :visible.sync="dialogVisible"
+    @open="getLevelList"
+    @close="resetLevel"
     width="40%">
-    <p class="level" v-for="(item, index) in levels" :key="item.id">
-      <span :style="{marginRight: `${110+60*index}px`}">{{ item.level }}</span>
-      <span :class="['shortname', {'active': index===levels.length-1}]">{{ item.shortName }}</span>
-    </p>
+    <div class="custom-dialog-body" v-loading="loading">
+      <p class="level" v-for="(item, index) in levelList" :key="item.id">
+        <span :style="{marginRight: `${110 + 60 * index}px`}">{{ item.level }}</span>
+        <span :class="['shortname', {'active': index===levelList.length-1}]">{{ item.shortName }}</span>
+      </p>
+    </div>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="dialogVisible = false">关 闭</el-button>
+      <el-button type="primary" @click="dialogVisible = false">{{ $t('company.level.close') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { viewLevel } from '@/api/company'
+ 
 export default {
   name: '',
   components: {},
@@ -22,29 +28,9 @@ export default {
   data() {
     return {
       dialogVisible: false,
-      companyInfoId: '',
-      levels: [
-        {
-          id: '122323',
-          level: '一级渠道商',
-          shortName: '渠道商简称',
-        },
-        {
-          id: '4233434',
-          level: '二级渠道商',
-          shortName: '渠道商简称'
-        },
-        {
-          id: '12323545',
-          level: '三级渠道商',
-          shortName: '渠道商简称'
-        },
-        {
-          id: '4234324324',
-          level: '四级渠道商',
-          shortName: '渠道商简称'
-        }
-      ]
+      companyId: -1,
+      levelList: [],
+      loading: false
     }
   },
   computed: {},
@@ -54,7 +40,29 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
+  methods: {
+    /* 渠道商层级转换翻译 */
+    levelTranslate(val) {
+      return this.$t(`company.level.level${val}`)
+    },
+    getLevelList() {
+      this.loading = true
+      viewLevel(this.companyId).then(res => {
+        this.levelList = _.map(res.data, (item, index) => {
+          const resItem = {}
+          resItem.shortName = item
+          resItem.level = this.levelTranslate(index + 1)
+          return resItem
+        })
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
+    resetLevel() {
+      this.levelList = []
+    }
+  }
 }
 </script>
 
@@ -73,5 +81,11 @@ export default {
       background-color: #EDF7FF;
     }
   }
+}
+</style>
+
+<style lang="scss">
+.custom-dialog-body {
+  min-height: 400px;
 }
 </style>

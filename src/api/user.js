@@ -82,7 +82,7 @@ export function editUser(userId, data) {
 /* 更新用户权限 */
 export function updateAuth(userId, data) {
   return request({
-    url: `/user/${userId}`,
+    url: `/user/${userId}/updateAuth`,
     method: 'put',
     data
   })

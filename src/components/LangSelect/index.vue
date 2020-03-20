@@ -41,6 +41,9 @@ export default {
       return this.language === 'zh' ? this.$t('login.langs.zh') : this.$t('login.langs.en')
     }
   },
+  created() {
+    setLanguage(this.language)
+  },
   methods: {
     handleSetLanguage(lang) {
       this.$i18n.locale = lang

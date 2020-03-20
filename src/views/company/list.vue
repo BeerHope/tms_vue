@@ -1,18 +1,24 @@
 <template>
   <div class="company-list common-list">
     <div class="filter-box p-t-6 p-b-6 m-b-20">
-      <treeselect class="filter-item" v-model="filter.company" :options="companyData" placeholder="渠道商"></treeselect>
-      <el-select class="filter-item" v-model="filter.company" clearable placeholder="归属">
+      <treeselect 
+        class="filter-item"
+        v-model="filter.companyId"
+        :default-expand-level="Infinity"
+        :options="companyTreeData"
+        :placeholder="$t('company.list.filter.company')">
+      </treeselect>
+      <el-select class="filter-item" v-model="filter.level" :placeholder="$t('company.list.filter.level')">
         <el-option
-          v-for="item in attributions"
+          v-for="item in $t('company.levels')"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
-      <el-select class="filter-item" v-model="filter.state" clearable placeholder="状态">
+      <el-select class="filter-item" v-model="filter.state" clearable :placeholder="$t('company.list.filter.state')">
         <el-option
-          v-for="item in states"
+          v-for="item in $t('company.states')"
           :key="item.value"
           :label="item.label"
           :value="item.value">
@@ -24,14 +30,15 @@
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        {{$t('company.list.add') }}
+        {{ $t('company.list.add') }}
       </el-button>
     </div>
     <div class="common-table">
       <list-item
         v-for="(item, index) in companyList" :key="index"
-        :item-data="item" @open-edit-dialog="openDialog(1, 123, true)"
-        @view-level="viewLevel(1233)"
+        :item-data="item" @open-edit-dialog="openDialog(1, item.id, true)"
+        @view-level="viewLevel(item.id)"
+        @refresh="getCompanyList"
       ></list-item>
       <!-- 分页 -->
       <el-pagination
@@ -45,8 +52,8 @@
         :total="total">
       </el-pagination>
     </div>
-    <company-dialog ref="CompanyDialog"></company-dialog>
-    <company-level ref="CompanyLevel"></company-level>
+    <company-dialog @refresh="getCompanyList" ref="companyDialog"></company-dialog>
+    <company-level ref="companyLevel"></company-level>
   </div>
 </template>
 
@@ -56,8 +63,9 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import ListItem from './components/ListItem.vue'
 import CompanyDialog from './components/CompanyDialog'
 import CompanyLevel from './components/CompanyLevel'
-import { getCompanyList } from '@/api/company'
+import { getCompanyTree, getCompanyList } from '@/api/company'
 import moment from 'moment'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'ChannelList',
@@ -75,97 +83,21 @@ export default {
       selectedChannel: '',
       filter: {
         state: '',
-        companyIds: [], // 设为数组只是为了后台方便赋值，无多选之意
-        companyId: '',
-        level: -1,
+        companyId: null,
+        level: '',
         page: 1,
         pageSize: 10,
       },
-      /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      companyData: [
-        {
-          id: '0',
-          label: '全部渠道商'
-        },
-        {
-          id: '1',
-          label: '渠道商1',
-          children: [
-            {
-              id: '1-1',
-              label: '渠道商1-1',
-            },
-            {
-              id: '1-2',
-              label: '渠道商1-2',
-            }
-          ],
-        },
-        {
-          id: '2',
-          label: '渠道商2',
-          children: [
-            {
-              id: '2-1',
-              label: '渠道商2-1'
-            }
-          ]
-        }
-      ],
-      attributions: [
-        {
-          label: '全部',
-          value: 'all',
-        },
-        {
-          label: '直接下级',
-          value: 'directSubordinates '
-        },
-        {
-          label: '间接下级',
-          value: 'indirectSubordinates '
-        }
-      ],
-      states: [
-        {
-          value: -1,
-          label: '全部'
-        },
-        {
-          value: 0,
-          label: '激活'
-        },
-        {
-          value: 1,
-          label: '冻结'
-        }
-      ],
-      companyList: [
-        {
-          number: 32432423423,
-          abbreviation: '渠道商1',
-          createTime: '2020-02-10 11:09:30',
-          state: 0, /* 0:激活，1：冻结 */
-        },
-        {
-          number: 43244324321,
-          abbreviation: '渠道商1',
-          createTime: '2020-02-10 11:09:30',
-          state: 1,
-        }
-      ],
-      currentPage: 1,
+      /* 下拉树渠道商 */
+      companyTreeData: [],
+      companyList: [],
       total: 0,
-      defaultProps: {
-        label: 'label',
-        children: 'children'
-      }
     }
   },
   computed: {},
   watch: {},
   created() {
-
+    this.getCompanyTree()
     this.getCompanyList()
   },
   beforeMount() {},
@@ -174,35 +106,49 @@ export default {
   destroyed() {},
   methods: {
     openDialog(flag = 0, companyId = -1, dialogVisible = true) {
-      const CompanyDialog = this.$refs.CompanyDialog
-      _.assign(CompanyDialog, {
+      const companyDialog = this.$refs.companyDialog
+      _.assign(companyDialog, {
         flag,
         companyId,
         dialogVisible
       })
     },
-    viewLevel(companyId = 1, dialogVisible = true) {
-      console.log('查看详情')
-      const CompanyLevel = this.$refs.CompanyLevel
-      _.assign(CompanyLevel, {
+    viewLevel(companyId) {
+      const companyLevel = this.$refs.companyLevel
+      _.assign(companyLevel, {
         companyId,
-        dialogVisible
+        dialogVisible: true
+      })
+    },
+    // 获取渠道商下拉树res.data.child
+    getCompanyTree() {
+      getCompanyTree().then(res => {
+        const resData = (res.data && res.data.child) || []
+        this.companyTreeData = this.sortTreeData(resData)
+      })
+    },
+    sortTreeData(array) {
+      return _.map(array, (item) => {
+        item.label = item.shortName
+        if (item.child.length) {
+          item.children = this.sortTreeData(item.child)
+        }
+        return item
       })
     },
     getCompanyList() {
-      getCompanyList(this.filter).then(res => {
+      const loading = Loading.service()
+      const reqData = _.cloneDeep(this.filter)
+      getCompanyList(reqData).then(res => {
         this.companyList = _.map(res.data.rows, (item) => {
           item.createTime = moment(item.createTime).format('YYYY-MM-DD HH:mm:ss')
           return item
         })
         this.total = res.data.totalRecord
+        loading.close()
+      }).catch(() => {
+        loading.close()
       })
-    },
-    handleSizeChange() {
-      console.log('handleSiseChange！！！！')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!')
     }
   }
 }

@@ -2,26 +2,28 @@
   <div class="user-list-item">
     <div class="item-left">
       <h4 class="m-t-16 m-b-16">
-        <span class="first-line">【渠道商编号{{ itemData.customerCode }}】</span>
+        <span class="first-line">【{{ $t('company.list.customerCode') }}{{ itemData.customerCode }}】</span>
         <span class="m-r-10">{{ itemData.shortName }}</span>
         <span :class="['state right', stateClass(itemData)]">
           {{ itemState('base.states', itemData) }}
         </span>
       </h4>
       <p class="details">
-        <span class="m-r-30">创建时间：{{ itemData.createTime }}</span>
+        <span class="m-r-30">{{ $t('company.list.customerCode') }}{{ itemData.createTime }}</span>
       </p>
     </div>
     <div class="item-right">
-      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="freezeAccount()">冻结</el-button>
-      <el-button class="line-type blue-btn" @click="$emit('view-level')">查看层级</el-button>
+      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('company.list.edit') }}</el-button>
+      <el-button v-if="mapState===1" class="line-type blue-btn" @click="freeze(itemData)">{{ $t('company.list.freeze') }}</el-button>
+      <el-button v-else class="line-type blue-btn" @click="activate(itemData)">{{ $t('company.list.activate') }}</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-level')">{{ $t('company.list.viewLevel') }}</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import mixin from '@/utils/mixin'
+import { freezeCompany, activateCompany } from '@/api/company'
 
 export default {
   name: 'ChannelListItem',
@@ -39,7 +41,11 @@ export default {
       curState: 1,
     }
   },
-  computed: {},
+  computed: {
+    mapState() {
+      return _.toNumber(this.itemData.state)
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
@@ -47,16 +53,36 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    freezeAccount() {
-      this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-        // customClass: 'delete-confirm'
-      }).then(() => {
-        // 进行删除操作
-        this.$message.success('账号已经被冻结')
+    freeze(item) {
+      const { shortName, customerCode, id: companyId } = item
+      this.$confirm(
+        `${this.$t('company.list.tips.freezeContent')}：${shortName}(${customerCode})`,
+        this.$t('company.list.tips.freezeTitle'), {
+          confirmButtonText: this.$t('base.buttons.yes'),
+          cancelButtonText: this.$t('base.buttons.no'),
+        }).then(() => {
+        freezeCompany(companyId).then(res => {
+          this.$emit('refresh')
+          this.$message.success(this.$t('company.list.tips.freezeSuccess'))
+        })
       }).catch(() => {
-        console.log('取消冻结账号！！！')
+        console.log('cancel to freeze~~~')
+      })
+    },
+    activate(item) {
+      const { shortName, customerCode, id: companyId } = item
+      this.$confirm(
+        `${this.$t('company.list.tips.activateContent')}：${shortName}(${customerCode})`,
+        this.$t('company.list.tips.activateTitle'), {
+          confirmButtonText: this.$t('base.buttons.yes'),
+          cancelButtonText: this.$t('base.buttons.no'),
+        }).then(() => {
+        activateCompany(companyId).then(res => {
+          this.$emit('refresh')
+          this.$message.success(this.$t('company.list.tips.activateSuccess'))
+        })
+      }).catch(() => {
+        console.log('cancel to activate~~~')
       })
     }
   }

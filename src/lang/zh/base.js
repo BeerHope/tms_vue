@@ -68,7 +68,9 @@ export default {
       cancel: '取消',
       save: '保存',
       add: '新增',
-      modify: '修改'
+      modify: '修改',
+      yes: '是',
+      no: '否'
     }
   }
 }

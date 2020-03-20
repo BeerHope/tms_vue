@@ -1,5 +1,13 @@
 import request from '@/utils/request'
 
+// 获取渠道商下拉树
+export function getCompanyTree() {
+  return request({
+    url: '/company/tree',
+    method: 'get',
+  })
+}
+
 // 获取渠道商列表
 export function getCompanyList(params) {
   return request({

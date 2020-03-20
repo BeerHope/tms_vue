@@ -30,7 +30,7 @@ const mixin = {
       encryptor.setPublicKey(publicKey)
       // 加密数据
       return encryptor.encrypt(text);
-    }
+    },
   }
 }
 

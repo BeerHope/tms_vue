@@ -14,6 +14,7 @@ export default {
       edit: 'Edit'
     },
     add: {
+      title: 'Add user',
       form: {
         label: {
           account: 'Account',
@@ -26,16 +27,21 @@ export default {
           email: 'Email',
           remark: 'Remark'
         },
+        placeholder: {
+          account: 'Support for upper and lower case English letters, @,., and Numbers, and length of 1~50 characters',
+          name: 'Support length: 1-16 bits in English or 2-8 bits in Chinese',
+          cellphone: 'eg: (86-755)888888888',
+          expireTime: 'Please select expireTime',
+        },
         tips: {
-          account: '登录账号',
-          companyId: '归属渠道商',
-          expireTime: '失效日期',
-          name: '姓名',
-          password: '密码',
-          roles: '角色',
-          cellphone: '电话',
-          email: '邮箱',
-          remark: '备注'
+          companyId: 'Please select the company',
+          expireTime: 'Please select expireTime',
+          roles: 'Please select role',
+          account: 'Account does not meet the requirements, please enter again',
+          name: 'The name does not meet the requirement, please enter again',
+          password: 'Support 6-18 - bit characters, must contain uppercase, lowercase letters, Numbers',
+          cellphone: 'Cellphone does not match, please enter again',
+          email: 'The email format does not match, please enter again',
         }
       },
     },

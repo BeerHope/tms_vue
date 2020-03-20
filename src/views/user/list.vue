@@ -38,7 +38,7 @@
         :total="total">
       </el-pagination>
     </div>
-    <add-dialog ref="addDialog"></add-dialog>
+    <add-dialog @refresh="getUserList" ref="addDialog"></add-dialog>
     <password-dialog ref="passwordDialog"></password-dialog>
   </div>
 </template>

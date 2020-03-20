@@ -35,7 +35,8 @@ $navHeight: 70px;
     }
 
     .scrollbar-wrapper {
-      overflow-x: hidden !important;
+      overflow-x: auto;
+      // overflow-x: hidden !important;
     }
 
     .el-scrollbar__bar.is-vertical {

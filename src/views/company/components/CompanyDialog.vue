@@ -2,97 +2,132 @@
   <el-dialog
     :title="dialogTitle"
     :visible.sync="dialogVisible"
+    @close="closeDialog"
+    @open="openDialog"
   >
-    <el-form class="common-form" ref="form" :rules="rules" :model="formData" label-width="100px">
-      <el-form-item label="渠道商编号" prop="number" v-if="flag!== 0">
-        <el-input v-model="formData.number" disabled></el-input>
+    <el-form v-loading="loading" class="common-form" ref="form" :rules="rules" :model="formData" label-width="100px">
+      <el-form-item
+        v-if="flag!== 0"
+        :label="$t('company.form.label.customerCode')"
+        prop="customerCode"
+      >
+        <el-input v-model="formData.customerCode" disabled></el-input>
       </el-form-item>
-      <el-form-item label="渠道商名称" prop="name">
+      <el-form-item :label="$t('company.form.label.name')" prop="name">
         <el-input v-model="formData.name" maxlength="40"></el-input>
       </el-form-item>
-      <el-form-item label="简称" prop="abbreviation">
-        <el-input v-model="formData.abbreviation" maxlength="20"></el-input>
+      <el-form-item :label="$t('company.form.label.shortName')" prop="shortName">
+        <el-input v-model="formData.shortName" maxlength="20"></el-input>
       </el-form-item>
-      <!-- 时区下拉插件 -->
-      <el-form-item label="时区" prop="timezone">
-        <el-select v-model="formData.timezone">
-          <el-option 
-            v-for="item in timezoneList" :key="item.id"
-            :label="item.nameZh" :value="item.value">
-          </el-option>
+      <el-form-item :label="$t('company.form.label.timezone')" prop="timezoneId">
+        <el-select v-model="formData.timezoneId" filterable>
+          <el-option
+            v-for="item in timezoneList"
+            :key="item.id"
+            :label="item | timezoneName"
+            :value="item.id"
+          ></el-option>
         </el-select>
       </el-form-item>
-      <!-- 国家下拉插件 -->
-      <el-form-item label="国家地区" prop="counrty">
-        <country-selector :language="language" v-model="formData.counrty"></country-selector>
+      <el-form-item :label="$t('company.form.label.area')" prop="area">
+        <country-selector :language="language" :value="formData.area"></country-selector>
       </el-form-item>
-      <el-form-item label="经营地区" prop="businessArea">
-        <el-input v-model="formData.businessArea" maxlength="100"></el-input>
+      <el-form-item :label="$t('company.form.label.address')" prop="address">
+        <el-input v-model="formData.address" maxlength="100"></el-input>
       </el-form-item>
-      <el-form-item label="备注" prop="remark">
-        <el-input type="textarea" v-model="formData.remark" maxlength="100"></el-input>
+      <el-form-item :label="$t('company.form.label.remark')" prop="remark">
+        <el-input
+          type="textarea"
+          :autosize="{minRows: 4, maxRows: 6}"
+          v-model="formData.remark"
+          maxlength="100"
+        ></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false" v-if="flag === 0">添 加</el-button>
-      <el-button type="primary" @click="dialogVisible = false" v-if="flag === 1">保 存</el-button>
+      <el-button
+        type="primary"
+        class="cancel"
+        @click="dialogVisible = false"
+      >{{ $t('base.buttons.cancel') }}</el-button>
+      <el-button type="primary" v-if="flag === 0" @click="addCompany">{{ $t('base.buttons.add') }}</el-button>
+      <el-button
+        type="primary"
+        @click="updateCompany"
+        v-if="flag === 1"
+      >{{ $t('base.buttons.save') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import CountrySelector from '@/components/Country/CountrySelector'
-import { getLanguage } from '@/utils/cookies.js'
-import { getTimezone } from '@/api/timezone'
+import CountrySelector from "@/components/Country/CountrySelector";
+import { getLanguage } from "@/utils/cookies.js";
+import { getTimezone } from "@/api/timezone"
+import { addCompany, getCompanyDetails, updateCompany } from "@/api/company";
 
 export default {
   name: '',
   components: {
     CountrySelector
   },
+  filters: {
+    timezoneName(item) {
+      const lang = getLanguage();
+      return lang === "zh" ? item.nameZh : item.nameEn;
+    }
+  },
   props: {},
   directive: {},
   data() {
     return {
       dialogVisible: false,
-      flag: 0, /* 0：add，1：edit */
-      companyInfoId: -1,
+      flag: 0 /* 0：add，1：edit */,
+      companyId: -1,
       formData: {
-        number: '434343432432432', /* 添加渠道商无编号 */
+        customerCode: '' /* 添加渠道商无编号 */,
         name: '',
-        abbreviation: '',
-        timezone: '',
-        country: '',
-        businessArea: '',
+        shortName: '',
+        timezoneId: '',
+        area: '',
+        address: '',
         remark: ''
       },
       rules: {
         name: [
           {
-            required: true, message: '请输入渠道商名称', trigger: 'blur'
+            required: true,
+            message: this.$t("company.form.tips.company"),
+            trigger: "blur"
           }
         ],
-        abbreviation: [
+        shortName: [
           {
-            required: true, message: '请输入渠道商简称', trigger: 'blur'
+            required: true,
+            message: this.$t("company.form.tips.shortName"),
+            trigger: "blur"
           }
         ],
-        timezone: [
+        timezoneId: [
           {
-            required: true, message: '请选择时区', trigger: 'blur'
+            required: true,
+            message: this.$t("company.form.tips.timezoneId"),
+            trigger: "blur"
           }
-        ],
+        ]
       },
       timezoneList: [],
-    }
+      loading: false
+    };
   },
   computed: {
     language() {
-      return getLanguage()
+      return getLanguage();
     },
     dialogTitle() {
-      return this.flag === 0 ? '添加渠道商' : '编辑渠道商' 
+      return this.flag
+        ? this.$t("company.add.title")
+        : this.$t("company.edit.title");
     }
   },
   watch: {},
@@ -105,10 +140,51 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {}
-}
+  methods: {
+    closeDialog() {
+      this.$refs.form.resetFields();
+    },
+    openDialog() {
+      if (this.flag) {
+        const { companyId } = this;
+        this.loading = true;
+        getCompanyDetails(companyId)
+          .then(res => {
+            this.formData = res.data;
+            this.loading = false;
+          })
+          .catch(() => {
+            this.loading = false;
+          });
+      }
+    },
+    addCompany() {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const reqData = _.omit(this.formData, "customerCode");
+          addCompany(reqData).then(res => {
+            this.$emit("refresh");
+            this.$message.success(this.$t("base.tips.addSuccess"));
+            this.dialogVisible = false;
+          });
+        }
+      })
+    },
+    updateCompany() {
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const reqData = _.omit(this.formData, ['customerCode', 'id']);
+          updateCompany(this.companyId, reqData).then(res => {
+            this.$emit("refresh");
+            this.$message.success(this.$t("base.tips.editSuccess"));
+            this.dialogVisible = false;
+          });
+        }
+      })
+    }
+  }
+};
 </script>
 
 <style lang='scss' scoped>
-
 </style>

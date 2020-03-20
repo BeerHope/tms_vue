@@ -14,6 +14,7 @@ export default {
       edit: '编辑'
     },
     add: {
+      title: '新增用户',
       form: {
         label: {
           account: '登录账号',
@@ -26,16 +27,21 @@ export default {
           email: '邮箱',
           remark: '备注'
         },
+        placeholder: {
+          account: '支持输入大小写英文字母、@、. 、数字;长度1~50个字符',
+          name: '支持长度：英文1~16位或中文2~8位',
+          cellphone: 'eg: (86-755)888888888',
+          expireTime: '请选择失效日期',
+        },
         tips: {
-          account: '登录账号',
-          companyId: '归属渠道商',
-          expireTime: '失效日期',
-          name: '姓名',
-          password: '密码',
-          roles: '角色',
-          cellphone: '电话',
-          email: '邮箱',
-          remark: '备注'
+          companyId: '请选择渠道商',
+          expireTime: '请选择失效日期',
+          roles: '请选择角色',
+          account: '登录账号不符合要求，请重新输入',
+          name: '姓名不符合要求，请重新输入',
+          password: '支持6~18位字符, 必须包含大小写字母、数字',
+          cellphone: '联系电话格式不符合, 请重新输入',
+          email: '邮箱格式不符合，请重新输入',
         }
       }
     },
