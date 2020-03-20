@@ -1,9 +1,17 @@
 import request from '@/utils/request'
 
-// 获取渠道商下拉树
+// 获取渠道商下拉树(本级和所有的下级)
 export function getCompanyTree() {
   return request({
     url: '/company/tree',
+    method: 'get',
+  })
+}
+
+// 获取渠道商下拉树(本级和直接下级)
+export function getCompanySubordinate() {
+  return request({
+    url: '/company/treeSubordinate',
     method: 'get',
   })
 }

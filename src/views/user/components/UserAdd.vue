@@ -91,7 +91,8 @@
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import * as UserService from '@/api/user'
-import { getCompanyTree } from '@/api/company'
+import { getCompanySubordinate } from '@/api/company'
+import mixin from '@/utils/mixin'
 import moment from 'moment'
 
 
@@ -100,6 +101,7 @@ export default {
   components: {
     Treeselect
   },
+  mixins: [mixin],
   props: {},
   directive: {},
   data() {
@@ -227,16 +229,22 @@ export default {
     /* 待检验 */
     addUser() {
       const reqData = _.omit(this.formData, 'expireTime')
-      reqData.expireTime = moment(this.formData.expireTime).format('YYYY-MM-DD HH:mm:ss')
+      const { expireTime, password } = this.formData
+      reqData.expireTime = moment(expireTime).format('YYYY-MM-DD HH:mm:ss')
+      reqData.password = this.encryptText(password)
       UserService.addUser(reqData).then(res => {
         this.$emit('refresh')
+        this.dialogVisible = false
         this.$message.success(this.$t('base.tips.addSuccess'))
       })
     },
     sortTreeData(array) {
+      if (!array.length) {
+        return []
+      }
       return _.map(array, (item) => {
         item.label = item.shortName
-        if (item.child.length) {
+        if (item.child && item.child.length) {
           item.children = this.sortTreeData(item.child)
         }
         return item
@@ -244,7 +252,7 @@ export default {
     },
     // 获取渠道商下拉树res.data.child
     getCompanyTree() {
-      getCompanyTree().then(res => {
+      getCompanySubordinate().then(res => {
         const resData = (res.data && [res.data]) || []
         this.companyTreeData = this.sortTreeData(resData)
       })
