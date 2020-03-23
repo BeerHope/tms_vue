@@ -4,6 +4,7 @@ import menu from './en/menu'
 import role from './en/role'
 import user from './en/user'
 import company from './en/company'
+import vendor from './en/vendor'
 
 export default {
   ...login,
@@ -11,5 +12,6 @@ export default {
   ...menu,
   ...role,
   ...user,
-  ...company
+  ...company,
+  ...vendor
 }

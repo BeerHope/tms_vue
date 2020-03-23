@@ -70,7 +70,7 @@
           <el-checkbox v-for="item in roleList" :key="item.id" :label="item.id">
             <span>{{ item.name }}</span>
             <el-tooltip class="item" effect="light" placement="top-end" v-if="item.remark">
-              <div slot="content">{{item.remark}}</div>
+              <div slot="content">{{ item.remark }}</div>
               <i class="el-input__icon el-icon-question"></i>
             </el-tooltip>
           </el-checkbox>
@@ -94,7 +94,6 @@ import * as UserService from '@/api/user'
 import { getCompanySubordinate } from '@/api/company'
 import mixin from '@/utils/mixin'
 import moment from 'moment'
-
 
 export default {
   name: 'UserDialog',
@@ -197,7 +196,7 @@ export default {
           }
         ]
       },
-      companyTreeData:[],
+      companyTreeData: [],
       passwordType: 'password',
       pickerOptions: {
         disabledDate(time) {

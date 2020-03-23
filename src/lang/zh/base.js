@@ -12,7 +12,7 @@ export default {
     company: '渠道商管理',
     companyInfo: '渠道商信息管理',
     equipment: '设备配置管理',
-    vendor: '产商管理',
+    vendor: '厂商管理',
     model: '机型管理',
     merchantList: '商户列表',
     merchantTerminal: '商户终端管理',

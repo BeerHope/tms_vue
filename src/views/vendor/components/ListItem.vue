@@ -7,7 +7,11 @@
       <span>{{ data.name }}</span>
       <span>({{ data.code }})</span>
     </p>
-    <el-button class="green-btn edit-btn" type="primary" @click="$emit('handle-edit')">编辑</el-button>
+    <el-button 
+      class="green-btn edit-btn" type="primary"
+      @click="$emit('handle-edit')">
+      {{ $t('vendor.list.edit') }}
+    </el-button>
   </div>
 </template>
 
@@ -44,7 +48,7 @@ export default {
 .vendor-list-item{
   &.list-item{
     width: 246px;
-    height: 268px;
+    height: 250px;
     text-align: center;
     border: 1px solid #538AE6;
     border-radius: 8px;
@@ -55,10 +59,11 @@ export default {
     }
   }
   .vendor-bg-img{
-    height: 56%;
+    height: 52%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding-top: 20px;
   }
   .info{
     font-size: 14px;
@@ -67,6 +72,7 @@ export default {
   }
   .edit-btn{
     border-radius: 16px;
+    min-width: 100px;
   }
 }
 </style>
