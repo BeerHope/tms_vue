@@ -123,7 +123,7 @@
 }
 
 #app .sidebar-container .scrollbar-wrapper {
-  overflow-x: hidden !important;
+  overflow-x: auto;
 }
 
 #app .sidebar-container .el-scrollbar__bar.is-vertical {
@@ -2380,11 +2380,11 @@ div:focus {
 }
 
 /* companyInfo-list */
-.companyInfo-list .vue-treeselect__control, .machine-list .vue-treeselect__control, .merchant-list .vue-treeselect__control {
+.company-list .vue-treeselect__control, .machine-list .vue-treeselect__control, .merchant-list .vue-treeselect__control {
   height: 34px;
   outline: none;
 }
 
-.companyInfo-list .vue-treeselect__menu, .machine-list .vue-treeselect__menu, .merchant-list .vue-treeselect__menu {
+.company-list .vue-treeselect__menu, .machine-list .vue-treeselect__menu, .merchant-list .vue-treeselect__menu {
   font-weight: normal;
 }

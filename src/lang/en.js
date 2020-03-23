@@ -5,6 +5,7 @@ import role from './en/role'
 import user from './en/user'
 import company from './en/company'
 import vendor from './en/vendor'
+import model from './en/model'
 
 export default {
   ...login,
@@ -13,5 +14,6 @@ export default {
   ...role,
   ...user,
   ...company,
-  ...vendor
+  ...vendor,
+  ...model
 }

@@ -7,3 +7,28 @@ export function getModelList(params) {
     params
   })
 }
+
+export function addModel(data) {
+  return request({
+    url: '/model',
+    method: 'post',
+    data
+  })
+}
+
+
+export function getModelDetails(modelId) {
+  return request({
+    url: `/model/${modelId}`,
+    method: 'get',
+  })
+}
+
+export function updateModel(modelId, data) {
+  return request({
+    url: `/model/${modelId}`,
+    method: 'put',
+    data
+  })
+}
+

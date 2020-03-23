@@ -71,6 +71,24 @@ export default {
       modify: '修改',
       yes: '是',
       no: '否'
-    }
+    },
+    posTypes: [
+      {
+        label: '全部',
+        value: null,
+      },
+      {
+        label: '传统pos',
+        value: 1,
+      },
+      {
+        label: '智能pos',
+        value: 2,
+      },
+      {
+        label: '移动pos',
+        value: 3,
+      }
+    ]
   }
 }

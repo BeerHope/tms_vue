@@ -43,3 +43,10 @@ export function getVendorDetails(vendorId) {
   })
 }
 
+/* 厂商列表-下拉框 */
+export function getAllvendors() {
+  return request({
+    url: '/vendor/all',
+    method: 'get',
+  })
+}

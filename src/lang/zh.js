@@ -6,6 +6,7 @@ import role from './zh/role'
 import user from './zh/user'
 import company from './zh/company'
 import vendor from './zh/vendor'
+import model from './zh/model'
 
 export default {
   ...login,
@@ -14,5 +15,6 @@ export default {
   ...role,
   ...user,
   ...company,
-  ...vendor
+  ...vendor,
+  ...model
 }

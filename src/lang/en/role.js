@@ -36,6 +36,7 @@ export default {
       save: 'Save'
     },
     manageUser: {
+      title: 'Manage User',
       thead: {
         account: 'Account',
         name: 'Name',

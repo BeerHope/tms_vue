@@ -31,11 +31,11 @@ export default {
           account: 'Support for upper and lower case English letters, @,., and Numbers, and length of 1~50 characters',
           name: 'Support length: 1-16 bits in English or 2-8 bits in Chinese',
           cellphone: 'eg: (86-755)888888888',
-          expireTime: 'Please select expireTime',
+          expireTime: 'Please select expired time',
         },
         tips: {
           companyId: 'Please select the company',
-          expireTime: 'Please select expireTime',
+          expireTime: 'Please select expired time',
           roles: 'Please select role',
           account: 'Account does not meet the requirements, please enter again',
           name: 'The name does not meet the requirement, please enter again',
@@ -57,7 +57,7 @@ export default {
           email: 'Email',
           remark: 'Remark',
           state: 'State',
-          expireTime: 'expireTime',
+          expireTime: 'Expired Time',
           roles: 'Roles Auth'
         },
         placeholder: {

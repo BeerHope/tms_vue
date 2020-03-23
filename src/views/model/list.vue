@@ -1,18 +1,29 @@
 <template>
   <div class="common-list model-list">
     <div class="filter-box p-t-6 p-b-6">
-      <el-select class="filter-item" v-model="filter.type" clearable placeholder="类型">
-        <el-option v-for="item in types" :key="item.value" :value="item.value" :label="item.label"></el-option>
+      <el-select class="filter-item" v-model="filter.type" clearable :placeholder="$t('model.list.filter.type')">
+        <el-option
+          v-for="item in $t('base.posTypes')" :key="item.value" 
+          :value="item.value" :label="item.label">
+        </el-option>
       </el-select>
-      <el-input class="filter-item" v-model="filter.model" clearable placeholder="机型名称"></el-input>
-      <el-input class="filter-item" v-model="filter.vendor" clearable placeholder="产商名称"></el-input>
-      <el-button type="primary">
+      <el-input class="filter-item" v-model="filter.model" clearable :placeholder="$t('model.list.filter.name')"></el-input>
+      <el-select
+        class="filter-item" clearable
+        v-model="filter.vendorId"
+        :placeholder="$t('model.list.filter.vendorName')">
+        <el-option
+          v-for="item in vendorList" :key="item.id"
+          :value="item.id" :label="item.name">
+        </el-option>
+      </el-select>
+      <el-button type="primary" @click="getModelList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('model.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        新增
+        {{ $t('model.list.add') }}
       </el-button>
     </div>
     <div class="model-table m-t-30">
@@ -21,42 +32,46 @@
         :cell-style="cellStyle"
         :data="modelList"
         style="width: 100%">
-        <el-table-column width="160" label="图片" align="center">
-          <template slot-scope="scope" width="200">
-            <img width="50%" :src="scope.row.type | getPosImg" alt="pos image">
+        <el-table-column width="160" :label="$t('model.list.table.picUrl')" align="center">
+          <template slot-scope="scope">
+            <el-image width="50%" :src="scope.row.type | getPosImg" alt="pos image" lazy></el-image>
           </template>
         </el-table-column>
-        <el-table-column width="120" label="机型名称" prop="model" align="center"></el-table-column>
-        <el-table-column width="120" label="类型" prop="type" align="center">
+        <el-table-column :label="$t('model.list.table.name')" prop="name" align="center"></el-table-column>
+        <el-table-column :label="$t('model.list.table.type')" prop="type" align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.type | getPosType }}</span>
           </template>
         </el-table-column>
-        <el-table-column width="120" label="分辨率" prop="resolution" align="center"></el-table-column>
-        <el-table-column width="160" label="厂商名称" prop="vendor" align="center"></el-table-column>
-        <el-table-column label="机型描述" prop="desc"></el-table-column>
+        <el-table-column :label="$t('model.list.table.resolution')" prop="resolution" align="center">
+          <template slot-scope="scope">
+            <span>{{ scope.row.resolutionX }} * {{ scope.row.resolutionY }}</span>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('model.list.table.vendorName')" prop="vendorName" align="center"></el-table-column>
+        <el-table-column :label="$t('model.list.table.remark')" prop="remark" align="center"></el-table-column>
         <el-table-column align="center">
           <template slot-scope="scope">
             <el-button
               type="primary"
               size="mini"
-              @click="openDialog(1, scope.row.id, true)">编辑</el-button>
+              @click="openDialog(1, scope.row.id, true)">{{ $t('model.list.edit') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination m-t-20"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getModelList"
+        @current-change="getModelList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
-    <model-dialog ref="modelDialog"></model-dialog>
+    <model-dialog @refresh="getModelList" :vendor-list="vendorList" ref="modelDialog"></model-dialog>
   </div>
 </template>
 
@@ -65,6 +80,9 @@ import tposImg from '@/assets/images/tpos.png'
 import sposImg from '@/assets/images/spos.png'
 import mposImg from '@/assets/images/mpos.png'
 import ModelDialog from './components/ModelDialog'
+import { getModelList } from '@/api/model'
+import { getAllvendors } from '@/api/vendor'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'ModelList',
@@ -93,28 +111,18 @@ export default {
   directive: {},
   data() {
     return {
+      loading: false,
       filter: {
         type: '',
         model: '',
-        verdor: ''
+        vendorId: '',
+        page: 1,
+        pageSize: 10
       },
-      types: [
-        {
-          value: 1,
-          label: 'TPos'
-        },
-        {
-          value: 2,
-          label: 'SPos'
-        },
-        {
-          value: 3,
-          label: 'MPos'
-        }
-      ],
       cellStyle() {
         return {
-          padding: '20px 0'
+          padding: '20px 0',
+          fontSize: '14px',
         }
       },
       headerStyle() {
@@ -125,40 +133,17 @@ export default {
           padding: '20px 0'
         }
       },
-      /* type表示机器类型：智能、传统 */
-      /* 暂时以1，2，3分别代表：传统pos，智能pos，移动pos */
-      modelList: [
-        {
-          id: 234324,
-          type: 1,
-          model: 'G2',
-          resolution: '1280 * 720',
-          vendor: 'NEXGO',
-          desc: '4核高性能+金融及安全,支持磁条卡、IC卡，非接NFC等多种支付方式,内置专业扫码模块，轻松实现微信，支付宝等二维码支付'
-        },
-        {
-          id: 234141,
-          type: 2,
-          model: 'N5',
-          resolution: '1280 * 720',
-          vendor: 'NEXGO',
-          desc: '4核高性能+金融及安全,支持磁条卡、IC卡，非接NFC等多种支付方式,内置专业扫码模块，轻松实现微信，支付宝等二维码支付'
-        },
-        {
-          id: 9432423,
-          type: 3,
-          model: 'KD58',
-          resolution: '1280 * 720',
-          vendor: 'NEXGO',
-          desc: '4核高性能+金融及安全,支持磁条卡、IC卡，非接NFC等多种支付方式,内置专业扫码模块，轻松实现微信，支付宝等二维码支付'
-        }
-      ],
-      currentPage: 1,
+      modelList: [],
+      vendorList: [],
+      total: 0,
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getVendorList()
+    this.getModelList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -173,19 +158,25 @@ export default {
         dialogVisible
       })
     },
-    handleSizeChange() {
-      console.log('handleSizeChange!!!!')
+    getVendorList() {
+      getAllvendors().then(res => {
+        this.vendorList = res.data
+      })
     },
-    handleCurrentChange() {
-      cosnole.log('handleCurrentChange')
-    },
-
+    getModelList() {
+      const loading = Loading.service()
+      getModelList(this.filter).then(res => {
+        this.modelList = res.data.rows
+        this.total = res.data.totalRecord
+        loading.close()
+      })
+    }
   }
 }
 </script>
 
-<style lang='scss' scoped>
+<style lang='scss'>
 .model-table{
-
+  width: calc(100% - 100px);
 }
 </style>

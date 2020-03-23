@@ -46,15 +46,15 @@ export default {
     states: [
       {
         value: '',
-        label: '全部'
+        label: 'All'
       },
       {
         value: 1,
-        label: '启用'
+        label: 'Enabled'
       },
       {
         value: 2,
-        label: '禁用'
+        label: 'Disabled'
       },
     ],
     buttons: {
@@ -73,6 +73,24 @@ export default {
       removeSuccess: 'Remove successfully',
       saveSuccess: 'Save successfully',
       cancelRemove: 'Cancel to remove',
-    }
+    },
+    posTypes: [
+      {
+        label: 'All',
+        value: null,
+      },
+      {
+        label: 'Traditional pos',
+        value: 1,
+      },
+      {
+        label: 'Smart pos',
+        value: 2,
+      },
+      {
+        label: 'Mobile pos',
+        value: 3,
+      }
+    ]
   }
 }
