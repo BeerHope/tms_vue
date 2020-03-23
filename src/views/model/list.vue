@@ -34,7 +34,8 @@
         style="width: 100%">
         <el-table-column width="160" :label="$t('model.list.table.picUrl')" align="center">
           <template slot-scope="scope">
-            <el-image width="50%" :src="scope.row.type | getPosImg" alt="pos image" lazy></el-image>
+            <el-image v-if="!scope.row.picUrl" width="50%" :src="scope.row.type | getPosImg" alt="pos image" lazy></el-image>
+            <el-image v-else width="50%" :src="scope.row.picUrl" alt="pos image" lazy></el-image>
           </template>
         </el-table-column>
         <el-table-column :label="$t('model.list.table.name')" prop="name" align="center"></el-table-column>

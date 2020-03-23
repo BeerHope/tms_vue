@@ -68,9 +68,9 @@
           :on-success="handleAvatarSuccess"
           :before-upload="beforeAvatarUpload"
         >
-          <img v-if="flag===0 && imageUrl" :src="imageUrl" class="avatar" />
-          <img v-else-if="flag===1 && !imageUrl" :src="formData.picUrl" class="avatar" />
-          <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          <img v-if="flag === 0 && imageUrl" :src="formData.picUrl" class="avatar" />
+          <img v-if="flag === 1 && formData.picUrl" :src="formData.picUrl" class="avatar" />
+          <i v-if="flag === 0 && !imageUrl" class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
       <el-form-item prop="remark" :label="$t('model.form.label.remark')">
@@ -198,11 +198,10 @@ export default {
   destroyed() {},
   methods: {
     handleAvatarSuccess(res, file) {
-       this.imageUrl = URL.createObjectURL(file.raw);
+      this.imageUrl = URL.createObjectURL(file.raw);
       this.formData.picUrl = res.data
     },
     beforeAvatarUpload(file) {
-      console.log(file, 'file!!!!!!!!!!!!!!')
       // const isJPG = file.type === "image/jpeg";
       const isLt200K = file.size / 1024 <= 200;
       // if (!isJPG) {
