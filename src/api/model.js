@@ -16,7 +16,6 @@ export function addModel(data) {
   })
 }
 
-
 export function getModelDetails(modelId) {
   return request({
     url: `/model/${modelId}`,
@@ -31,4 +30,3 @@ export function updateModel(modelId, data) {
     data
   })
 }
-

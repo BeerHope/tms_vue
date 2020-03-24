@@ -1,9 +1,16 @@
 /* 后期优化提炼这部分 */
-import { getTimezone } from "@/api/timezone"
-const timezoneList = []
-console.log(timezoneList, 'timezoneList!!!!!!')
-const global ={
-  timezoneList
+export function sortCompanyTree(array) {
+  if (!array.length) {
+    return []
+  }
+  return _.map(array, (item) => {
+    item.label = item.shortName
+    if (item.child && item.child.length) {
+      item.children = sortCompanyTree(item.child)
+    }
+    return item
+  })
 }
 
+const global = {}
 export default global

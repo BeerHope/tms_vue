@@ -61,6 +61,7 @@ export default {
       confirm: 'Confirm',
       cancel: 'Cancel',
       save: 'Save',
+      close: 'Close',
       add: 'Add',
       modify: 'Modify',
       yes: 'Yes',

@@ -181,7 +181,6 @@ export default {
       return _.filter(this.$t('base.posTypes'), 'value')
     },
     uploadUrl() {
-      // return `${process.env.VUE_APP_BASE_API}/file/pic`
       return `${process.env.VUE_APP_BASE_URL}/file/pic`
     },
     headers() {
@@ -202,18 +201,17 @@ export default {
       this.formData.picUrl = res.data
     },
     beforeAvatarUpload(file) {
-      // const isJPG = file.type === "image/jpeg";
+      const acceptTypes = ['image/jpeg', 'image/png', 'imgage/jpg']
       const isLt200K = file.size / 1024 <= 200;
-      // if (!isJPG) {
-      //   this.$message.error("上传头像图片只能是 JPG 格式!");
-      // }
-      if (!isLt200K) {
-        this.$message.error("上传头像图片大小不能超过 200KB!");
+      const isAcceptedType = _.includes(acceptTypes, file.type)
+      if (!isAcceptedType) {
+        this.$message.error(this.$t('model.form.tips.checkPicType'));
       }
-      return isLt200K;
-      // return isJPG && isLt200K;
+      if (!isLt200K) {
+        this.$message.error(this.$t('model.form.tips.checkPicSize'));
+      }
+      return isAcceptedType && isLt200K;
     },
-
     openDialog() {
       if (this.flag) {
         // 调接口，获取详情
@@ -236,18 +234,24 @@ export default {
       this.$refs.form.resetFields();
     },
     addModel() {
-      addModel(this.formData).then(res => {
-        this.$emit('refresh')
-        this.$message.success(this.$t('base.tips.addSuccess'))
-        this.dialogVisible = false
+      this.$refs.form.validate((valid) => {
+        addModel(this.formData).then(res => {
+          this.$emit('refresh')
+          this.$message.success(this.$t('base.tips.addSuccess'))
+          this.dialogVisible = false
+        })
       })
     },
     updateModel() {
-      const { modelId, formData } = this
-      updateModel(modelId, formData).then(res => {
-        this.$emit('refresh')
-        this.$message.success(this.$t('base.tips.saveSuccess'))
-        this.dialogVisible = false
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const { modelId, formData } = this
+          updateModel(modelId, formData).then(res => {
+            this.$emit('refresh')
+            this.$message.success(this.$t('base.tips.saveSuccess'))
+            this.dialogVisible = false
+          })
+        }
       })
     }
   }

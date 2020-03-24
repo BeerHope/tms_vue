@@ -38,19 +38,19 @@
             <el-image v-else width="50%" :src="scope.row.picUrl" alt="pos image" lazy></el-image>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('model.list.table.name')" prop="name" align="center"></el-table-column>
-        <el-table-column :label="$t('model.list.table.type')" prop="type" align="center">
+        <el-table-column width="160" :label="$t('model.list.table.name')" prop="name" align="center"></el-table-column>
+        <el-table-column width="160" :label="$t('model.list.table.type')" prop="type" align="center">
           <template slot-scope="scope">
-            <span>{{ scope.row.type | getPosType }}</span>
+            <span>{{ mapPosType(scope.row.type) }}</span>
           </template>
         </el-table-column>
-        <el-table-column :label="$t('model.list.table.resolution')" prop="resolution" align="center">
+        <el-table-column width="160"  :label="$t('model.list.table.resolution')" prop="resolution" align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.resolutionX }} * {{ scope.row.resolutionY }}</span>
           </template>
         </el-table-column>
         <el-table-column :label="$t('model.list.table.vendorName')" prop="vendorName" align="center"></el-table-column>
-        <el-table-column :label="$t('model.list.table.remark')" prop="remark" align="center"></el-table-column>
+        <el-table-column :label="$t('model.list.table.remark')" prop="remark"></el-table-column>
         <el-table-column align="center">
           <template slot-scope="scope">
             <el-button
@@ -99,14 +99,6 @@ export default {
       }
       return posImgs[posType]
     },
-    getPosType(posType) {
-      const posTypes = {
-        1: '传统pos',
-        2: '智能pos',
-        3: '移动pos'
-      }
-      return posTypes[posType]
-    }
   },
   props: {},
   directive: {},
@@ -130,7 +122,6 @@ export default {
         return {
           color: '#172B4D',
           fontSize: '16px',
-          textAlign: 'center',
           padding: '20px 0'
         }
       },
@@ -139,7 +130,9 @@ export default {
       total: 0,
     }
   },
-  computed: {},
+  computed: {
+   
+  },
   watch: {},
   created() {
     this.getVendorList()
@@ -171,6 +164,10 @@ export default {
         this.total = res.data.totalRecord
         loading.close()
       })
+    },
+    mapPosType(posType) {
+      const posTypes = this.$t('base.posTypes')
+      return _.find(posTypes, {value: _.toNumber(posType)}).label || ''
     }
   }
 }

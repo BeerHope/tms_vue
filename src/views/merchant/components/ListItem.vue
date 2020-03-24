@@ -2,19 +2,19 @@
   <div class="merchant-list-item">
     <div class="item-left">
       <h4 class="m-t-16 m-b-20">
-        <span class="first-line">【商户编号{{ itemData.id }}】</span>
+        <span class="first-line">【{{ $t('merchant.list.merchantNo') }} {{ itemData.merchantNo }}】</span>
         <span class="m-r-10">{{ itemData.name }}</span>
       </h4>
       <p class="details">
-        <span class="m-r-30">所属渠道商：{{ itemData.attributedChannel }}</span>
-        <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
+        <span class="m-r-30">{{ $t('merchant.list.company') }}{{ itemData.companyName }}</span>
+        <span class="m-r-30">{{ $t('merchant.list.createTime') }}{{ itemData.createTime | mapTime }}</span>
       </p>
     </div>
     <div class="item-right">
-      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="$emit('view-details')">详情</el-button>
-      <el-button class="line-type blue-btn" @click="toManageTerminal">管理终端</el-button>
-      <el-button class="line-type blue-btn" @click="toManageMachine">管理机具</el-button>
+      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('merchant.list.edit') }}</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-details')">{{ $t('merchant.list.details') }}</el-button>
+      <el-button class="line-type blue-btn" @click="toManageTerminal">{{ $t('merchant.list.manageTerminal') }}</el-button>
+      <el-button class="line-type blue-btn" @click="toManageMachine">{{ $t('merchant.list.manageMachine') }}</el-button>
     </div>
   </div>
 </template>
@@ -23,6 +23,11 @@
 export default {
   name: 'MerchantListItem',
   components: {},
+  filters: {
+    mapTime(time) {
+      return moment(time).format('YYYY-MM-DD HH:mm:ss')
+    }
+  },
   props: {
     itemData: {
       type: Object,

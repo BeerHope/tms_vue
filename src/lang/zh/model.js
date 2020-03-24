@@ -45,7 +45,9 @@ export default {
         vendorId: '请选择厂商',
         resolutionX: '请输入宽度',
         resolutionY: '请输入高度',
-        picUrl: '请上传图片'
+        picUrl: '请上传图片',
+        checkPicType: '上传图片仅支持JPG、png、jpeg格式!',
+        checkPicSize: '上传图片大小的不能超过200KB!'
       }
     }
   }

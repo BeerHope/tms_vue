@@ -7,6 +7,7 @@ import user from './zh/user'
 import company from './zh/company'
 import vendor from './zh/vendor'
 import model from './zh/model'
+import merchant from './zh/merchant'
 
 export default {
   ...login,
@@ -16,5 +17,6 @@ export default {
   ...user,
   ...company,
   ...vendor,
-  ...model
+  ...model,
+  ...merchant
 }

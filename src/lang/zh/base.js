@@ -66,6 +66,7 @@ export default {
     buttons: {
       confirm: '确定',
       cancel: '取消',
+      close: '关闭',
       save: '保存',
       add: '新增',
       modify: '修改',

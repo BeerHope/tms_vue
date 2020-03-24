@@ -172,18 +172,17 @@ export const constantRoutes = [
     redirect: '/merchant/analysis/list',
     name: 'merchant',
     meta: { title: 'merchantTerminal', icon: 'terminal' },
-    // meta: { title: 'merchant', icon: 'terminal' },
     children: [
       {
         path: 'information/list',
         name: 'information',
-        component: () => import('@/views/merchant-info/list'),
+        component: () => import('@/views/merchant/list'),
         meta: { title: 'merchantInfo' }
       },
       {
         path: 'terminal/list',
         name: 'terminal',
-        component: () => import('@/views/merchant-terminal/list'),
+        component: () => import('@/views/terminal/list'),
         meta: { title: 'merchantTerminal' }
       },
       {

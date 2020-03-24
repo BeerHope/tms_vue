@@ -45,7 +45,9 @@ export default {
         vendorId: 'Please select a vendor',
         resolutionX: 'Please input the width',
         resolutionY: 'Please input the height',
-        picUrl: 'Please upload a picture'
+        picUrl: 'Please upload a picture',
+        checkPicType: 'Image only support JPG, PNG, jpeg format!',
+        checkPicSize: 'Image size cannot exceed 200KB!'
       }
     }
   }

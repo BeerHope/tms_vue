@@ -6,6 +6,7 @@ import user from './en/user'
 import company from './en/company'
 import vendor from './en/vendor'
 import model from './en/model'
+import merchant from './en/merchant'
 
 export default {
   ...login,
@@ -15,5 +16,6 @@ export default {
   ...user,
   ...company,
   ...vendor,
-  ...model
+  ...model,
+  ...merchant
 }
