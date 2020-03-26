@@ -42,8 +42,11 @@ service.interceptors.response.use(
    */
   response => {
     const res = response.data
+    const isBlob = response.config.responseType === 'blob'
+    if (response.status && (res.code === 200 || isBlob)) {
+      return res
     // if the custom code is not 200, it is judged as an error.
-    if (res.code !== 200) {
+    } else { 
       Message({
         message: res.msg || 'Error',
         type: 'error',
@@ -62,14 +65,11 @@ service.interceptors.response.use(
           })
         })
       }
-      /* 后期根据错误码映射提示 */
+      /* 后期根据错误码映射提示，抛出错误 */
       return Promise.reject(new Error(res.msg || 'Error'))
-    } else {
-      return res
     }
   },
   error => {
-    console.log('err' + error) // for debug
     Message({
       message: error.msg,
       type: 'error',

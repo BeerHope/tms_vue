@@ -1725,6 +1725,11 @@
   flex-direction: row;
 }
 
+.common-list .list-wrapper {
+  width: calc(100% - 100px);
+  min-width: 1060px;
+}
+
 .custom-hover:hover {
   color: #5087E5;
 }

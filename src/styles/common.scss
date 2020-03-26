@@ -312,6 +312,10 @@ $hoverOpacity: 0.78;
         flex-wrap: wrap;
         flex-direction: row;
     }
+    .list-wrapper{
+        width: calc(100% - 100px);
+        min-width: 1060px;
+    }
 }
 
 .custom-hover {

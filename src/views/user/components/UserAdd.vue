@@ -8,13 +8,6 @@
     <el-form class="common-form" ref="userForm" :model="formData" :rules="rules" label-width="100px">
       <!-- 如果为最下级渠道商，则不显示"归属渠道商"，后期根据接口返回字段判断是否为最下级，目前处理为全部展示 -->
       <el-form-item :label="$t('user.add.form.label.companyId')" prop="companyId">
-        <!-- <el-select v-model="formData.companyId">
-          <el-option
-            v-for="(item, index) in companyTreeData" :key="index"
-            :value="item.value" :label="item.label"
-          >
-          </el-option>
-        </el-select> -->
         <treeselect 
           v-model="formData.companyId"
           :default-expand-level="Infinity"
@@ -157,7 +150,7 @@ export default {
         remark: ''
       },
       rules: {
-        companyInfo: [
+        companyId: [
           { required: true, message: this.$t('user.add.form.companyId'), trigger: 'blur' }
         ],
         account: [

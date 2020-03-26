@@ -42,8 +42,16 @@ export function updateMerchant(merchantId, data) {
 
 export function downloadTemplate() {
   return request({
-    url: 'merchant/template',
+    url: '/merchant/template',
     method: 'get',
-    responseType:ResponseContentType.Blob,
+    responseType: 'blob'
+  })
+}
+
+/* 获取当前渠道商直属商户 */
+export function getDirectMerchants() {
+  return request({
+    url: '/merchant/direct',
+    method: 'get'
   })
 }

@@ -66,14 +66,19 @@ export default {
       }
     },
     password: {
-      title: 'Modify password',
-      modify: 'Modify',
+      title: 'Reset password',
+      reset: 'Reset',
       label: {
         newPass: 'Input new password',
         newPassAgain: 'Input new password again'
       },
       tips: {
-        modifySuccess: 'Password modified successfully'
+        modifySuccess: 'Password modified successfully',
+        requiredTips: 'Please input a new password',
+        requiredTipsAgain: 'Please input the password again',
+        password: 'Support 6-18 - bit characters, must contain uppercase, lowercase letters, Numbers',
+        consistencyCheck: 'The passwords entered are inconsistent',
+        resetSuccess: 'Password reset successfully'
       }
     }
   }

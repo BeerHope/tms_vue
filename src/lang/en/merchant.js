@@ -15,6 +15,7 @@ export default {
     batch: {
       title: 'Batch Import',
       templateTips: 'Please click to download the template first${模板名称}',
+      templateName: 'merchant-template',
       uploadTips: 'Drag the file here, or click upload',
       fileCheckTips: 'You can only choose excel files, only support XLSX suffix, and no more than 5M',
       cancel: 'Cancel',

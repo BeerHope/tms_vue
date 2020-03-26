@@ -3,12 +3,12 @@
     <el-dialog
       @close="handleDialogClose"
       custom-class="bind-dialog"
-      title="绑定终端商户"
+      :title="$t('terminal.bind.title')"
       :visible.sync="dialogVisible"
       width="632px">
       <el-form ref="form" :model="formData" v-if="!isShowResult" class="common-form" :rules="rules" label-width="120px">
-        <el-form-item label="设备序列号" prop="deviceSN">
-          <el-input v-model="formData.deviceSN" clearable></el-input>
+        <el-form-item :label="$t('terminal.bind.label.deviceSN')" prop="sn">
+          <el-input v-model="formData.sn" clearable></el-input>
         </el-form-item>
       </el-form>
       <div v-else class="search-result">
@@ -18,15 +18,16 @@
         <div class="content">
           <el-row>
             <el-col :span="12">
-              <span>客户名称：</span>
+              <span>{{ $t('terminal.bind.label.deviceSN') }}</span>
               <span>*****</span>
             </el-col>
             <el-col :span="12">
-              <span>终端号: </span>
+              <span>{{ $t('terminal.bind.label.terminalNo') }}</span>
               <span>12345678</span>
             </el-col>
           </el-row>
           <el-row>
+            <!-- 下面是传入值 -->
             <el-col :span="24">
               <span>智能POS：</span>
               <span>N5</span>
@@ -34,21 +35,23 @@
           </el-row>
           <el-row>
             <el-col :span="24">
-              <span>SN：</span>
+              <span>{{ $t('terminal.bind.label.sn') }}</span>
               <span>12345678910</span>
             </el-col>
           </el-row>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" v-if="!isShowResult" @click="handleSearch">查 询</el-button>
-        <el-button type="primary" v-if="isShowResult" @click="isShowResult=false">更 换</el-button>
-        <el-button type="primary" v-if="isShowResult" @click="handleBind">绑 定</el-button>
+        <el-button type="primary" v-if="!isShowResult" @click="querySN">{{ $t('terminal.bind.query') }}</el-button>
+        <el-button type="primary" v-if="isShowResult" @click="isShowResult=false">{{ $t('terminal.bind.replace') }}</el-button>
+        <el-button type="primary" v-if="isShowResult" @click="bindSN">{{ $t('terminal.bind.bind') }}</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
+import { querySN, bindSN } from '@/api/terminal'
+
 export default {
   name: '',
   components: {},
@@ -58,16 +61,14 @@ export default {
     return {
       dialogVisible: false,
       merchantDialogVisible: false,
-      filter: {
-        merchant: ''
-      },
+      terminalId: -1,
       formData: {
-        deviceSN: '',
+        sn: '',
         merchant: ''
       },
       rules: {
-        deviceSN: [
-          { required: true, message: '请输入设备序列号', trigger: 'blur' }
+        sn: [
+          { required: true, message: this.$t('terminal.bind.tips.sn'), trigger: 'blur' }
         ]
       },
       merchantList: [
@@ -101,25 +102,27 @@ export default {
       /* 下面代码暂时模拟 */
       this.$refs.form.resetFields()
     },
-    handleSearch() {
+    querySN() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          this.isShowResult = true
+          const sn = ''
+          querySN(this.terminalId, sn).then(res => {
+            console.log(res.data, '绑定设备 querySN接口数据')
+            this.isShowResult = true
+          })
         }
       })
     },
-    handleBind() {
+    bindSN() {
+      bindSN(this.terminalId, this.formData.sn).then(res => {
       /* 此处调用绑定接口，然后关闭dialog */
-      this.dialogVisible = false
+        this.$emit('refresh')
+        this.message.success(this.$t('base.tips.bindSuccess'))
+        this.dialogVisible = false
+      })
     },
     openMerchantDialog() {
       this.merchantDialogVisible = true
-    },
-    handleSizeChange() {
-      console.log('handleSizeChange!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!')
     },
     selectMerchant() {
       const isSelectedOne = _.filter(this.merchantList, (item) => {

@@ -1,90 +1,122 @@
 <template>
   <div class="merchant-list common-list">
     <div class="filter-box p-t-6 p-b-6">
-      <el-input class="filter-item" v-model="filter.merchantId" clearable placeholder="商户编号"></el-input>
-      <el-input class="filter-item" v-model="filter.merchantName" clearable placeholder="商户名称"></el-input>
-      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
-      <el-input class="filter-item" v-model="filter.companyInfo" clearable placeholder="终端号"></el-input>
-      <el-select class="filter-item" v-model="filter.state" clearable placeholder="状态">
+      <el-input 
+        class="filter-item" v-model="filter.merchantNo"
+        clearable :placeholder="$t('terminal.list.filter.merchantNo')">
+      </el-input>
+      <el-input
+        class="filter-item" v-model="filter.merchantName"
+        clearable :placeholder="$t('terminal.list.filter.merchantName')">
+      </el-input>
+      <treeselect 
+        class="filter-item" 
+        v-model="filter.companyId" 
+        :options="companyTreeData"
+        :default-expand-level="Infinity"
+        :placeholder="$t('terminal.list.filter.company')">
+      </treeselect>
+      <el-input 
+        class="filter-item" v-model="filter.terminalNo" clearable
+        :placeholder="$t('terminal.list.filter.terminalNo')">
+      </el-input>
+      <el-select class="filter-item" v-model="filter.state" clearable :placeholder="$t('terminal.list.filter.state')">
         <el-option
-          v-for="item in states"
+          v-for="item in $t('terminal.states')"
           :key="item.value"
           :label="item.label"
           :value="item.value">
         </el-option>
       </el-select>
-      <el-button type="primary">
+      <el-button type="primary" @click="getTerminalList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('terminal.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog(0, -1, true)">
         <svg-icon icon-class="add"></svg-icon>
-        添加终端
-      </el-button>
-      <el-button type="primary" class="green-btn" @click="openImportDialog">
-        <i class="el-icon-upload2"></i>
-        批量导入终端
-      </el-button>
-      <el-button type="primary" class="green-btn" @click="openBatchBindDialog">
-        <svg-icon icon-class="bind"></svg-icon>
-        批量绑定
+        {{ $t('terminal.list.add') }}
       </el-button>
     </div>
-    <div class="m-t-20">
+    <div class="batch m-t-14">
+      <el-button type="primary" @click="openImportDialog">
+        <svg-icon icon-class="batch-import"></svg-icon>
+        {{ $t('terminal.list.batchImport') }}
+      </el-button>
+      <el-button type="primary" @click="openBatchBindDialog">
+        <svg-icon icon-class="bind"></svg-icon>
+        {{ $t('terminal.list.batchBind') }}
+      </el-button>
+    </div>
+    <div class="m-t-20 list-wrapper">
       <list-item
-        v-for="item in merchantList" :key="item.id"
+        v-for="item in terminalList" :key="item.id"
         @open-edit-dialog="openDialog(1, item.id, true)"
-        @open-bind-dialog="openBindDialog"
-        @handle-unbind="handleUnbind"
+        @open-bind-dialog="openBindDialog(item.id)"
+        @handle-unbind="handleUnbind(item)"
         @view-details="openDialog(2, item.id, true)"
         :item-data="item">
       </list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getTerminalList"
+        @current-change="getTerminalList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
-    <merchant-dialog ref="merchantDialog"></merchant-dialog>
-    <bind-dialog ref="bindDialog"></bind-dialog>
-    <upload-dialog ref="import" title="批量导入终端"></upload-dialog>
-    <upload-dialog ref="batchBind" title="批量绑定"></upload-dialog>
+    <terminal-dialog ref="terminalDialog" @refresh="getTerminalList"></terminal-dialog>
+    <bind-dialog ref="bindDialog" @refresh="getTerminalList"></bind-dialog>
+    <upload
+      ref="import" 
+      :title="$t('terminal.batchImport.title')"
+      :template-name="$t('terminal.batchImport.templateName')"
+      :upload-url="importUploadUrl" :download="downloadImportTemplate">
+    </upload>
+    <upload
+      ref="batchBind" 
+      :title="$t('terminal.batchBind.title')"
+      :template-name="$t('terminal.batchBind.templateName')"
+      :upload-url="bindUploadUrl" :download="downloadBindTemplate">
+    </upload>
   </div>
 </template>
 
 <script>
-import UploadDialog from '@/components/Upload'
-import BindDialog from './components/BindDialog'
-import ListItem from './components/ListItem'
-import MerchantDialog from './components/MerchantDialog'
+/* BatchBind */
+import { getTerminalList, downloadBindTemplate, downloadImportTemplate, unbind } from '@/api/terminal'
+import { ListItem, TerminalDialog, BindDialog } from './components'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { sortCompanyTree } from "@/utils/global";
+import { getCompanyTree } from '@/api/company'
+import Upload from '@/components/Upload'
+import { Loading } from 'element-ui'
 
 export default {
   name: '',
   components: {
     ListItem,
-    MerchantDialog,
+    TerminalDialog,
     BindDialog,
     Treeselect,
-    UploadDialog
+    Upload
   },
   props: {},
   directive: {},
   data() {
     return {
       filter: {
-        merchantId: '',
+        merchantNo: '',
         merchantName: '',
-        companyInfo: null,
-        terminalId: '',
-        state: ''
+        companyId: null,
+        terminalNo: '',
+        state: null,
+        page: 1,
+        pageSize: 10
       },
       cellStyle() {
         return {
@@ -99,98 +131,50 @@ export default {
           padding: '20px 0'
         }
       },
-      /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      companyInfoData: [
-        {
-          id: '0',
-          label: '全部渠道商'
-        },
-        {
-          id: '1',
-          label: '渠道商1',
-          children: [
-            {
-              id: '1-1',
-              label: '渠道商1-1',
-            },
-            {
-              id: '1-2',
-              label: '渠道商1-2',
-            }
-          ],
-        },
-        {
-          id: '2',
-          label: '渠道商2',
-          children: [
-            {
-              id: '2-1',
-              label: '渠道商2-1'
-            }
-          ]
-        }
-      ],
-      states: [
-        {
-          value: -1,
-          label: '全部'
-        },
-        {
-          value: 0,
-          label: '激活'
-        },
-        {
-          value: 1,
-          label: '冻结'
-        }
-      ],
-      merchantList: [
-        {
-          id: 10056,
-          name: '一级渠道商直属商户名称',
-          terminalId: 1002656,
-          state: 0, // 绑定
-          equipment: '设备SN1',
-          operationTime: '2020-02-20 10:10:30',
-          attributedChannel: '一级渠道商A简称',
-          createdTime: '2019-05-30 20:04:05',
-        },
-        {
-          id: 10057,
-          name: '一级渠道商直属商户名称',
-          terminalId: 1002657,
-          state: 1, // 未绑定
-          equipment: '设备SN2',
-          operationTime: '2020-02-20 10:10:30',
-          attributedChannel: '一级渠道商A简称',
-          createdTime: '2019-05-30 20:04:05',
-        }
-      ],
-      currentPage: 1,
+      companyTreeData: [],
+      terminalList: [],
+      total: 0,
     }
   },
-  computed: {},
+  computed: {
+    bindUploadUrl() {
+      return `${process.env.VUE_APP_BASE_URL}/terminal/binding/machine`;
+    },
+    importUploadUrl() {
+      return `${process.env.VUE_APP_BASE_URL}/terminal/batch`;
+    },
+  },
   watch: {},
-  created() {},
+  created() {
+    this.getCompanyTree()
+    this.getTerminalList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleSizeChange() {
-      console.log('handleSizeChange!!!')
+    getCompanyTree() {
+      getCompanyTree().then(res => {
+        const resData = (res.data && [res.data]) || [];
+        this.companyTreeData = sortCompanyTree(resData);
+      });
     },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!!')
+    getTerminalList() {
+      const loading = Loading.service()
+      getTerminalList(this.filter).then(res => {
+        this.terminalList = res.data.rows
+        this.total = res.data.totalRecord
+        loading.close()
+      })
     },
-    openDialog(flag = 0, merchantId = -1, dialogVisible = true) {
-      const merchantDialog = this.$refs.merchantDialog
-      _.assign(merchantDialog, {
+    openDialog(flag = 0, terminalId = -1, dialogVisible = true) {
+      const terminalDialog = this.$refs.terminalDialog
+      _.assign(terminalDialog, {
         flag,
-        merchantId,
+        terminalId,
         dialogVisible
       })
-      console.log('添加渠道商！！！')
     },
     openImportDialog() {
       this.$refs.import.dialogVisible = true
@@ -198,26 +182,44 @@ export default {
     openBatchBindDialog() {
       this.$refs.batchBind.dialogVisible = true
     },
-    openBindDialog() {
-      this.$refs.bindDialog.dialogVisible = true
+    openBindDialog(terminalId) {
+      const bindDialog = this.$refs.bindDialog
+      bindDialog.terminalId = terminalId
+      bindDialog.dialogVisible = true
     },
-    handleUnbind() {
-      this.$confirm('请确认是否解除 设备${设备SN号} 与 ${商户名称}(终端号${终端号})的绑定关系?', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
+    handleUnbind(row) {
+      const { id: terminalId, sn, merchantName, terminalNo } = row
+      const content = 
+        `${this.$t('terminal.unbind.content1')}
+        ${sn}${this.$t('terminal.unbind.content2')}
+        ${merchantName}(${this.$t('terminal.unbind.content3')}${terminalNo})
+        ${this.$t('terminal.unbind.content4')}?`
+      this.$confirm(content, this.$t('terminal.unbind.title'), {
+        confirmButtonText: this.$t('base.buttons.yes'),
+        cancelButtonText: this.$t('base.buttons.no'),
+        customClass: 'delete-confirm'
       }).then(() => {
         // 进行删除操作
-        this.$message.success('解绑成功')
+        unbind(terminalId, sn).then(res => {
+          this.$emit('refresh')
+          this.$message.success(this.$t('base.tips.unbindSucces'))
+        })
       }).catch(() => {
-        console.log('取消冻结账号！！！')
+        console.log('取消解绑')
       })
     },
+    downloadBindTemplate() {
+      return downloadBindTemplate()
+    },
+    downloadImportTemplate() {
+      return downloadImportTemplate()
+    }
   }
 }
 </script>
 
 <style lang="scss">
-.merchant-list{
+.terminal-list{
   .el-button{
     min-width: auto;
   }

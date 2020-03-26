@@ -42,6 +42,22 @@ export default {
     reset: 'Reset'
   },
   base: {
+    upload: {
+      title: 'Batch Import',
+      templateTips: 'Please click to download the template first${模板名称}',
+      templateName: 'merchant-template',
+      uploadTips: 'Drag the file here, or click upload',
+      fileCheckTips: 'You can only choose excel files, only support XLSX suffix, and no more than 5M',
+      cancel: 'Cancel',
+      import: 'Import',
+      /* 上传后的操作提示 */
+      uploadRes: {
+        title: 'Operation tips',
+        totalMerchant: 'The total number of merchants in the manifest file：',
+        successAmount: 'The number of successful imports:',
+        failureText: 'Whether you need to export the failure list?'
+      }
+    },
     /* 状态 */
     states: [
       {
@@ -64,16 +80,19 @@ export default {
       close: 'Close',
       add: 'Add',
       modify: 'Modify',
+      import: 'Import',
       yes: 'Yes',
       no: 'No'
     },
     tips: {
-      addSuccess: 'Add Successfully',
-      editSuccess: 'Modify Successfully',
+      addSuccess: 'Add successfully',
+      editSuccess: 'Modify successfully',
       deleteSuccess: 'Delete successfully',
       removeSuccess: 'Remove successfully',
       saveSuccess: 'Save successfully',
       cancelRemove: 'Cancel to remove',
+      unbindSuccess: 'Unbind successfully',
+      bindSuccess: 'Bind successfully'
     },
     posTypes: [
       {

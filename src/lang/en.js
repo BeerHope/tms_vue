@@ -7,6 +7,8 @@ import company from './en/company'
 import vendor from './en/vendor'
 import model from './en/model'
 import merchant from './en/merchant'
+import terminal from './en/terminal'
+import machine from './en/machine'
 
 export default {
   ...login,
@@ -17,5 +19,7 @@ export default {
   ...company,
   ...vendor,
   ...model,
-  ...merchant
+  ...merchant,
+  ...terminal,
+  ...machine
 }

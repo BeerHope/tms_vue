@@ -68,14 +68,19 @@ export default {
       }
     },
     password: {
-      title: '修改密码',
-      modify: '修改',
+      title: '重置密码',
+      reset: '重置',
       label: {
-        originPassword: '输入旧密码',
-        password: '输入新密码'
+        originPassword: '输入新密码',
+        password: '确认新密码'
       },
       tips: {
-        modifySuccess: '密码修改成功'
+        modifySuccess: '密码修改成功',
+        requiredTips: '请输入新密码',
+        requiredTipsAgain: '请再次输入确认密码',
+        password: '支持6~18位字符, 必须包含大小写字母、数字',
+        consistencyCheck: '两次输入的密码不一致',
+        resetSuccess: '密码重置成功'
       }
     }
   }

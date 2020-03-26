@@ -1,5 +1,5 @@
 <template>
-  <div class="merchant-list common-list" v-loading="loading">
+  <div class="merchant-list common-list">
     <div class="filter-box p-t-6 p-b-6">
       <el-input 
         class="filter-item"
@@ -33,7 +33,7 @@
         {{ $t('merchant.list.batch') }}
       </el-button>
     </div>
-    <div class="m-t-20">
+    <div class="m-t-20 list-wrapper">
       <list-item
         v-for="item in merchantList"
         :key="item.id"
@@ -67,6 +67,7 @@ import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 import { getMerchantList } from "@/api/merchant";
 import { getCompanyTree } from "@/api/company";
 import { sortCompanyTree } from "@/utils/global";
+import { Loading } from 'element-ui';
 
 export default {
   name: "",
@@ -80,7 +81,6 @@ export default {
   directive: {},
   data() {
     return {
-      loading: false,
       filter: {
         merchantNo: "",
         merchantName: "",
@@ -124,11 +124,11 @@ export default {
       });
     },
     getMerchantList() {
-      this.loading = true;
+      const loading = Loading.service()
       getMerchantList(this.filter).then(res => {
         this.merchantList = res.data.rows;
         this.total = res.data.totalRecord;
-        this.loading = false;
+        loading.close()
       });
     },
     openDialog(flag = 0, merchantId = -1, dialogVisible = true) {

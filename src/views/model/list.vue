@@ -26,7 +26,7 @@
         {{ $t('model.list.add') }}
       </el-button>
     </div>
-    <div class="model-table m-t-30">
+    <div class="m-t-30 list-wrapper">
       <el-table
         :header-cell-style="headerStyle"
         :cell-style="cellStyle"
@@ -44,7 +44,7 @@
             <span>{{ mapPosType(scope.row.type) }}</span>
           </template>
         </el-table-column>
-        <el-table-column width="160"  :label="$t('model.list.table.resolution')" prop="resolution" align="center">
+        <el-table-column width="160" :label="$t('model.list.table.resolution')" prop="resolution" align="center">
           <template slot-scope="scope">
             <span>{{ scope.row.resolutionX }} * {{ scope.row.resolutionY }}</span>
           </template>
@@ -167,14 +167,11 @@ export default {
     },
     mapPosType(posType) {
       const posTypes = this.$t('base.posTypes')
-      return _.find(posTypes, {value: _.toNumber(posType)}).label || ''
+      return _.find(posTypes, { value: _.toNumber(posType) }).label || ''
     }
   }
 }
 </script>
 
 <style lang='scss'>
-.model-table{
-  width: calc(100% - 100px);
-}
 </style>

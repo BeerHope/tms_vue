@@ -23,8 +23,8 @@
     <div class="common-table">
       <list-item
         v-for="(item, index) in userList" :key="index"
-        :item-data="item" @open-password-dialog="openPasswordDialog"
-        @open-edit-dialog="openEditDialog(1, 123, true)"
+        :item-data="item" @open-password-dialog="openPasswordDialog(item.id)"
+        @open-edit-dialog="openEditDialog(1, item.id, true)"
       ></list-item>
       <!-- 分页 -->
       <el-pagination
@@ -39,7 +39,7 @@
       </el-pagination>
     </div>
     <add-dialog @refresh="getUserList" ref="addDialog"></add-dialog>
-    <password-dialog ref="passwordDialog"></password-dialog>
+    <password-dialog @refresh="getUserList" ref="passwordDialog"></password-dialog>
   </div>
 </template>
 
@@ -101,9 +101,10 @@ export default {
         dialogVisible
       })
     },
-    openPasswordDialog() {
+    openPasswordDialog(userId) {
       const passwordDialog = this.$refs.passwordDialog
       passwordDialog.dialogVisible = true
+      passwordDialog.userId = userId
     }
   }
 }

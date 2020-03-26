@@ -8,6 +8,8 @@ import company from './zh/company'
 import vendor from './zh/vendor'
 import model from './zh/model'
 import merchant from './zh/merchant'
+import terminal from './zh/terminal'
+import machine from './zh/machine'
 
 export default {
   ...login,
@@ -18,5 +20,7 @@ export default {
   ...company,
   ...vendor,
   ...model,
-  ...merchant
+  ...merchant,
+  ...terminal,
+  ...machine
 }

@@ -41,6 +41,24 @@ export default {
     reset: '重 置'
   },
   base: {
+    upload: {
+      title: '批量录入',
+      templateTips: '请先点击下载模板${模板名称}',
+      templateName: '商户录入模板',
+      uploadTips: '将文件拖到此处，或点击上传',
+      fileCheckTips: '只能选择excel文件，仅支持xlsx后缀 ，且不超过5M',
+      fileCheckType: '只能选择excel文件，仅支持xlsx后缀',
+      fileCheckSize: '上传文件不能超过5M',
+      cancel: '取消',
+      import: '导入',
+      /* 上传后的操作提示 */
+      uploadRes: {
+        title: '操作提示',
+        totalMerchant: '清单文件中商户总数：',
+        successAmount: '导入成功数量：',
+        failureText: '是否需要导出失败清单'
+      },
+    },
     states: [
       {
         value: null,
@@ -62,6 +80,8 @@ export default {
       removeSuccess: '移除成功',
       saveSuccess: '保存成功',
       cancelRemove: '取消移除',
+      unbindSuccess: '解绑成功',
+      bindSuccess: '绑定成功',
     },
     buttons: {
       confirm: '确定',
@@ -70,6 +90,7 @@ export default {
       save: '保存',
       add: '新增',
       modify: '修改',
+      import: '导入',
       yes: '是',
       no: '否'
     },

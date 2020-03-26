@@ -36,7 +36,6 @@
 
 <script>
 import { getToken } from "@/utils/auth";
-import axios from 'axios';
 import { downloadTemplate } from "@/api/merchant";
 
 export default {
@@ -67,23 +66,16 @@ export default {
   destroyed() {},
   methods: {
     downloadTemplate() {
-      axios.get('merchant/template').then(res => {
-        console.log(res, 'res')
-        console.log('!!!!!!!!!!!!!!!')
+      downloadTemplate().then(res => {
+        const blob = new Blob([res]); // 创建一个blob对象
+        const link = document.createElement('a'); // 创建一个<a></a>标签
+        link.href = URL.createObjectURL(blob); // response is a blob
+        link.download = `${this.$t('merchant.batch.templateName')}.xlsx` // 文件名称${moment().valueOf()}
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
       })
-      // downloadTemplate().then(res => {
-      //   console.log(res, 'res!!!!!!!')
-      //   const blob = new Blob([res.json()]); //创建一个blob对象
-      //   const a = document.createElement('a'); //创建一个<a></a>标签
-      //   a.href = URL.createObjectURL(blob, {
-      //     type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-      //   }); // response is a blob
-      //   a.download = "模板.xlsx";  //文件名称
-      //   a.style.display = 'none';
-      //   document.body.appendChild(a);
-      //   a.click();
-      //   a.remove();
-      // })
     },
     uploadSuccess(res, file) {
       if (res.code !== 200) {
@@ -91,12 +83,13 @@ export default {
         this.$refs.upload.clearFiles()
         return;
       }
-      const { successAmount, total, result } = res.data;
+      const { successAmount, total } = res.data;
       const confirmText = [
         `${this.$t('merchant.batch.uploadRes.totalMerchant')}${total};`,
         `${this.$t('merchant.batch.uploadRes.successAmount')}${successAmount}；`,
         `${this.$t('merchant.batch.uploadRes.failureText')}`
       ];
+      /* 下面处理confirm内容换行操作 */
       const newDatas = [];
       const h = this.$createElement
       for (const i in confirmText) {

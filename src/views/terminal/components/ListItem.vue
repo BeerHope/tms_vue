@@ -1,37 +1,43 @@
 <template>
-  <div class="merchant-list-item">
+  <div class="terminal-list-item">
     <div class="item-left">
       <h4 class="m-t-16 m-b-20">
-        <span class="first-line">【商户编号{{ itemData.id }}】</span>
-        <span class="m-r-10">{{ itemData.name }}</span>
-        <span v-if="itemData.state" class="state right disabled">未绑定</span>
-      
+        <span class="first-line">【{{ $t('terminal.list.merchantNo') }}{{ itemData.merchantNo }}】</span>
+        <span class="m-r-10">{{ itemData.merchantName }}</span>
+        <span class="state right" :class="!itemData.state ? 'enabled' : 'disabled'">{{ itemData.state | curState($t('terminal.states')) }}</span>
       </h4>
       <p class="details">
-        <span class="m-r-30">终端号：{{ itemData.terminalId }}</span>
-        <span class="m-r-30">绑定设备：{{ itemData.equipment }}</span>
-        <span class="m-r-30">所属渠道商：{{ itemData.attributedChannel }}</span>
-        <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
+        <span :class="marginRight">{{ $t('terminal.list.terminalNo') }}{{ itemData.terminalNo }}</span>
+        <span :class="marginRight">{{ $t('terminal.list.sn') }}{{ itemData.sn }}</span>
+        <span :class="marginRight">{{ $t('terminal.list.companyName') }}{{ itemData.companyName }}</span>
+        <span>{{ $t('terminal.list.createTime') }}{{ itemData.createTime }}</span>
       </p>
     </div>
     <div class="item-right">
-      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="$emit('view-details')">详情</el-button>
-      <el-button class="line-type blue-btn" v-if="!itemData.state" @click="$emit('handle-unbind')">解绑</el-button>
-      <el-button class="line-type blue-btn" v-if="itemData.state" @click="$emit('open-bind-dialog')">绑定</el-button>
+      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('terminal.list.edit') }}</el-button>
+      <el-button class="line-type blue-btn" @click="$emit('view-details')">{{ $t('terminal.list.details') }}</el-button>
+      <el-button class="line-type blue-btn" v-if="!itemData.state" @click="$emit('handle-unbind')">{{ $t('terminal.list.unbind') }}</el-button>
+      <el-button class="line-type blue-btn" v-if="itemData.state" @click="$emit('open-bind-dialog')">{{ $t('terminal.list.bind') }}</el-button>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'MerchantListItem',
+  name: 'TerminalList',
   components: {},
+  filters: {
+    /* 后台暂时还缺少一个state字段，03-27调整这一块 */
+    curState(val, states) {
+      const curState = _.find(states, { value: _.toNumber(val) })
+      return curState && curState.label || '绑定'
+    }
+  },
   props: {
     itemData: {
       type: Object,
       default: () => null
-    }
+    },
   },
   directive: {},
   data() {
@@ -39,8 +45,17 @@ export default {
       curState: 1,
     }
   },
-  computed: {},
+  computed: {
+    marginRight() {
+      const screenWidth = window.screen.width
+      if (screenWidth <= 1366) {
+        return 'm-r-20'
+      }
+      return 'm-r-30'
+    }
+  },
   watch: {},
+  beforeCreate() {},
   created() {},
   beforeMount() {},
   mounted() {},
@@ -63,7 +78,7 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-  .merchant-list-item {
+  .terminal-list-item {
     display: flex;
     align-items: center;
     width: 100%;
@@ -73,7 +88,7 @@ export default {
     .item-left{
       font-size: 18px;
       color: #172B4D;
-      width: 60%;
+      width: 64%;
       max-width: 1000px;
       .first-line{
         display: inline-block;
@@ -88,5 +103,18 @@ export default {
       min-width: 80px;
     }
   }
+  @media screen and (max-width: 1440px){
+    .terminal-list-item{
+      .item-left{
+        width: 70%;
+      }
+    }
+  }
+  @media screen and (max-width: 1366px){
+    .terminal-list-item{
+      .item-left{
+        width: 70%;
+      }
+    }
+  }
 </style>
-
