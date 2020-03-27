@@ -30,3 +30,10 @@ export function updateModel(modelId, data) {
     data
   })
 }
+
+export function getModelTree() {
+  return request({
+    url: '/model/tree',
+    method: 'get'
+  })
+}

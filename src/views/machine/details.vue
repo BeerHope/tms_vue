@@ -1,40 +1,40 @@
-<template>
+<template v-loading="loading">
   <el-tabs class="machine-details common-tabs" v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane label="机具详情" name="details">
+    <el-tab-pane :label="$t('machine.details.machineDetails')" name="details">
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix basic-info">
-          <span>基本信息</span>
+          <span>{{ $t('machine.details.machineDetails') }}</span>
         </div>
         <div class="content">
           <el-row>
             <el-col :span="12">
-              <span>型号：</span>
+              <span>{{ $t('machine.details.model') }}</span>
               <span>TPOS/G2</span>
             </el-col>
             <el-col :span="12">
-              <span>机身号：</span>
+              <span>{{ $t('machine.details.reportCycle') }}</span>
               <span>SN243240734273421</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
-              <span>报道周期(分钟)：</span>
+              <span>{{ $t('machine.details.heartbeatCycle') }}</span>
               <span>TPOS/G2</span>
             </el-col>
             <el-col :span="12">
-              <span>心跳周期(秒): </span>
+              <span>{{ $t('machine.details.sn') }} </span>
               <span>SN243240734273421</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <span>创建人：</span>
+              <span>{{ $t('machine.details.createPerson') }}</span>
               <span>TPOS/G2</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <span>备注：</span>
+              <span>{{ $t('machine.details.createPerson') }}</span>
               <span>SN243240734273421</span>
             </el-col>
           </el-row>
@@ -106,7 +106,8 @@
 
 <script>
 import AppItem from './components/AppItem'
-import { getAppList } from '@/api/machine'
+import { getMachineDetails } from '@/api/machine'
+
 export default {
   name: '',
   components: {
@@ -117,6 +118,7 @@ export default {
   data() {
     return {
       activeName: 'details',
+      loading: false,
       appList: [
         {
           id: '2412412',
@@ -131,7 +133,7 @@ export default {
   computed: {},
   watch: {},
   created() {
-    this.getAppList()
+    this.getMachineDetails()
   },
   beforeMount() {},
   mounted() {},
@@ -144,15 +146,16 @@ export default {
         console.log('看情况确定要不要重新获取')
       }
     },
-    getAppList() {
-      getAppList()
-        .then((res) => {
-          this.appList = res.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    }
+    getMachineDetails() {
+      this.loading = true
+      const machineId = this.$route.params.id
+      getMachineDetails(machineId).then(res => {
+        console.log(res, 'res!!!!!!')
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
+    },
   }
 }
 </script>

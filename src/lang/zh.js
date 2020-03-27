@@ -10,6 +10,7 @@ import model from './zh/model'
 import merchant from './zh/merchant'
 import terminal from './zh/terminal'
 import machine from './zh/machine'
+import allocation from './zh/allocation'
 
 export default {
   ...login,
@@ -22,5 +23,6 @@ export default {
   ...model,
   ...merchant,
   ...terminal,
-  ...machine
+  ...machine,
+  ...allocation
 }

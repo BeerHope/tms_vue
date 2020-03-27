@@ -1,82 +1,90 @@
 <template>
   <el-dialog
     custom-class="import-dialog"
-    title="批量调拨"
+    :title="$t('allocation.batch.title')"
     :visible.sync="dialogVisible"
+    @close="closeDialog"
     width="40%"
   >
-    <el-form ref="form" :model="formData" label-width="66px" label-position="left">
-      <el-form-item label="渠道商" required>
-        <treeselect class="filter-item" v-model="formData.companyInfo" :options="companyInfoList" placeholder="渠道商"></treeselect>
+    <el-form ref="form" :model="formData" :rules="rules" label-width="66px" label-position="left">
+      <el-form-item :label="$t('allocation.batch.company')" prop="companyId">
+        <el-select 
+          class="filter-item" 
+          v-model="formData.companyId" 
+          :placeholder="$t('allocation.list.filter.companyName')">
+          <el-option 
+            v-for="item in companyData" 
+            :key="item.id" :label="item.shortName" 
+            :value="item.id">
+          </el-option>
+        </el-select>
       </el-form-item>
     </el-form>
-    <el-button type="text" class="download-text" @click="downloadTemplate">请先点击下载模板${模板名称}</el-button>
+    <el-button type="text" class="download-text" @click="downloadTemplate">{{ $t('base.upload.templateTips') }}</el-button>
     <el-upload
       class="upload-demo"
       drag
-      action="https://jsonplaceholder.typicode.com/posts/">
+      ref="upload"
+      :limit="1"
+      :auto-upload="false"
+      :on-change="uploadChange"
+      :headers="headers"
+      :on-remove="removeFile"
+      :action="uploadUrl">
       <i class="el-icon-upload"></i>
-      <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-      <div class="el-upload__tip m-t-10" slot="tip">只能选择excel文件，仅支持xlsx后缀 ，且不超过5M</div>
+      <div class="el-upload__text">{{ $t('base.upload.uploadTips') }}</div>
+      <div class="el-upload__tip m-t-10" slot="tip">{{ $t('base.upload.fileCheckTips') }}</div>
     </el-upload>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" @click="dialogVisible = false">导 入</el-button>
+      <el-button type="primary" class="cancel" @click="dialogVisible = false">{{ $t('base.upload.cancel') }}</el-button>
+      <el-button type="primary" @click="handleImport">{{ $t('base.upload.import') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+import { downloadTemplate, batchImportAllocation } from '@/api/allocation'
+import { getToken } from '@/utils/auth'
 
 export default {
   name: 'ImportBatch',
-  components: {
-    Treeselect
+  components: {},
+  props: {
+    companyData: {
+      type: Array,
+      default: () => []
+    }
   },
-  props: {},
   directive: {},
   data() {
     return {
       dialogVisible: false,
       formData: {
-        companyInfo: null
+        companyId: null,
       },
-      /* 下拉可搜索渠道商 */
-      companyInfoList: [
-        {
-          id: '0',
-          label: '全部渠道商'
-        },
-        {
-          id: '1',
-          label: '渠道商1',
-          children: [
-            {
-              id: '1-1',
-              label: '渠道商1-1',
-            },
-            {
-              id: '1-2',
-              label: '渠道商1-2',
-            }
-          ],
-        },
-        {
-          id: '2',
-          label: '渠道商2',
-          children: [
-            {
-              id: '2-1',
-              label: '渠道商2-1'
-            }
-          ]
-        }
-      ],
+      file: null,
+      rules: {
+        companyId: [
+          {
+            required: true,
+            message: this.$t('allocation.batch.tips.company'),
+            trigger: 'blur'
+          }
+        ]
+      },
+      
     }
   },
-  computed: {},
+  computed: {
+    uploadUrl() {
+      return `${process.env.VUE_APP_BASE_URL}/machine/allocation`;
+    },
+    headers() {
+      return {
+        token: getToken()
+      };
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
@@ -85,8 +93,85 @@ export default {
   destroyed() {},
   methods: {
     downloadTemplate() {
-      console.log('下载模板')
-    }
+      downloadTemplate().then(res => {
+        const blob = new Blob([res])
+        const link = document.createElement('a')
+        link.href = URL.createObjectURL(blob)
+        link.download = `${this.$t('allocation.batch.templateName')}.xlsx`
+        link.style.display = 'none';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    uploadChange(file) {
+      const acceptTypes = ['xlsx']
+      const type = file.name.slice(file.name.lastIndexOf('.') + 1)
+      const isAcceptedType = _.includes(acceptTypes, type)
+      const isLt5M = file.size / 1024 / 1024 <= 5;
+      if (!isAcceptedType) {
+        this.$message.error(this.$t('base.upload.fileCheckType'))
+      }
+      if (!isLt5M) {
+        this.$message.error(this.$t('base.upload.fileCheckSize'))
+      }
+      if (!isAcceptedType || !isAcceptedType) {
+        this.$refs.upload.clearFiles()
+        return
+      }
+      this.file = file
+    },
+    removeFile(file) {
+      this.file = null
+    },
+    handleImport() {
+      if (!this.file) {
+        this.$message.error(this.$t('allocation.batch.tips.file'))
+        return
+      }
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          const formData = new FormData()
+          formData.append('file', this.file.raw)
+          batchImportAllocation(formData, this.formData).then(res => {
+            // 此处回调展示上传的结果
+            this.dialogVisible = false
+            const { successAmount, total } = res.data;
+            const confirmText = [
+              `${this.$t('base.upload.uploadRes.totalMerchant')}${total};`,
+              `${this.$t('base.upload.uploadRes.successAmount')}${successAmount}；`,
+              `${this.$t('base.upload.uploadRes.failureText')}`
+            ];
+            /* 下面处理confirm内容换行操作 */
+            const newDatas = [];
+            const h = this.$createElement
+            for (const i in confirmText) {
+              newDatas.push(h('p', null, confirmText[i]))
+            }
+            this.$confirm(this.$t('base.upload.uploadRes.title'), {
+              message: h('div', null, newDatas),
+              confirmButtonText: this.$t('base.buttons.yes'),
+              cancelButtonText: this.$t('base.buttons.no'),
+              customClass: "delete-confirm"
+            })
+              .then(() => {
+                // 进行导出失败清单(todo)
+                this.$message.success("失败清单导出成功");
+              })
+              .catch(() => {
+                console.log("取消导出失败清单");
+              });
+          })
+        }
+      })
+    },
+    closeDialog() {
+      this.$refs.form.resetFields()
+      this.$refs.upload.clearFiles()
+      console.log(this.formData, 'formData!!!!!!')
+    },
   }
 }
 </script>

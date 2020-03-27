@@ -33,6 +33,7 @@ export default {
     routes() {
       return this.$router.options.routes
     },
+    /* 当前激活高亮menu */
     activeMenu() {
       const route = this.$route
       const { meta, path } = route

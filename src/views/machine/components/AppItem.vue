@@ -1,16 +1,16 @@
 <template>
   <div :class="['machine-app-item', customClass]" :style="{width: width,}">
+    <el-checkbox class="m-r-20"></el-checkbox>
     <div class="m-r-20">
       <img src="@/assets/images/apk.png" alt="apk.png">
     </div>
     <div class="content">
       <h4 class="m-0">{{ itemData.appName }}</h4>
-      <p class="m-t-10 m-b-10">
+      <p class="m-t-0 m-b-16">
         <span>{{ itemData.version }}</span>
         <span>{{ itemData.apkName }}</span>
       </p>
     </div>
-    
   </div>
 </template>
 
@@ -51,6 +51,7 @@ export default {
 <style lang='scss' scoped>
 .machine-app-item{
   display: flex;
+  align-items: center;
   &:not(:last-child) {
     margin-right: 20px;
   }
@@ -61,7 +62,7 @@ export default {
 }
 .default-custom-class{
   margin-top: 0;
-  padding-top: 40px;
+  padding-top: 20px;
   float: left;
 }
 </style>

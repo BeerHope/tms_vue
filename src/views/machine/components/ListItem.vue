@@ -1,33 +1,37 @@
 <template>
   <div class="machine-list-item">
     <div class="item-left">
-      <!-- <svg-icon icon-class="username"></svg-icon> -->
-      <img width="80%" :src="itemData.type | getPosImg" alt="pos image">
+      <img width="80%" :src="itemData.modelPic" alt="pos image">
     </div>
     <div class="item-middle">
       <h4 class="m-t-16 m-b-16">
-        <span class="m-r-10">{{ itemData.id }}</span>
-        <span class="m-r-20">({{ itemData.model }})</span>
+        <span class="m-r-10">{{ itemData.sn}}</span>
+        <span class="m-r-20">({{ itemData.modelName }})</span>
       </h4>
-      <p class="details">
+      <p class="details bind-info">
         <!-- <span class="m-r-8">商户编号</span> -->
-        <span class="m-r-8">{{ itemData.merchantId }}</span>
-        <span class="m-r-8">商户名称</span>
-        <span class="m-r-30">(终端号：342238)</span>
-        <span>{{ itemData.state ? '绑定' : '解绑' }} 时间：{{ itemData.operatedTime }}</span>
+        <span>{{ $t('machine.list.merchant') }}</span>
+        <span class="m-r-30">
+          <span v-if="itemData.merchantNo" class="m-r-4">{{ itemData.merchantNo }}</span>
+          <span>{{ itemData.merchantName || '--' }}</span>
+        </span>
+        <span class="m-r-30">({{ $t('machine.list.terminalNo') }}{{ itemData.terminalNo || '--' }})</span>
+        <span>{{ itemData.state ? $t('machine.list.bindTimeText') : $t('machine.list.unbindTimeText') }}
+          {{ itemData.bindOrUnBindTime | formatTime }}
+        </span>
       </p>
       <p class="details">
-        <span class="m-r-30">所属渠道商：{{ itemData.attributionChannel }}</span>
-        <span class="m-r-30">创建时间：{{ itemData.createdTime }}</span>
+        <span class="m-r-30">{{ $t('machine.list.companyName') }}{{ itemData.companyName }}</span>
+        <span class="m-r-30">{{ $t('machine.list.createTime') }}{{ itemData.createTime | formatTime }}</span>
       </p>
     </div>
     <div class="item-right">
-      <el-button class="line-type green-btn" @click="$emit('handle-edit')">编辑</el-button>
-      <el-button class="line-type blue-btn" @click="toDetails(itemData.id)">详情</el-button>
+      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('machine.list.edit') }}</el-button>
+      <el-button class="line-type blue-btn" @click="toDetails(itemData.id)">{{ $t('machine.list.details') }}</el-button>
       <!-- 可进行解绑操作，表示为未解绑 -->
-      <el-button v-if="itemData.state === 1" class="line-type blue-btn" @click="handleUnbind">解绑</el-button>
-      <el-button v-else class="line-type blue-btn" @click="$emit('open-bind-dialog')">绑定</el-button>
-      <el-button class="line-type blue-btn" @click="toControl(itemData.id)">远程控制</el-button>
+      <el-button v-if="itemData.state === 1" class="line-type blue-btn" @click="handleUnbind">{{ $t('machine.list.unbind') }}</el-button>
+      <el-button v-else class="line-type blue-btn" @click="$emit('open-bind-dialog')">{{ $t('machine.list.bind') }}</el-button>
+      <el-button class="line-type blue-btn" @click="toControl(itemData.id)">{{ $t('machine.list.remote') }}</el-button>
     </div>
   </div>
 </template>
@@ -41,14 +45,9 @@ export default {
   name: 'UserListItem',
   components: {},
   filters: {
-    getPosImg(posType) {
-      const posImgs = {
-        1: tposImg,
-        2: sposImg,
-        3: mposImg
-      }
-      return posImgs[posType]
-    },
+    formatTime(time) {
+      return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : '--'
+    }
   },
   props: {
     itemData: {
@@ -83,16 +82,19 @@ export default {
       })
     },
     toDetails(machineId) {
-      this.$router.push(`/merchant/machine/details/${machineId}`)
+      this.$router.push(`./details/${machineId}`)
     },
     toControl(machineId) {
-      this.$router.push(`/merchant/machine/control/${machineId}`)
+      this.$router.push(`./control/${machineId}`)
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
+  $color-172B4D: #172B4D;
+  $color-7A8190: #7A8190;
+  
   .machine-list-item {
     display: flex;
     align-items: center;
@@ -107,12 +109,15 @@ export default {
     }
     .item-middle{
       font-size: 18px;
-      color: #172B4D;
+      color: $color-172B4D;
       width: 52%;
       max-width: 1000px;
       .details{
         font-size: 14px;
-        color: #9297A3;
+        color: $color-7A8190;
+        &.bind-info{
+          color: $color-172B4D;
+        }
       }
     }
   }

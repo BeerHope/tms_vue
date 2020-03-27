@@ -1692,8 +1692,15 @@
   margin: auto;
 }
 
-.common-form .el-select, .common-form .el-date-editor {
+.common-form .el-select, .common-form .el-date-editor,
+.common-form .el-input-number, .common-form .el-cascader {
   width: 100%;
+}
+
+.common-form .el-input-number__decrease,
+.common-form .el-input-number__increase {
+  height: calc(100% - 2px);
+  line-height: 34px;
 }
 
 .common-pagination {

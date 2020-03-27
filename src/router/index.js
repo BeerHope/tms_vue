@@ -186,24 +186,34 @@ export const constantRoutes = [
         meta: { title: 'merchantTerminal' }
       },
       {
-        path: 'machine/list',
+        path: 'machine',
         name: 'machine',
-        component: () => import('@/views/machine/list'),
-        meta: { title: 'machine' }
-      },
-      {
-        path: 'machine/details/:id',
-        name: 'machineDetails',
-        component: () => import('@/views/machine/details'),
-        hidden: true,
-        meta: { title: 'machineDetails' }
-      },
-      {
-        path: 'machine/control/:id',
-        name: 'machineControl',
-        component: () => import('@/views/machine/control'),
-        hidden: true,
-        meta: { title: 'machineControl' }
+        redirect: 'machine/list',
+        component: Index,
+        meta: { title: 'machine' },
+        children: [
+          {
+            path: 'list',
+            name: 'machineList',
+            component: () => import('@/views/machine/list'),
+            meta: { activeMenu: '/merchant/machine' },
+            hidden: true
+          },
+          {
+            path: 'details/:id',
+            name: 'machineDetails',
+            component: () => import('@/views/machine/details'),
+            hidden: true,
+            meta: { title: 'machineDetails', activeMenu: '/merchant/machine' }
+          },
+          {
+            path: 'control/:id',
+            name: 'machineControl',
+            component: () => import('@/views/machine/control'),
+            hidden: true,
+            meta: { title: 'machineControl', activeMenu: '/merchant/machine' }
+          },
+        ]
       },
       // 机具批量调拨
       {

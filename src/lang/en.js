@@ -9,6 +9,7 @@ import model from './en/model'
 import merchant from './en/merchant'
 import terminal from './en/terminal'
 import machine from './en/machine'
+import allocation from './en/allocation'
 
 export default {
   ...login,
@@ -21,5 +22,6 @@ export default {
   ...model,
   ...merchant,
   ...terminal,
-  ...machine
+  ...machine,
+  ...allocation,
 }

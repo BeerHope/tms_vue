@@ -42,7 +42,7 @@
       <dl>
         <dt class="clearfix">最近下发指令</dt>
         <dd>
-          <el-table :data="recentDirectiveList">
+          <el-table :data="recentDirectiveList" :header-row-style="headerRowStyle">
             <el-table-column prop="setTime" label="设置时间"></el-table-column>
             <el-table-column prop="directive" label="指令"></el-table-column>
             <el-table-column prop="sendTime" label="下发时间"></el-table-column>
@@ -120,7 +120,14 @@ export default {
       ]
     }
   },
-  computed: {},
+  computed: {
+    headerRowStyle() {
+      return {
+        fontSize: '14px',
+        color: '#172B4D',
+      }
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
@@ -134,7 +141,7 @@ export default {
 <style lang='scss' scoped>
 .machine-control{
   padding: 0 120px;
- 
+  color: '#172B4D';
   .content {
     max-width: 700px;
     margin: auto;
@@ -168,6 +175,9 @@ export default {
   .el-checkbox__inner, .el-radio__inner{
     border-color: #7A8190;
   }
-  
+  .el-table td{
+    border-bottom: none;
+    height: 36px;
+  }
 }
 </style>

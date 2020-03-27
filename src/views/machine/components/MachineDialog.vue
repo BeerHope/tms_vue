@@ -3,55 +3,42 @@
     :title="dialogTitle"
     width="40%"
     :visible.sync="dialogVisible"
-    @closed="resetForm"
-    @opened="openedDialog"
-  >
-    <el-form ref="form" class="common-list" :model="formData" :rules="rules" label-width="120px">
-      <el-form-item prop="modelNum" label="型号" required>
-        <el-col :span="12" style="height: 32px">
-          <el-form-item>
-            <el-select v-model="formData.type" clearable>
-              <el-option
-                v-for="item in types" :key="item.value+item.label"
-                :value="item.value" :label="item.label"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
-        <el-col :span="1" style="height: 32px"></el-col>
-        <el-col :span="11" style="height: 32px">
-          <el-form-item>
-            <el-select v-model="formData.model" clearable>
-              <el-option
-                v-for="item in models" :key="item.value+item.label"
-                :value="item.value" :label="item.label"
-              ></el-option>
-            </el-select>
-          </el-form-item>
-        </el-col>
+    @close="resetForm"
+    @open="openDialog">
+    <el-form v-loading="loading" ref="form" class="common-form" :model="formData" :rules="rules" label-width="120px">
+      <el-form-item prop="model" :label="$t('machine.form.label.model')">
+        <el-cascader
+          v-model="formData.model"
+          :options="modelTreeData"
+          @change="handleChange"
+          :props="{ expandTrigger: 'hover' }">
+        </el-cascader>
       </el-form-item>
-      <el-form-item prop="sn" label="机身号">
+      <el-form-item prop="sn" :label="$t('machine.form.label.sn')">
         <el-input v-model="formData.sn" maxlength="20"></el-input>
       </el-form-item>
-      <el-form-item prop="checkInCycle" label="报到周期(分钟)">
-        <el-input v-model="formData.checkInCycle"></el-input>
+      <el-form-item prop="reportCycle" :label="$t('machine.form.label.reportCycle')">
+        <el-input-number v-model="formData.reportCycle" :min="1440"></el-input-number>
       </el-form-item>
-      <el-form-item prop="heartbeatCycle" label="心跳周期(秒)">
-        <el-input v-model="formData.heartbeatCycle"></el-input>
+      <el-form-item prop="heartbeatCycle" :label="$t('machine.form.label.heartbeatCycle')">
+        <el-input-number v-model="formData.heartbeatCycle" :min="3600"></el-input-number>
       </el-form-item>
-      <el-form-item prop="remark" label="备注">
+      <el-form-item prop="remark" :label="$t('machine.form.label.remark')">
         <el-input type="textarea" v-model="formData.remark" maxlength="200"></el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" class="cancel" @click="dialogVisible = false">取 消</el-button>
-      <el-button type="primary" v-if="flag === 0">添 加</el-button>
-      <el-button type="primary" v-if="flag === 1">保 存</el-button>
+      <el-button type="primary" class="cancel" @click="dialogVisible = false">{{ $t('base.buttons.cancel') }}</el-button>
+      <el-button type="primary" v-if="flag === 0" @click="addMachine">{{ $t('base.buttons.add') }}</el-button>
+      <el-button type="primary" v-if="flag === 1">{{ $t('base.buttons.save') }}</el-button>
     </span>
   </el-dialog>
 </template>
 
 <script>
+import { getModelTree } from '@/api/model'
+import { getMachineDetails, addMachine } from '@/api/machine'
+
 export default {
   name: '',
   components: {},
@@ -61,31 +48,12 @@ export default {
     const validateSn = (rule, value, callback) => {
       const regExp = /^[A-Za-z0-9]{11,20}$/
       if (_.trim(value) && !regExp.test(value)) {
-        callback(new Error('支持大小写英文、数字，11~20个字符'))
-      }
-      callback()
-    }
-    const validateCheckinCycle = (rule, value, callback) => {
-      const numberValue = _.toNumber(value)
-      const minValue = 1440
-      if (!numberValue) {
-        callback(new Error('仅支持数字'))
-      } else if (numberValue < minValue) {
-        callback(new Error(`支持输入最小值为${minValue}`))
-      }
-      callback()
-    }
-    const validateHeartbeatCycle = (rule, value, callback) => {
-      const numberValue = _.toNumber(value)
-      const minValue = 3600
-      if (!numberValue) {
-        callback(new Error('仅支持数字'))
-      } else if (numberValue < minValue) {
-        callback(new Error(`支持输入最小值为${minValue}`))
+        callback(new Error(this.$t('machine.form.tips.sn2')))
       }
       callback()
     }
     return {
+      loading: false,
       dialogVisible: false,
       flag: 0,
       machineId: -1,
@@ -93,44 +61,28 @@ export default {
         type: '',
         model: '',
         sn: '',
-        checkInCycle: 1440, /* 默认值 & 最小值： 1440min */
+        reportCycle: 1440, /* 默认值 & 最小值： 1440min */
         heartbeatCycle: 3600, /* 默认值 & 心跳周期：3600s */
         remark: ''
       },
       rules: {
-        type: [
-          {
-            required: true, message: '请选择机型', trigger: 'blur'
-          }
-        ],
         model: [
           {
-            required: true, message: '请选择pos类型', trigger: 'blur'
+            required: true, message: this.$t('machine.form.tips.model'), trigger: 'blur'
           }
         ],
         sn: [
-          { required: true, message: '请输入机身号', trigger: 'blur' },
+          { required: true, message: this.$t('machine.form.tips.sn1'), trigger: 'blur' },
           { validator: validateSn, trigger: 'blur' }
         ],
-        checkInCycle: [
-          { required: true, message: '请输入报到周期', trigger: 'blur' },
-          { validator: validateCheckinCycle, trigger: 'blur' }
+        reportCycle: [
+          { required: true, message: this.$t('machine.form.tips.reportCycle'), trigger: 'blur' },
         ],
         heartbeatCycle: [
-          { required: true, message: '请输入心跳周期', trigger: 'blur' },
-          { validator: validateHeartbeatCycle, trigger: 'blur' }
+          { required: true, message: this.$t('machine.form.tips.heartbeatCycle'), trigger: 'blur' },
         ]
       },
-      models: [
-        {
-          value: 1,
-          label: 'G2'
-        },
-        {
-          value: 2,
-          label: 'N3'
-        },
-      ],
+      modelTreeData: [],
       types: [
         {
           value: 1,
@@ -149,33 +101,66 @@ export default {
   },
   computed: {
     dialogTitle() {
-      return !this.flag ? '添加机具' : '编辑机具'
+      return !this.flag ? this.$t('machine.add.title') : this.$t('machine.edit.title')
     }
   },
   watch: {},
-  created() {},
+  created() {
+    this.getModelTree()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    getModelTree() {
+      getModelTree().then(res => {
+        const posTypes = this.$t('base.posTypes')
+        this.modelTreeData = _.map(res.data, (item) => {
+          item.label = _.find(posTypes, {
+            value: item.value
+          }).label
+          return item
+        })
+      })
+    },
     /* 打开弹窗后回调 */
-    openedDialog() {
-      /* 若为编辑，调接口显示 */
-      if (this.flag === 1) {
-        console.log('编辑，调接口')
+    openDialog() {
+      if (this.machineId !== -1) {
+        console.log(this.machineId, 'machineId!!!')
+        this.loading = true
+        getMachineDetails(this.machineId).then(res => {
+          console.log(res, 'res 详情结果')
+          this.formData = res.data
+          this.loading = false
+        }).catch(() => {
+          this.loading = false
+        })
       }
+    },
+    addMachine() {
+      /* formdata绑定的model是数组，只需产叶子节点下的modelId即可 */
+      const reqData = _.omit(this.formData, 'model')
+      reqData.modelId = _.last(this.formData.model)
+      addMachine(reqData).then(res => {
+        console.log(res, '新增返回的数据详情！！！')
+        this.$emit('refresh')
+        this.dialogVisible = false
+        this.$message.success(this.$t('base.tips.addSuccess'))
+      })
     },
     resetForm() {
       this.$refs.form.resetFields()
     },
     /* 提交表单 */
     submitForm() {
+    },
+    handleChange() {
+      console.log('handle change!!!')
     }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-
 </style>

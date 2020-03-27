@@ -1,14 +1,23 @@
 <template>
   <div class="allocation-list common-list">
     <div class="filter-box p-t-6 p-b-6">
-      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
-      <el-button type="primary">
+       <el-select 
+          class="filter-item" 
+          v-model="filter.companyId" 
+          :placeholder="$t('allocation.list.filter.companyName')">
+          <el-option 
+            v-for="item in companyData" 
+            :key="item.id" :label="item.shortName" 
+            :value="item.id">
+          </el-option>
+        </el-select>
+      <el-button type="primary" @click="getAllocationList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('allocation.list.search')}}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openBatchAllocation">
         <svg-icon icon-class="allocation"></svg-icon>
-        批量调拨
+        {{ $t('allocation.list.batchAllocate') }}
       </el-button>
     </div>
     <div class="m-t-30">
@@ -17,43 +26,47 @@
         style="width: 100%"
         class="f-z-14"
         :header-cell-style="headerStyle">
-        <el-table-column prop="allocatedTime" label="挑拨时间" align="center"></el-table-column>
-        <el-table-column prop="companyInfo" label="接收机具渠道商" align="center"></el-table-column>
-        <el-table-column prop="number" label="数量" align="center"></el-table-column>
-        <el-table-column prop="batch" label="调拨批次" align="center"></el-table-column>
-        <el-table-column label="操作" align="center">
+        <el-table-column prop="createTime" :label="$t('allocation.list.thead.createTime')" align="center"></el-table-column>
+        <el-table-column prop="companyName" :label="$t('allocation.list.thead.companyName')" align="center"></el-table-column>
+        <el-table-column prop="machineAmount" :label="$t('allocation.list.thead.machineAmount')" align="center"></el-table-column>
+        <el-table-column prop="batchNo" :label="$t('allocation.list.thead.batchNo')" align="center"></el-table-column>
+        <el-table-column :label="$t('allocation.list.thead.operation')" align="center">
           <template slot-scope="scope">
-            <el-button class="line-type blue-btn" @click="viewDetails(scope.row.id)">详情</el-button>
+            <el-button class="line-type blue-btn" @click="viewDetails(scope.row.id)">{{$t('allocation.list.details')}}</el-button>
           </template>
         </el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getAllocationList"
+        @current-change="getAllocationList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
-    <batch-allocation ref="allocation"></batch-allocation>
+    <batch-allocation
+      ref="allocation" 
+      :company-data="companyData"
+      :title="$t('allocation.batch.title')">
+    </batch-allocation>
     <details-dialog ref="details"></details-dialog>
   </div>
 </template>
 
 <script>
-import Treeselect from '@riophae/vue-treeselect'
-import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 import BatchAllocation from './components/BatchAllocation'
 import DetailsDialog from './components/DetailsDialog'
+import { getAllocationList } from '@/api/allocation'
+import { getDirectCompany } from '@/api/company'
+import { Loading } from 'element-ui'
 
 export default {
   name: '',
   components: {
-    Treeselect,
     BatchAllocation,
     DetailsDialog
   },
@@ -62,63 +75,21 @@ export default {
   data() {
     return {
       filter: {
-        companyInfo: null,
+        companyId: null,
+        page: 1,
+        pageSize: 10
       },
-      alllocationList: [
-        {
-          id: 12323,
-          allocatedTime: '2020-02-19 12:20:18',
-          companyInfo: '1000645 渠道商简称',
-          number: 100,
-          batch: '批次1',
-          operator: '西欧奥明',
-        },
-        {
-          id: 332322,
-          allocatedTime: '2020-02-19 12:20:18',
-          companyInfo: '1000645 渠道商简称',
-          number: 100,
-          batch: '批次1',
-          operator: '西欧奥明',
-        },
-      ],
-      /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      companyInfoData: [
-        {
-          id: '0',
-          label: '全部渠道商'
-        },
-        {
-          id: '1',
-          label: '渠道商1',
-          children: [
-            {
-              id: '1-1',
-              label: '渠道商1-1',
-            },
-            {
-              id: '1-2',
-              label: '渠道商1-2',
-            }
-          ],
-        },
-        {
-          id: '2',
-          label: '渠道商2',
-          children: [
-            {
-              id: '2-1',
-              label: '渠道商2-1'
-            }
-          ]
-        }
-      ],
-      currentPage: 1,
+      alllocationList: [],
+      total: 0,
+      companyData: [],
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getDirectCompany()
+    this.getAllocationList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -127,15 +98,24 @@ export default {
     headerStyle() {
       return "background: #E2E4E9; color: #172B4D;height: 42px;"
     },
-    handleSizeChange() {
-      console.log('handleSizeChange!!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!!')
-    },
     /* 打开批量调拨 */
     openBatchAllocation() {
       this.$refs.allocation.dialogVisible = true
+    },
+    getDirectCompany() {
+      getDirectCompany().then(res => {
+        this.companyData = res.data
+      })
+    },
+    getAllocationList() {
+      const loading = Loading.service()
+      getAllocationList(this.filter).then(res => {
+        this.alllocationList = res.data.rows
+        this.total = res.data.totalRecords
+        loading.close()
+      }).catch(() => {
+        loading.close()
+      })
     },
     /* 查看详情 */
     viewDetails(id) {
@@ -143,7 +123,7 @@ export default {
       const detailsDialog = this.$refs.details
       detailsDialog.dialogVisible = true
       detailsDialog.allocationId = id
-    }
+    },
   }
 }
 </script>

@@ -11,6 +11,7 @@
       drag
       ref="upload"
       class="upload-demo"
+      :limit="1"
       :action="uploadUrl"
       :headers="headers"
       :on-success="uploadSuccess"

@@ -8,6 +8,14 @@ export function getCompanyTree() {
   })
 }
 
+// 渠道商 只获取直接商机和直接下级
+export function getDirectCompany() {
+  return request({
+    url: '/company/listUpAndDown',
+    method: 'get'
+  })
+}
+
 // 获取渠道商下拉树(本级和直接下级)
 export function getCompanySubordinate() {
   return request({

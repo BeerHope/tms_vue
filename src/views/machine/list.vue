@@ -1,29 +1,39 @@
 <template>
   <div class="common-list machine-list">
-    <div class="filter-box p-t-6 p-b-6 m-b-20">
+    <div class="filter-box p-t-6 p-b-6">
       <!-- 机身号：精确查询 -->
-      <el-input class="filter-item" v-model="filter.sn" placeholder="机身号" clearable></el-input>
-      <el-select class="filter-item" v-model="filter.state" placeholder="绑定状态" clearable>
-        <el-option v-for="item in states" :key="item.value" :label="item.label" :value="item.prop"></el-option>
+      <el-input class="filter-item" v-model="filter.sn" :placeholder="$t('machine.list.filter.sn')" clearable></el-input>
+      <el-select class="filter-item" v-model="filter.state" :placeholder="$t('machine.list.filter.state')" clearable>
+        <el-option 
+          v-for="item in $t('machine.states')" :key="item.value" 
+          :label="item.label" :value="item.value">
+        </el-option>
       </el-select>
-      <treeselect class="filter-item" v-model="filter.companyInfo" :options="companyInfoData" placeholder="渠道商"></treeselect>
+      <treeselect 
+        class="filter-item" v-model="filter.companyId" 
+        :default-expand-level="Infinity"
+        :options="companyTreeData" 
+        :placeholder="$t('machine.list.filter.companyId')">
+      </treeselect>
       <!-- 商户编号：精确查询 -->
-      <el-input class="filter-item" v-model="filter.marchantId" placeholder="商户编号" clearable></el-input>
-      <el-input class="filter-item" v-model="filter.marchantName" placeholder="商户名称" clearable></el-input>
-      <el-button type="primary">
+      <el-input class="filter-item" v-model="filter.marchantId" :placeholder="$t('machine.list.filter.merchantNo')" clearable></el-input>
+      <el-input class="filter-item" v-model="filter.marchantName" :placeholder="$t('machine.list.filter.merchantName')" clearable></el-input>
+      <el-button type="primary" @click="getMachineList">
         <svg-icon icon-class="search"></svg-icon>
-        搜索
+        {{ $t('machine.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openDialog()">
         <svg-icon icon-class="add"></svg-icon>
-        添加机具
-      </el-button>
-      <el-button type="primary" class="green-btn" @click="openImportDialog">
-        <i class="el-icon-upload2"></i>
-        批量导入
+        {{ $t('machine.list.add') }}
       </el-button>
     </div>
-    <div class="common-table">
+    <div class="m-t-14">
+      <el-button type="primary" @click="openImportDialog">
+        <svg-icon icon-class="batch-import"></svg-icon>
+        {{ $t('machine.list.batchImport') }}
+      </el-button>
+    </div>
+    <div class="common-table m-t-20">
       <list-item
         v-for="item in machineList" :key="item.id"
         :item-data="item" @open-bind-dialog="openBindDialog"
@@ -32,18 +42,18 @@
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getMachineList"
+        @current-change="getMachineList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
     <machine-dialog ref="machineDialog"></machine-dialog>
     <bind-dialog ref="bindDialog"></bind-dialog>
-    <import-dialog ref="importDialog" title="批量导入"></import-dialog>
+    <import-dialog ref="importDialog" :title="$t('machine.batchImport.title')"></import-dialog>
   </div>
 </template>
 
@@ -54,6 +64,11 @@ import MachineDialog from './components/MachineDialog'
 import BindDialog from './components/BindDialog'
 import Treeselect from '@riophae/vue-treeselect'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
+/* 后期整合优化 */
+import { sortCompanyTree } from "@/utils/global";
+import { getCompanyTree } from '@/api/company'
+import { getMachineList } from '@/api/machine'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'MachineList',
@@ -68,117 +83,45 @@ export default {
   directive: {},
   data() {
     return {
-      /* 无详情，以下字段后期修改 */
       filter: {
         sn: '',
         state: '',
-        companyInfo: null,
-        merchantId: '', /* 商户编号 */
-        merchantName: '', /* 商户名称 */
+        companyId: null,
+        merchantNo: '',
+        merchantName: '',
+        page: 1,
+        pageSize: 10
       },
-      /* 可搜索的下拉树，暂时将渠道商写死，后期接口调用获取 */
-      companyInfoData: [
-        {
-          id: '0',
-          label: '全部渠道商'
-        },
-        {
-          id: '1',
-          label: '渠道商1',
-          children: [
-            {
-              id: '1-1',
-              label: '渠道商1-1',
-            },
-            {
-              id: '1-2',
-              label: '渠道商1-2',
-            }
-          ],
-        },
-        {
-          id: '2',
-          label: '渠道商2',
-          children: [
-            {
-              id: '2-1',
-              label: '渠道商2-1'
-            }
-          ]
-        }
-      ],
-      states: [
-        {
-          value: '',
-          label: '全部'
-        },
-        {
-          value: 0,
-          label: '解绑'
-        },
-        {
-          value: 1,
-          label: '未解绑'
-        }
-      ],
-      /* 类型：type： 1, 2, 3 -> 传统pos， 智能pos， 移动pos */
-      /* 所属渠道商: attributionChannel */
-      /* state: 0, 1 -> 解绑，未解绑 */
-      /* 商户Id：merchantId */
-      /* 商户名称：merchantName */
-      /* 终端号： terminalId、 */
-      machineList: [
-        {
-          id: 14423324,
-          type: 1,
-          model: 'G2',
-          state: 0,
-          sn: 'G2133021651',
-          attributionChannel: '100056 一级渠道商A简称',
-          merchantId: '76577',
-          merchantName: '',
-          terminalId: '',
-          createdTime: '2020-02-12 10:09:28',
-          operatedTime: '2020-02-17 10:09:28'
-        },
-        {
-          id: 1442332324,
-          type: 2,
-          model: 'G2',
-          state: 1,
-          sn: 'G213302113431',
-          attributionChannel: '100056 一级渠道商A简称',
-          merchantId: '4324324',
-          merchantName: '',
-          terminalId: '',
-          createdTime: '2020-02-12 12:09:28',
-          operatedTime: '2020-02-22 10:09:28'
-        },
-        {
-          id: 244233232422,
-          type: 3,
-          model: 'G2',
-          state: 1,
-          sn: 'G213302113431',
-          attributionChannel: '100056 一级渠道商A简称',
-          merchantId: '4324324',
-          merchantName: '',
-          terminalId: '',
-          createdTime: '2020-02-12 12:09:28',
-          operatedTime: '2020-02-22 10:09:28'
-        }
-      ],
-      currentPage: 1,
+      companyTreeData: [],
+      machineList: [],
+      total: 0,
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getCompanyTree()
+    this.getMachineList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    getCompanyTree() {
+      getCompanyTree().then(res => {
+        const resData = (res.data && [res.data]) || [];
+        this.companyTreeData = sortCompanyTree(resData);
+      })
+    },
+    getMachineList() {
+      const loading = Loading.service()
+      getMachineList(this.filter).then(res => {
+        this.machineList = res.data.rows
+        this.total = res.data.totalRecord
+        loading.close()
+      })
+    },
     openDialog(flag = 0, machineId = -1, dialogVisible = true) {
       const machineDialog = this.$refs.machineDialog
       _.assign(machineDialog, {
@@ -195,12 +138,6 @@ export default {
     openImportDialog() {
       this.$refs.importDialog.dialogVisible = true
     },
-    handleSizeChange() {
-      console.log('handleSizeChange!!!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!')
-    }
   }
 }
 </script>

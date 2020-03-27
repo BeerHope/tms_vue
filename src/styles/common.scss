@@ -283,8 +283,14 @@ $hoverOpacity: 0.78;
     width: 60%;
     min-width: 400px;
     margin: auto;
-    .el-select, .el-date-editor {
+    .el-select, .el-date-editor,
+    .el-input-number, .el-cascader{
         width: 100%;
+    }
+    .el-input-number__decrease,
+    .el-input-number__increase{
+        height: calc(100% - 2px);
+        line-height: $smallSize;
     }
 }
 
