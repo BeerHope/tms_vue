@@ -48,7 +48,7 @@
         <div class="lang-select">
           <LangSelect />
         </div>
-        <span class="forget-pass">{{ $t('login.forgotPsd') }}</span>
+        <!-- <span class="forget-pass">{{ $t('login.forgotPsd') }}</span> -->
         <el-button class="submit" :loading="loading" type="primary" @click.native.prevent="handleLogin">{{ $t('login.signIn') }}</el-button>
       </el-form>
     </div>

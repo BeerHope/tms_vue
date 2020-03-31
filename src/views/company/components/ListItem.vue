@@ -3,7 +3,7 @@
     <div class="item-left">
       <h4 class="m-t-16 m-b-16">
         <span class="first-line">【{{ $t('company.list.customerCode') }}{{ itemData.customerCode }}】</span>
-        <span class="m-r-10">{{ itemData.shortName }}</span>
+        <span class="m-r-22">{{ itemData.shortName }}</span>
         <span :class="['state right', stateClass(itemData)]">
           {{ itemState('base.states', itemData) }}
         </span>

@@ -1,5 +1,5 @@
 <template>
-  <div class="vendor-list common-list" v-loading="loading">
+  <div class="vendor-list common-list">
     <div class="filter-box p-t-6 p-b-6">
       <el-input class="filter-item" v-model="filter.name" clearable :placeholder="$t('vendor.list.filter.name')"></el-input>
       <el-button type="primary" @click="getVendorList">
@@ -11,8 +11,8 @@
         {{ $t('vendor.list.add') }}
       </el-button>
     </div>
-    <div class="common-table">
-      <list-item v-for="item in vendorList" :key="item.code" :data="item" @handle-edit="openDialog(1, item.id, true)"></list-item>
+    <div class="common-table" v-if="vendorList.length">
+      <list-item v-for="item in vendorList" :key="item.id" :data="item" @handle-edit="openDialog(1, item.id, true)"></list-item>
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
@@ -25,6 +25,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <vendor-dialog @refresh="getVendorList" ref="vendorDialog"></vendor-dialog>
   </div>
 </template>
@@ -33,6 +34,7 @@
 import ListItem from './components/ListItem'
 import VendorDialog from './components/VendorDialog'
 import { getVendorList } from '@/api/vendor'
+import { Loading } from 'element-ui'
 
 export default {
   name: 'VendorList',
@@ -44,7 +46,6 @@ export default {
   directive: {},
   data() {
     return {
-      loading: false,
       filter: {
         name: '',
         page: 1,
@@ -65,11 +66,13 @@ export default {
   destroyed() {},
   methods: {
     getVendorList() {
-      this.loading = true
+      const loading = Loading.service()
       getVendorList(this.filter).then(res => {
         this.vendorList = res.data.rows
         this.total = res.data.totalRecord
-        this.loading = false
+        loading.close()
+      }).catch(() => {
+        loading.close()
       })
     },
     openDialog(flag = 0, vendorId = -1, dialogVisible = true) {

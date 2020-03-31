@@ -1,11 +1,11 @@
 <template>
   <div class="machine-list-item">
     <div class="item-left">
-      <img width="80%" :src="itemData.modelPic" alt="pos image">
+      <img width="80%" class="m-t-6" :src="itemData.modelPic" alt="pos image">
     </div>
     <div class="item-middle">
       <h4 class="m-t-16 m-b-16">
-        <span class="m-r-10">{{ itemData.sn}}</span>
+        <span class="m-r-10">{{ itemData.sn }}</span>
         <span class="m-r-20">({{ itemData.modelName }})</span>
       </h4>
       <p class="details bind-info">
@@ -16,30 +16,47 @@
           <span>{{ itemData.merchantName || '--' }}</span>
         </span>
         <span class="m-r-30">({{ $t('machine.list.terminalNo') }}{{ itemData.terminalNo || '--' }})</span>
-        <span>{{ itemData.state ? $t('machine.list.bindTimeText') : $t('machine.list.unbindTimeText') }}
+        <span>{{ itemData.state === 1 ? $t('machine.list.bindTimeText') : $t('machine.list.unbindTimeText') }}
           {{ itemData.bindOrUnBindTime | formatTime }}
         </span>
       </p>
       <p class="details">
-        <span class="m-r-30">{{ $t('machine.list.companyName') }}{{ itemData.companyName }}</span>
-        <span class="m-r-30">{{ $t('machine.list.createTime') }}{{ itemData.createTime | formatTime }}</span>
+        <span class="m-r-30">
+          {{ $t('machine.list.companyName') }}{{ itemData.companyName }}
+        </span>
+        <span class="m-r-30">
+          {{ $t('machine.list.createTime') }}{{ itemData.createTime | formatTime }}
+        </span>
       </p>
     </div>
     <div class="item-right">
-      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('machine.list.edit') }}</el-button>
-      <el-button class="line-type blue-btn" @click="toDetails(itemData.id)">{{ $t('machine.list.details') }}</el-button>
+      <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">
+        {{ $t('machine.list.edit') }}
+      </el-button>
+      <el-button class="line-type blue-btn" @click="toDetails(itemData.id)">
+        {{ $t('machine.list.details') }}
+      </el-button>
       <!-- 可进行解绑操作，表示为未解绑 -->
-      <el-button v-if="itemData.state === 1" class="line-type blue-btn" @click="handleUnbind">{{ $t('machine.list.unbind') }}</el-button>
-      <el-button v-else class="line-type blue-btn" @click="$emit('open-bind-dialog')">{{ $t('machine.list.bind') }}</el-button>
-      <el-button class="line-type blue-btn" @click="toControl(itemData.id)">{{ $t('machine.list.remote') }}</el-button>
+      <el-button
+        v-if="itemData.state === 1" class="line-type blue-btn"
+        @click="handleUnbind(itemData)">
+        {{ $t('machine.list.unbind') }}
+      </el-button>
+      <el-button 
+        v-else 
+        class="line-type blue-btn" 
+        @click="$emit('open-bind-dialog')">
+        {{ $t('machine.list.bind') }}
+      </el-button>
+      <el-button class="line-type blue-btn" @click="toControl(itemData.id)">
+        {{ $t('machine.list.remote') }}
+      </el-button>
     </div>
   </div>
 </template>
 
 <script>
-import tposImg from '@/assets/images/tpos.png'
-import sposImg from '@/assets/images/spos.png'
-import mposImg from '@/assets/images/mpos.png'
+import { unbindTerminal } from '@/api/machine'
 
 export default {
   name: 'UserListItem',
@@ -69,16 +86,29 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleUnbind() {
-      this.$confirm('请确认是否解除 设备${设备SN号} 与 ${商户名称}(终端号${终端号})的绑定关系?', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
+    handleUnbind(item) {
+      const {
+        sn,
+        merchantName,
+        terminalNo,
+        id: machineId
+      } = item
+      const content = 
+        `${this.$t('machine.unbind.content1')}
+        ${sn}${this.$t('machine.unbind.content2')}
+        ${merchantName}(${this.$t('machine.unbind.content3')}${terminalNo})
+        ${this.$t('machine.unbind.content4')}?`
+      this.$confirm(content, this.$t('machine.unbind.title'), {
+        confirmButtonText: this.$t('base.buttons.yes'),
+        cancelButtonText: this.$t('base.buttons.no'),
         customClass: 'delete-confirm'
       }).then(() => {
-        // 进行删除操作
-        this.$message.success('解绑成功')
+        unbindTerminal(machineId).then(res => {
+          this.$emit('refresh')
+          this.$message.success(this.$t('base.tips.unbindSuccess'))
+        })
       }).catch(() => {
-        console.log('取消冻结账号！！！')
+        console.log('cancel to unbind')
       })
     },
     toDetails(machineId) {

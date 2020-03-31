@@ -71,7 +71,7 @@ export default {
       font-size: 14px;
       font-family: youyuan, Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
-      font-size: 24px;
+      font-size: 22px;
     }
   }
 

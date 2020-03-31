@@ -32,18 +32,19 @@ export function getMachineDetails(machineId) {
 }
 
 /* 批量导入机具 */
-export function batchMachine(machineId) {
+export function batchMachine() {
   return request({
     url: '/machine/batch',
     method: 'post',
   })
 }
 
-/* 查询商户终端 */
-export function queryTerminals() {
+/* 查询商户终端——机具绑定终端时调用 */
+export function queryMerchantTerminal(params) {
   return request({
     url: '/machine/queryMerchantTerminal',
     method: 'get',
+    params
   })
 }
 
@@ -65,7 +66,7 @@ export function queryMerchant(machineId) {
 }
 
 /* 绑定商户终端 */
-export function bindTerminal(machineId, data) {
+export function bindMerchantTerminal(machineId, data) {
   return request({
     url: `/machine/${machineId}/merchantTerminal`,
     method: 'post',

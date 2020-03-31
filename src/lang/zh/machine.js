@@ -43,6 +43,34 @@ export default {
       remark: '备注:',
       runningInfo: '运行信息'
     },
+    bind: {
+      title: '绑定商户终端',
+      selectionTitle: '选择商户终端',
+      label: {
+        sn: '机身号',
+        merchant: '绑定商户终端',
+      },
+      placeholder: {
+        merchant: '请输入商户编号或名称'
+      },
+      thead: {
+        merchantNo: '商户编号',
+        merchantName: '商户名称',
+        terminalNo: '终端号',
+        selection: '选择'
+      },
+      tips: {
+        merchant: '请点击搜索按钮选择终端',
+        selection: '只支持绑定一个商户终端'
+      }
+    },
+    unbind: {
+      content1: '请确认是否解除设备',
+      content2: '与',
+      content3: '终端号',
+      content4: '的绑定关系',
+      title: '提示'
+    },
     form: {
       label: {
         model: '型号',
@@ -58,9 +86,6 @@ export default {
         reportCycle: '请输入报到周期',
         heartbeatCycle: '请输入心跳周期'
       }
-    },
-    unbind: {
-      
     },
     states: [
       {

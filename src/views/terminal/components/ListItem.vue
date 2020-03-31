@@ -3,21 +3,21 @@
     <div class="item-left">
       <h4 class="m-t-16 m-b-20">
         <span class="first-line">【{{ $t('terminal.list.merchantNo') }}{{ itemData.merchantNo }}】</span>
-        <span class="m-r-10">{{ itemData.merchantName }}</span>
-        <span class="state right" :class="!itemData.state ? 'enabled' : 'disabled'">{{ itemData.state | curState($t('terminal.states')) }}</span>
+        <span class="m-r-24">{{ itemData.merchantName }}</span>
+        <span class="state right" :class="itemData.state === 1 ? 'enabled' : 'disabled'">{{ itemData.state | curState($t('terminal.states')) }}</span>
       </h4>
       <p class="details">
         <span :class="marginRight">{{ $t('terminal.list.terminalNo') }}{{ itemData.terminalNo }}</span>
-        <span :class="marginRight">{{ $t('terminal.list.sn') }}{{ itemData.sn }}</span>
+        <span :class="marginRight">{{ $t('terminal.list.sn') }}{{ itemData.sn || '--' }}</span>
         <span :class="marginRight">{{ $t('terminal.list.companyName') }}{{ itemData.companyName }}</span>
-        <span>{{ $t('terminal.list.createTime') }}{{ itemData.createTime }}</span>
+        <span>{{ $t('terminal.list.createTime') }}{{ itemData.createTime || '--' }}</span>
       </p>
     </div>
     <div class="item-right">
       <el-button class="line-type green-btn" @click="$emit('open-edit-dialog')">{{ $t('terminal.list.edit') }}</el-button>
       <el-button class="line-type blue-btn" @click="$emit('view-details')">{{ $t('terminal.list.details') }}</el-button>
-      <el-button class="line-type blue-btn" v-if="!itemData.state" @click="$emit('handle-unbind')">{{ $t('terminal.list.unbind') }}</el-button>
-      <el-button class="line-type blue-btn" v-if="itemData.state" @click="$emit('open-bind-dialog')">{{ $t('terminal.list.bind') }}</el-button>
+      <el-button class="line-type blue-btn" v-if="itemData.state === 1" @click="$emit('handle-unbind')">{{ $t('terminal.list.unbind') }}</el-button>
+      <el-button class="line-type blue-btn" v-if="itemData.state === 2" @click="$emit('open-bind-dialog')">{{ $t('terminal.list.bind') }}</el-button>
     </div>
   </div>
 </template>
@@ -27,10 +27,9 @@ export default {
   name: 'TerminalList',
   components: {},
   filters: {
-    /* 后台暂时还缺少一个state字段，03-27调整这一块 */
     curState(val, states) {
       const curState = _.find(states, { value: _.toNumber(val) })
-      return curState && curState.label || '绑定'
+      return curState && curState.label
     }
   },
   props: {
@@ -61,19 +60,7 @@ export default {
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
-  methods: {
-    freezeAccount() {
-      this.$confirm('请确认是否冻结${渠道商简称}(${渠道商编号})', '提示', {
-        confirmButtonText: '是',
-        cancelButtonText: '否',
-      }).then(() => {
-        // 进行删除操作
-        this.$message.success('账号已经被冻结')
-      }).catch(() => {
-        console.log('取消冻结账号！！！')
-      })
-    }
-  }
+  methods: {}
 }
 </script>
 

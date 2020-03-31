@@ -11,7 +11,7 @@
         prop="merchantId"
         :label="$t('terminal.form.label.merchantId')"
       >
-        <el-select v-model="formData.merchantId">
+        <el-select v-model="formData.merchantId" :disabled="isDetailsMode">
           <el-option
             v-for="item in directMerchantList"
             :key="item.id"
@@ -24,19 +24,31 @@
         v-if="!flag"
         :label="$t('terminal.form.label.terminalNos')"
         prop="terminalNos">
-        <el-input v-model="formData.terminalNos" type="textarea" maxlength="200"></el-input>
+        <el-input 
+          v-model="formData.terminalNos" type="textarea" 
+          maxlength="200" :disabled="isDetailsMode">
+        </el-input>
       </el-form-item>
       <el-form-item
         v-else
         :label="$t('terminal.form.label.terminalNos')"
         prop="terminalNo">
-        <el-input v-model="formData.terminalNo" maxlength="20"></el-input>
+        <el-input 
+          v-model="formData.terminalNo" maxlength="20" 
+          :disabled="isDetailsMode"></el-input>
       </el-form-item>
       <el-form-item :label="$t('terminal.form.label.remark')">
-        <el-input v-model="formData.remark" type="textarea" maxlength="200"></el-input>
+        <el-input 
+          v-model="formData.remark" 
+          type="textarea" maxlength="200" 
+          :disabled="isDetailsMode">
+        </el-input>
       </el-form-item>
       <el-form-item :label="$t('terminal.form.label.createPerson')" v-if="flag===2">
-        <el-input v-model="formData.createPerson" maxlength="200"></el-input>
+        <el-input 
+          v-model="formData.createPerson" 
+          maxlength="200" :disabled="isDetailsMode">
+        </el-input>
       </el-form-item>
     </el-form>
     <span slot="footer" class="dialog-footer">
@@ -97,7 +109,7 @@ export default {
       return this.flag === 2;
     },
     dialogTitle() {
-      let title = "";
+      let title = ''
       switch (this.flag) {
         case 0:
           title = this.$t("terminal.add.title");
@@ -116,8 +128,6 @@ export default {
   },
   watch: {},
   created() {
-    // const res = await getDirectMerchants();
-    // this.directMerchantList = res.data;
     this.getDirectMerchantList()
   },
   beforeMount() {},

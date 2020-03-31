@@ -16,11 +16,11 @@ export default {
       unbind: 'Unbind',
       batchImport: 'Batch import',
       batchBind: 'Batch unbind',
-      merchantNo: 'Merchant number',
-      terminalNo: 'Terminal number',
-      sn: 'SN', // 设备sn（即机身号）
-      companyName: 'Attribute company',
-      createTime: 'Created time',
+      merchantNo: 'Merchant number: ',
+      terminalNo: 'Terminal number: ',
+      sn: 'SN: ', // 设备sn（即机身号）
+      companyName: 'Attribute company: ',
+      createTime: 'Created time: ',
     },
     add: {
       title: 'Add Terminal',
@@ -50,13 +50,15 @@ export default {
     bind: {
       title: 'Bind machine',
       label: {
-        deviceSN: 'machine SN',
+        deviceSN: 'machine SN:',
         merchantName: 'Merchant name：',
-        terminalNo: 'Terminal number',
-        sn: 'SN'
+        terminalNo: 'Terminal number: ',
+        model: 'Model: ',
+        sn: 'SN: '
       },
       tips: {
         sn: 'Please input a machine sn',
+        querySnTips: 'No data found, please check whether the machine number entered is correct'
       },
       query: 'Query',
       replace: 'Replace',
@@ -84,7 +86,7 @@ export default {
         value: 1
       },
       {
-        label: 'Unbounded',
+        label: 'Unbound',
         value: 2
       },
     ]

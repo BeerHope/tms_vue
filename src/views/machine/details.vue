@@ -9,40 +9,40 @@
           <el-row>
             <el-col :span="12">
               <span>{{ $t('machine.details.model') }}</span>
-              <span>TPOS/G2</span>
+              <span>{{ modelType }}/{{ machineDetails && machineDetails.modelName }}</span>
             </el-col>
             <el-col :span="12">
               <span>{{ $t('machine.details.reportCycle') }}</span>
-              <span>SN243240734273421</span>
+              <span>{{ machineDetails && machineDetails.reportCycle }}</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="12">
               <span>{{ $t('machine.details.heartbeatCycle') }}</span>
-              <span>TPOS/G2</span>
+              <span>{{ machineDetails && machineDetails.heartbeatCycle }}</span>
             </el-col>
             <el-col :span="12">
               <span>{{ $t('machine.details.sn') }} </span>
-              <span>SN243240734273421</span>
+              <span>{{ machineDetails && machineDetails.sn }}</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
               <span>{{ $t('machine.details.createPerson') }}</span>
-              <span>TPOS/G2</span>
+              <span>{{ machineDetails && machineDetails.createPerson }}</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
-              <span>{{ $t('machine.details.createPerson') }}</span>
-              <span>SN243240734273421</span>
+              <span>{{ $t('machine.details.remark') }}</span>
+              <span>{{ machineDetails && machineDetails.remark }}</span>
             </el-col>
           </el-row>
         </div>
       </el-card>
       <el-card class="box-card" shadow="never">
         <div slot="header" class="clearfix run-info">
-          <span>运行信息</span>
+          <span>{{ $t('machine.details.runningInfo') }}</span>
         </div>
         <div class="content">
           <el-row>
@@ -127,10 +127,17 @@ export default {
           version: 'V1.0.0',
           apkName: '应用包名称'
         }
-      ]
+      ],
+      machineDetails: null,
     }
   },
-  computed: {},
+  computed: {
+    modelType() {
+      return this.machineDetails ? _.find(this.$t('base.posTypes'), {
+        value: this.machineDetails.modelType
+      }).label : '--'
+    }
+  },
   watch: {},
   created() {
     this.getMachineDetails()
@@ -150,7 +157,7 @@ export default {
       this.loading = true
       const machineId = this.$route.params.id
       getMachineDetails(machineId).then(res => {
-        console.log(res, 'res!!!!!!')
+        this.machineDetails = res.data
         this.loading = false
       }).catch(() => {
         this.loading = false

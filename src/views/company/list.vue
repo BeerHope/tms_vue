@@ -33,7 +33,7 @@
         {{ $t('company.list.add') }}
       </el-button>
     </div>
-    <div class="common-table">
+    <div v-if="companyList.length" class="common-table">
       <list-item
         v-for="(item, index) in companyList" :key="index"
         :item-data="item" @open-edit-dialog="openDialog(1, item.id, true)"
@@ -52,6 +52,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <company-dialog @refresh="getCompanyList" ref="companyDialog"></company-dialog>
     <company-level ref="companyLevel"></company-level>
   </div>

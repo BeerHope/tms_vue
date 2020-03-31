@@ -33,10 +33,11 @@
         {{ $t('machine.list.batchImport') }}
       </el-button>
     </div>
-    <div class="common-table m-t-20">
+    <div v-if="machineList.length" class="common-table m-t-20">
       <list-item
         v-for="item in machineList" :key="item.id"
-        :item-data="item" @open-bind-dialog="openBindDialog"
+        @refresh="getMachineList"
+        :item-data="item" @open-bind-dialog="openBindDialog(item)"
         @open-edit-dialog="openDialog(1, item.id, true)"
       ></list-item>
       <!-- 分页 -->
@@ -51,8 +52,9 @@
         :total="total">
       </el-pagination>
     </div>
-    <machine-dialog ref="machineDialog"></machine-dialog>
-    <bind-dialog ref="bindDialog"></bind-dialog>
+    <no-result v-else></no-result>
+    <machine-dialog @refresh="getMachineList" ref="machineDialog"></machine-dialog>
+    <bind-dialog ref="bindDialog" @refresh="getMachineList"></bind-dialog>
     <import-dialog ref="importDialog" :title="$t('machine.batchImport.title')"></import-dialog>
   </div>
 </template>
@@ -130,10 +132,10 @@ export default {
         dialogVisible
       })
     },
-    openBindDialog() {
+    openBindDialog(item) {
       const bindDialog = this.$refs.bindDialog
-      bindDialog.isShowResult = false
       bindDialog.bindingDialogVisible = true
+      bindDialog.currentMachine = item
     },
     openImportDialog() {
       this.$refs.importDialog.dialogVisible = true

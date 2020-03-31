@@ -1,49 +1,53 @@
 <template>
   <div>
     <el-dialog
-      @close="handleDialogClose"
+      @close="resetDialog"
+      @open="openDialog"
       custom-class="bind-dialog"
       :title="$t('terminal.bind.title')"
       :visible.sync="dialogVisible"
       width="632px">
-      <el-form ref="form" :model="formData" v-if="!isShowResult" class="common-form" :rules="rules" label-width="120px">
+      <el-form ref="form" v-loading="loading" :model="formData" v-if="!isShowResult" class="common-form" :rules="rules" label-width="120px">
         <el-form-item :label="$t('terminal.bind.label.deviceSN')" prop="sn">
           <el-input v-model="formData.sn" clearable></el-input>
         </el-form-item>
       </el-form>
       <div v-else class="search-result">
         <div class="m-r-30">
-          <img src="@/assets/images/mpos.png" alt="apk.png">
+          <!-- <img src="@/assets/images/mpos.png" alt="apk.png"> -->
+          <img :src="snDetails && snDetails.modelPic" alt="apk.png">
         </div>
         <div class="content">
           <el-row>
             <el-col :span="12">
-              <span>{{ $t('terminal.bind.label.deviceSN') }}</span>
-              <span>*****</span>
+              <span>{{ $t('terminal.bind.label.merchantName') }}</span>
+              <span>{{ snDetails && snDetails.merchantName }}</span>
             </el-col>
             <el-col :span="12">
               <span>{{ $t('terminal.bind.label.terminalNo') }}</span>
-              <span>12345678</span>
+              <span>{{ snDetails && snDetails.terminalNo }}</span>
             </el-col>
           </el-row>
           <el-row>
             <!-- 下面是传入值 -->
             <el-col :span="24">
-              <span>智能POS：</span>
-              <span>N5</span>
+              <!-- modelType需转换 -->
+              <span>{{ $t('terminal.bind.label.model') }}</span>
+              <span class="m-r-6">{{ modelType }}</span>
+              <span>{{ snDetails && snDetails.modelName }}</span>
             </el-col>
           </el-row>
           <el-row>
             <el-col :span="24">
               <span>{{ $t('terminal.bind.label.sn') }}</span>
-              <span>12345678910</span>
+              <span>{{ snDetails && snDetails.sn }}</span>
             </el-col>
           </el-row>
         </div>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" v-if="!isShowResult" @click="querySN">{{ $t('terminal.bind.query') }}</el-button>
-        <el-button type="primary" v-if="isShowResult" @click="isShowResult=false">{{ $t('terminal.bind.replace') }}</el-button>
+        <el-button type="primary" v-if="isShowResult" @click="resetDialog">{{ $t('terminal.bind.replace') }}</el-button>
         <el-button type="primary" v-if="isShowResult" @click="bindSN">{{ $t('terminal.bind.bind') }}</el-button>
       </span>
     </el-dialog>
@@ -59,18 +63,19 @@ export default {
   directive: {},
   data() {
     return {
+      loading: false,
       dialogVisible: false,
       merchantDialogVisible: false,
       terminalId: -1,
       formData: {
         sn: '',
-        merchant: ''
       },
       rules: {
         sn: [
           { required: true, message: this.$t('terminal.bind.tips.sn'), trigger: 'blur' }
         ]
       },
+      snDetails: null,
       merchantList: [
         {
           id: '23213213213',
@@ -90,7 +95,13 @@ export default {
       currentMerchant: -1,
     }
   },
-  computed: {},
+  computed: {
+    modelType() {
+      return this.snDetails ? _.find(this.$t('base.posTypes'), {
+        value: this.snDetails.modelType
+      }).label : '--'
+    }
+  },
   watch: {},
   created() {},
   beforeMount() {},
@@ -98,28 +109,43 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleDialogClose() {
-      /* 下面代码暂时模拟 */
-      this.$refs.form.resetFields()
+    openDialog() {
+      this.loading = true
+      this.$nextTick(() => {
+        this.$refs.form.resetFields()
+        this.loading = false
+      })
     },
     querySN() {
       this.$refs.form.validate((valid) => {
         if (valid) {
-          const sn = ''
-          querySN(this.terminalId, sn).then(res => {
-            console.log(res.data, '绑定设备 querySN接口数据')
+          this.loading = true
+          querySN(this.terminalId, this.formData.sn).then(res => {
+            const resData = res.data
+            if (!resData) {
+              this.$message.warning(this.$t('terminal.bind.tips.querySnTips'))
+              this.loading = false
+              return
+            }
+            this.snDetails = resData
+            this.loading = false
             this.isShowResult = true
+          }).catch(() => {
+            this.loading = false
           })
         }
       })
     },
     bindSN() {
       bindSN(this.terminalId, this.formData.sn).then(res => {
-      /* 此处调用绑定接口，然后关闭dialog */
         this.$emit('refresh')
-        this.message.success(this.$t('base.tips.bindSuccess'))
+        this.$message.success(this.$t('base.tips.bindSuccess'))
         this.dialogVisible = false
       })
+    },
+    resetDialog() {
+      this.snDetails = null
+      this.isShowResult = false
     },
     openMerchantDialog() {
       this.merchantDialogVisible = true
@@ -167,6 +193,10 @@ export default {
 </style>
 <style lang="scss">
 .bind-dialog {
+  .el-form-item__label, 
+  .el-dialog__body{
+    color: #172B4D;
+  }
   margin-top: calc(50vh - 160px) !important;
   .el-dialog__header{
     padding: 20px 30px;

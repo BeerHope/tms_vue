@@ -59,6 +59,9 @@ export default {
         failureText: '是否需要导出失败清单'
       },
     },
+    noResult: {
+      desc: '无搜索结果',
+    },
     states: [
       {
         value: null,
@@ -91,6 +94,9 @@ export default {
       add: '新增',
       modify: '修改',
       import: '导入',
+      bind: '绑定',
+      unbind: '解绑',
+      search: '搜索',
       yes: '是',
       no: '否'
     },
@@ -100,15 +106,15 @@ export default {
         value: null,
       },
       {
-        label: '传统pos',
+        label: '传统POS',
         value: 1,
       },
       {
-        label: '智能pos',
+        label: '智能POS',
         value: 2,
       },
       {
-        label: '移动pos',
+        label: '移动POS',
         value: 3,
       }
     ]

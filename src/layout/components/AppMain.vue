@@ -26,6 +26,10 @@ export default {
   padding: 16px;
   overflow-x: hidden;
   overflow-y: auto;
+
+}
+.app-main>div{
+  margin-top: 70px;
 }
 .fixed-header + .app-main {
   padding-top: 50px;

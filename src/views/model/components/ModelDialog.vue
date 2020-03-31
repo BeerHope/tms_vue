@@ -131,7 +131,7 @@ export default {
         type: [
           {
             required: true,
-            message: this.$t("model.form.tips.type"),
+            message: this.$t("model.form.tips.types"),
             trigger: "blur"
           }
         ],
@@ -235,11 +235,13 @@ export default {
     },
     addModel() {
       this.$refs.form.validate((valid) => {
-        addModel(this.formData).then(res => {
-          this.$emit('refresh')
-          this.$message.success(this.$t('base.tips.addSuccess'))
-          this.dialogVisible = false
-        })
+        if (valid) {
+          addModel(this.formData).then(res => {
+            this.$emit('refresh')
+            this.$message.success(this.$t('base.tips.addSuccess'))
+            this.dialogVisible = false
+          })
+        }
       })
     },
     updateModel() {

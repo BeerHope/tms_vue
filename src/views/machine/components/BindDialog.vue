@@ -1,103 +1,74 @@
 <template>
   <div>
-    <el-dialog
-      @open="handleOpenBindDialog"
-      custom-class="bind-dialog"
-      title="绑定终端商户"
-      :visible.sync="bindingDialogVisible"
-      width="632px">
-      <el-form ref="form" :model="formData" v-if="!isShowResult" class="common-form" :rules="rules" label-width="120px">
-        <el-form-item label="机身号" prop="deviceSn">
-          <el-input v-model="formData.deviceSN" disabled></el-input>
-        </el-form-item>
-        <el-form-item label="绑定商户终端" prop="merchant">
-          <el-input v-model="formData.merchant" readonly>
-            <svg-icon slot="suffix" icon-class="search" class="search-btn" @click="openMerchantDialog"></svg-icon>
-          </el-input>
-        </el-form-item>
-      </el-form>
-      <div v-else class="search-result">
-        <div class="m-r-30">
-          <img src="@/assets/images/mpos.png" alt="apk.png">
-        </div>
-        <div class="content">
-          <el-row>
-            <el-col :span="12">
-              <span>客户名称：</span>
-              <span>*****</span>
-            </el-col>
-            <el-col :span="12">
-              <span>终端号: </span>
-              <span>12345678</span>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <span>智能POS：</span>
-              <span>N5</span>
-            </el-col>
-          </el-row>
-          <el-row>
-            <el-col :span="24">
-              <span>SN：</span>
-              <span>12345678910</span>
-            </el-col>
-          </el-row>
-        </div>
-      </div>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" class="cancel" @click="bindingDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="handleBind">绑 定</el-button>
-      </span>
-    </el-dialog>
     <!-- 选择商户终端弹窗 -->
     <el-dialog
-      custom-class="merchant-dialog"
-      title="选择商户终端"
-      :visible.sync="merchantDialogVisible"
+      custom-class="bind-dialog"
+      :title="$t('machine.bind.title')"
+      :visible.sync="bindingDialogVisible"
+      @close="closeDialog"
       width="40%">
-      <div class="filter-box">
-        <el-input class="filter-item" v-model="filter.merchant" placeholder="请输入商户编号或者名称" clearable></el-input>
-        <el-button type="primary">
-          <svg-icon icon-class="search"></svg-icon>
-          搜索
-        </el-button>
+      <div class="m-b-10">
+        <span class="m-r-10" style="display: inline-block;width: 94px;text-align: right">{{ $t('machine.bind.label.sn') }}</span>
+        <el-input style="width: 244px" v-model="currentMachine.sn" disabled></el-input>
       </div>
-      <div class="m-t-20 h-100">
+      <div class="m-b-20">
+        <span class="m-r-10" style="display: inline-block;width: 94px;text-align: right">{{ $t('machine.bind.label.merchant') }}</span>
+        <el-input 
+          style="width: 244px"
+          class="filter-item" 
+          v-model="filter.keyword" 
+          :placeholder="$t('machine.bind.placeholder.merchant')">
+          <svg-icon
+            slot="suffix"
+            icon-class="search"
+            class="search-btn"
+            @click="getMerchantTerminal"
+          ></svg-icon>
+        </el-input>
+      </div>
+      <div v-loading="loading" style="height: calc(100% - 60px)">
         <el-table
-          :data="merchantList"
-          height="calc(100% - 100px)"
+          ref="table"
+          :data="merchantList" 
+          height="calc(100% - 80px)"
           style="width: 100%">
-          <el-table-column label="商户编号" prop="id"></el-table-column>
-          <el-table-column label="商户名称" prop="name"></el-table-column>
-          <el-table-column label="终端号" prop="terminalId"></el-table-column>
-          <el-table-column label="选择">
+          <el-table-column :label="$t('machine.bind.thead.merchantNo')" prop="merchantNo"></el-table-column>
+          <el-table-column :label="$t('machine.bind.thead.merchantName')" prop="merchantName"></el-table-column>
+          <el-table-column :label="$t('machine.bind.thead.terminalNo')" prop="terminalNo"></el-table-column>
+          <el-table-column :label="$t('machine.bind.thead.selection')" prop="selection" width="70px" align="center">
             <template slot-scope="scope">
-              <el-checkbox v-model="scope.row.isSelected"></el-checkbox>
+              <el-checkbox @change="handleSelect(scope.row, scope.column)" v-model="scope.row.isSelected"></el-checkbox>
             </template>
           </el-table-column>
         </el-table>
         <el-pagination
-          class="common-pagination"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="10"
-          layout="prev, pager, next, jumper"
-          :total="3">
-        </el-pagination>
+          class="common-pagination m-t-0"
+          :pager-count="5"
+          @size-change="getMerchantTerminal"
+          @current-change="getMerchantTerminal"
+          :current-page.sync="filter.page"
+          :page-sizes="[10, 20, 30, 50]"
+          :page-size.sync="filter.pageSize"
+          layout="total, prev, pager, next, jumper"
+          :total="total"
+        ></el-pagination>
       </div>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" class="cancel" @click="merchantDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="selectMerchant">确 定</el-button>
+        <el-button
+          type="primary"
+          class="cancel"
+          @click="bindingDialogVisible = false"
+        >{{ $t('base.buttons.cancel') }}</el-button>
+        <el-button type="primary" @click="handleBind">{{ $t('base.buttons.bind') }}</el-button>
       </span>
     </el-dialog>
   </div>
 </template>
 <script>
+import { queryMerchantTerminal, bindMerchantTerminal } from '@/api/machine'
+
 export default {
-  name: '',
+  name: "",
   components: {},
   props: {},
   directive: {},
@@ -105,40 +76,38 @@ export default {
     return {
       bindingDialogVisible: false,
       merchantDialogVisible: false,
+      loading: false,
+      machineId: -1,
       filter: {
-        merchant: ''
+        keyword: '',
+        page: 1,
+        pageSize: 10,
       },
-      formData: {
-        deviceSN: '1243243247890',
-        merchant: ''
+      currentMachine: {
+        sn: "",
+        merchant: ""
       },
       rules: {
         merchant: [
-          { required: true, message: '请点击搜索选择终端', trigger: 'blur' }
+          {
+            required: true,
+            message: this.$t('machine.bind.tips.merchant'),
+            trigger: "blur"
+          }
         ]
       },
-      merchantList: [
-        {
-          id: '23213213213',
-          name: '商户11',
-          terminalId: '32423213223',
-          isSelected: false,
-        },
-        {
-          id: '23213213213',
-          name: '商户12',
-          terminalId: '332222432423',
-          isSelected: false,
-        },
-      ],
-      currentPage: 1,
-      isShowResult: false,
-      currentMerchant: -1,
-    }
+      merchantList: [],
+      total: 1,
+      bindingCellList: [], // 绑定的列表
+      selectedMerchant: null,
+    };
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    /* 放在这里调用而不放在openDialog时调用，主要是出于性能考虑 */
+    this.getMerchantTerminal()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
@@ -146,84 +115,106 @@ export default {
   methods: {
     handleOpenBindDialog() {
       /* 下面代码暂时模拟 */
-      _.forEach(this.merchantList, (item) => {
-        item.isSelected = false
-      })
+      _.forEach(this.merchantList, item => {
+        item.isSelected = false;
+      });
     },
     handleBind() {
-      if (this.$refs.form) {
-        /* 校验是否通过 */
-        this.$refs.form.validate().catch(err => console.log(err))
+      const bindingCellList = []
+      const { merchantId, terminalId } = this.selectedMerchant
+      if (terminalId) {
+        bindingCellList.push({ merchantId, terminalId })
       } else {
-        /* 此处调用绑定接口，然后关闭dialog */
-        this.bindingDialogVisible = false
+        bindingCellList.push({ merchantId })
       }
+      // return
+      const reqData = {
+        id: this.currentMachine.id,
+        bindingCellList
+      }
+      bindMerchantTerminal(merchantId, reqData).then(res => {
+        this.$emit('refresh')
+        this.bindingDialogVisible = false
+        this.$message.success(this.$t('base.tips.bindSuccess'))
+      })
     },
     openMerchantDialog() {
       this.merchantDialogVisible = true
     },
-    handleSizeChange() {
-      console.log('handleSizeChange!!')
+    closeDialog() {
+      this.clearSelection()
+      this.currentMachine = null
     },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!')
+    getMerchantTerminal() {
+      this.loading = true
+      queryMerchantTerminal(this.filter).then(res => {
+        this.merchantList = _.map(res.data.rows, item => {
+          item.isSelected = false
+          return item
+        })
+        this.total = res.data.totalRecord
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
     },
-    selectMerchant() {
-      const isSelectedOne = _.filter(this.merchantList, (item) => {
-        return item.isSelected
-      }).length === 1
-      if (!isSelectedOne) {
-        this.$message.warning('请选择一个要绑定的商户')
+    clearSelection() {
+      _.forEach(this.merchantList, (item) => {
+        if (item.isSelected) {
+          item.isSelected = false
+        } 
+      })
+    },
+    handleSelect(row, column) {
+      if (column.property !== 'selection') {
         return
       }
-      /* 更新表单 */
-      this.isShowResult = true
-      this.merchantDialogVisible = false
+      if (_.isEqual(this.selectedMerchant, row)) {
+        this.selectedMerchant = null
+        return
+      }
+      this.clearSelection()
+      row.isSelected = true
+      this.selectedMerchant = row
     }
   }
-}
+};
 </script>
 
 <style lang='scss' scoped>
-.el-input__suffix{
+.el-input__suffix {
   .search-btn {
     cursor: pointer;
     font-size: 16px;
-    color: #5087E5;
+    color: #5087e5;
     height: 34px;
     line-height: 34px;
-  }
-}
-.search-result{
-  display: flex;
-  border: 1px solid #BEC1C6;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 0 16px;
-  width: 100%;
-  .el-row{
-    height: 30px;
-  }
-  .content{
-    flex: auto;
   }
 }
 </style>
 <style lang="scss">
 .bind-dialog {
-  margin-top: calc(50vh - 160px) !important;
-  .el-dialog__header{
-    padding: 20px 30px;
-  }
-  .el-dialog__body{
-    width: 100%;
-    height: 192px;
-    display: flex;
-  }
-}
-.merchant-dialog{
-  .el-dialog__body{
+  .el-dialog__body {
     height: 60vh;
+    width: calc(100% - 100px);
+  }
+  .el-table {
+    thead{
+      color: #172B4D;
+    }
+    td{
+      border-bottom: none;
+    }
+    /deep/.diabled-selection .cell .el-checkbox__inner{
+      display: none;
+      position: relative;
+    }
+    /deep/.diabled-selection .cell:before{
+      content: '';
+      position: absolute;
+      width: 100%;
+      left: 0;
+    }
   }
 }
 </style>

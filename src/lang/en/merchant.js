@@ -5,12 +5,17 @@ export default {
       typeIn: 'Type-in merchant',
       batch: 'Batch import',
       merchantNo: 'Merchant number',
-      company: 'attributive company：',
-      createTime: 'Created time',
+      company: 'Attributive company：',
+      createTime: 'Created time: ',
       edit: 'Edit',
       details: 'Details',
       manageTerminal: 'Manage terminal',
-      manageMachine: 'Manage machine'
+      manageMachine: 'Manage machine',
+      filter: {
+        merchantNo: 'Merchant number',
+        merchantName: 'Merchant name',
+        company: 'Company',
+      }
     },
     batch: {
       title: 'Batch Import',

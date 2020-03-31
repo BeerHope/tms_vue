@@ -1,26 +1,26 @@
 <template>
   <div class="allocation-list common-list">
     <div class="filter-box p-t-6 p-b-6">
-       <el-select 
-          class="filter-item" 
-          v-model="filter.companyId" 
-          :placeholder="$t('allocation.list.filter.companyName')">
-          <el-option 
-            v-for="item in companyData" 
-            :key="item.id" :label="item.shortName" 
-            :value="item.id">
-          </el-option>
-        </el-select>
+      <el-select 
+        class="filter-item" 
+        v-model="filter.companyId" 
+        :placeholder="$t('allocation.list.filter.companyName')">
+        <el-option 
+          v-for="item in companyData" 
+          :key="item.id" :label="item.shortName" 
+          :value="item.id">
+        </el-option>
+      </el-select>
       <el-button type="primary" @click="getAllocationList">
         <svg-icon icon-class="search"></svg-icon>
-        {{ $t('allocation.list.search')}}
+        {{ $t('allocation.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openBatchAllocation">
         <svg-icon icon-class="allocation"></svg-icon>
         {{ $t('allocation.list.batchAllocate') }}
       </el-button>
     </div>
-    <div class="m-t-30">
+    <div class="m-t-30" v-if="alllocationList.length">
       <el-table
         :data="alllocationList"
         style="width: 100%"
@@ -32,7 +32,7 @@
         <el-table-column prop="batchNo" :label="$t('allocation.list.thead.batchNo')" align="center"></el-table-column>
         <el-table-column :label="$t('allocation.list.thead.operation')" align="center">
           <template slot-scope="scope">
-            <el-button class="line-type blue-btn" @click="viewDetails(scope.row.id)">{{$t('allocation.list.details')}}</el-button>
+            <el-button class="line-type blue-btn" @click="viewDetails(scope.row.id)">{{ $t('allocation.list.details') }}</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -48,6 +48,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <batch-allocation
       ref="allocation" 
       :company-data="companyData"

@@ -13,6 +13,7 @@ export default {
         companyName: 'Receiving Machine Company',
         createPerson: 'Operator',
         machineAmount: 'Machine Amount',
+        operation: 'Operation'
       }
     },
     batch: {

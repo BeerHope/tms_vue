@@ -70,6 +70,10 @@ $navBorderColor: #F0F3F4;
   // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   box-shadow: none;
   border-bottom: 1px solid $navBorderColor;
+  /* 暂时先这样写死 */
+  position: fixed;
+  z-index: 2;  
+  width: calc(100% - 251px);
 
   .hamburger-container {
     height: 100%;

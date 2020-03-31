@@ -1833,11 +1833,11 @@
 .state.right {
   display: inline-block;
   margin-top: -20px;
-  min-width: 56px;
+  min-width: 76px;
   height: 28px;
   line-height: 28px;
   position: relative;
-  text-align: left;
+  text-align: center;
   text-indent: 10px;
   font-size: 14px;
   font-weight: normal;

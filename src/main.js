@@ -16,7 +16,8 @@ import moment from 'moment'
 
 import '@/icons' // icon
 import '@/permission' // permission control
-
+import NoResult from '@/components/NoResult'
+Vue.use(NoResult)
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -27,11 +28,11 @@ import '@/permission' // permission control
  */
 
 /* 本地mock 暂时屏蔽*/
-import { mockXHR } from '../mock'
-if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_BASE_URL === '/mock-api') {
-  console.log('111111111111111')
-  mockXHR()
-}
+// import { mockXHR } from '../mock'
+// if (process.env.NODE_ENV === 'development' && process.env.VUE_APP_BASE_URL === '/mock-api') {
+//   console.log('111111111111111')
+//   mockXHR()
+// }
 _.assign(window, {
   _,
   moment

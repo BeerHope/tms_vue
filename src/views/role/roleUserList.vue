@@ -1,7 +1,7 @@
 <template>
   <div class="user-management-list">
     <h4 class="common-title">{{ $t('role.manageUser.title') }}</h4>
-    <section class="content">
+    <section v-if="userList.length" class="content">
       <el-table
         :data="userList"
         style="width: 100%"
@@ -26,7 +26,7 @@
           :label="$t('role.manageUser.thead.operation')"
           align="center">
           <template slot-scope="scope">
-            <span class="delete" @click="deleteUser(scope)">
+            <span class="delete" @click="deleteUser(scope.row.id)">
               {{ $t('role.manageUser.remove') }}
             </span>
           </template>
@@ -43,6 +43,7 @@
         :total="total"
       ></el-pagination>
     </section>
+    <no-result v-else></no-result>
   </div>
 </template>
 
@@ -81,18 +82,17 @@ export default {
       return "background: #E2E4E9; color: #172B4D;height: 42px;"
     },
     deleteUser(userId) {
-      const { $t, roleId } = this
       this.$confirm(
-        $t('manageUser.removeContent'),
-        $t('manageUser.remove'),
+        this.$t('role.manageUser.removeContent'),
+        this.$t('role.manageUser.remove'),
         {
-          confirmButtonText: $t('base.buttons.confirm'),
-          cancelButtonText: $t('base.buttons.cancel'),
-          // customClass: 'delete-confirm'
+          confirmButtonText: this.$t('base.buttons.confirm'),
+          cancelButtonText: this.$t('base.buttons.cancel'),
+          customClass: 'delete-confirm'
         }).then(() => {
-        deleteUser(roleId, userId).then(res => {
-          console.log(res, 'res deleteuser!!!!!!!')
-          this.$message.success($t('base.tips.removeSuccess'))
+        deleteUser(this.roleId, userId).then(res => {
+          this.getRoleUser()
+          this.$message.success(this.$t('base.tips.removeSuccess'))
         })
       }).catch(() => {
         console.log($t('base.tips.cancelRemove'))

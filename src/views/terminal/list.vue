@@ -47,7 +47,7 @@
         {{ $t('terminal.list.batchBind') }}
       </el-button>
     </div>
-    <div class="m-t-20 list-wrapper">
+    <div v-if="terminalList.length" class="m-t-20 list-wrapper">
       <list-item
         v-for="item in terminalList" :key="item.id"
         @open-edit-dialog="openDialog(1, item.id, true)"
@@ -68,6 +68,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <terminal-dialog ref="terminalDialog" @refresh="getTerminalList"></terminal-dialog>
     <bind-dialog ref="bindDialog" @refresh="getTerminalList"></bind-dialog>
     <upload
@@ -166,6 +167,8 @@ export default {
         this.terminalList = res.data.rows
         this.total = res.data.totalRecord
         loading.close()
+      }).catch(() => {
+        loading.close()
       })
     },
     openDialog(flag = 0, terminalId = -1, dialogVisible = true) {
@@ -201,8 +204,8 @@ export default {
       }).then(() => {
         // 进行删除操作
         unbind(terminalId, sn).then(res => {
-          this.$emit('refresh')
-          this.$message.success(this.$t('base.tips.unbindSucces'))
+          this.getTerminalList()
+          this.$message.success(this.$t('base.tips.unbindSuccess'))
         })
       }).catch(() => {
         console.log('取消解绑')

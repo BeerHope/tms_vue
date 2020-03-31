@@ -7,7 +7,7 @@
           :value="item.value" :label="item.label">
         </el-option>
       </el-select>
-      <el-input class="filter-item" v-model="filter.model" clearable :placeholder="$t('model.list.filter.name')"></el-input>
+      <el-input class="filter-item" v-model="filter.name" clearable :placeholder="$t('model.list.filter.name')"></el-input>
       <el-select
         class="filter-item" clearable
         v-model="filter.vendorId"
@@ -26,7 +26,7 @@
         {{ $t('model.list.add') }}
       </el-button>
     </div>
-    <div class="m-t-30 list-wrapper">
+    <div v-if="modelList.length" class="m-t-30 list-wrapper">
       <el-table
         :header-cell-style="headerStyle"
         :cell-style="cellStyle"
@@ -72,6 +72,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <model-dialog @refresh="getModelList" :vendor-list="vendorList" ref="modelDialog"></model-dialog>
   </div>
 </template>
@@ -107,7 +108,7 @@ export default {
       loading: false,
       filter: {
         type: '',
-        model: '',
+        name: '',
         vendorId: '',
         page: 1,
         pageSize: 10
@@ -144,7 +145,6 @@ export default {
   destroyed() {},
   methods: {
     openDialog(flag = 0, modelId = -1, dialogVisible = true) {
-      console.log('打开新增弹窗！！！！')
       const modelDialog = this.$refs.modelDialog
       _.assign(modelDialog, {
         flag,
@@ -162,6 +162,8 @@ export default {
       getModelList(this.filter).then(res => {
         this.modelList = res.data.rows
         this.total = res.data.totalRecord
+        loading.close()
+      }).catch(() => {
         loading.close()
       })
     },

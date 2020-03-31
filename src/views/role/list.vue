@@ -15,7 +15,7 @@
           {{ $t('role.list.add') }}
         </el-button>
       </div>
-      <div class="common-table">
+      <div v-if="roleList.length" class="common-table">
         <list-item
           v-for="(item, index) in roleList"
           :key="index"
@@ -34,6 +34,7 @@
           :total="total"
         ></el-pagination>
       </div>
+      <no-result v-else></no-result>
     </div>
     <!-- 新增/编辑 角色 -->
     <role-add ref="dialog" @refresh="getRoleList"></role-add>

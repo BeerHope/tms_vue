@@ -58,6 +58,9 @@ export default {
         failureText: 'Whether you need to export the failure list?'
       }
     },
+    noResult: {
+      desc: 'No Search Result',
+    },
     /* 状态 */
     states: [
       {
@@ -81,6 +84,9 @@ export default {
       add: 'Add',
       modify: 'Modify',
       import: 'Import',
+      bind: 'Bind',
+      unbind: 'Unbind',
+      search: 'Search',
       yes: 'Yes',
       no: 'No'
     },

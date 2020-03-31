@@ -33,7 +33,7 @@
         {{ $t('merchant.list.batch') }}
       </el-button>
     </div>
-    <div class="m-t-20 list-wrapper">
+    <div v-if="merchantList.length" class="m-t-20 list-wrapper">
       <list-item
         v-for="item in merchantList"
         :key="item.id"
@@ -53,6 +53,7 @@
         :total="total"
       ></el-pagination>
     </div>
+    <no-result v-else></no-result>
     <merchant-dialog ref="merchantDialog" @refresh="getMerchantList"></merchant-dialog>
     <import-dialog ref="importDialog"></import-dialog>
   </div>

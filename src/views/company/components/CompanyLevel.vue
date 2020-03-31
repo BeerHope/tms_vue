@@ -79,6 +79,8 @@ export default {
       color: #5087E5;
       border: 1px solid #5087E5;
       background-color: #EDF7FF;
+      min-width: 80px;
+      text-align: center;
     }
   }
 }

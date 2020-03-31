@@ -18,11 +18,11 @@
         class="common-pagination m-t-20"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="prev, pager, next, jumper"
-        :total="400">
+        :total="total">
       </el-pagination>
     </div>
   </el-dialog>
@@ -38,6 +38,10 @@ export default {
     return {
       dialogVisible: false,
       allocationId: -1,
+      filter: {
+        page: 1,
+        pageSize: 10
+      },
       detailsList: [
         {
           model: 'G2',
@@ -48,7 +52,7 @@ export default {
           machineSN: 'N2452365481',
         },
       ],
-      currentPage: 1,
+      total: 0,
       headerStyle() {
         return "background: #E2E4E9; color: #172B4D;height: 42px;"
       },

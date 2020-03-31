@@ -20,7 +20,7 @@
         {{ $t('user.list.add') }}
       </el-button>
     </div>
-    <div class="common-table">
+    <div v-if="userList.length" class="common-table">
       <list-item
         v-for="(item, index) in userList" :key="index"
         :item-data="item" @open-password-dialog="openPasswordDialog(item.id)"
@@ -38,6 +38,7 @@
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else></no-result>
     <add-dialog @refresh="getUserList" ref="addDialog"></add-dialog>
     <password-dialog @refresh="getUserList" ref="passwordDialog"></password-dialog>
   </div>

@@ -151,7 +151,7 @@ export default {
       },
       rules: {
         companyId: [
-          { required: true, message: this.$t('user.add.form.companyId'), trigger: 'blur' }
+          { required: true, message: this.$t('user.add.form.tips.companyId'), trigger: 'blur' }
         ],
         account: [
           {

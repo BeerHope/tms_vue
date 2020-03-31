@@ -32,7 +32,7 @@ export default {
     },
     unbind: {
       content: '请确认是否解除设备${设备SN号}与${商户名称}(终端号${终端号})的绑定关系?',
-      content1: '请确认是否接触设备',
+      content1: '请确认是否解除设备',
       content2: '与',
       content3: '终端号',
       content4: '的绑定关系',
@@ -42,12 +42,14 @@ export default {
       title: '绑定设备',
       label: {
         deviceSN: '设备序列号',
-        merchantName: '商户名称：',
-        terminalNo: '终端号',
-        sn: 'SN'
+        merchantName: '商户名称:',
+        terminalNo: '终端号:',
+        model: '机型:',
+        sn: 'SN:'
       },
       tips: {
         sn: '请输入设备序列号',
+        querySnTips: '没找到数据，请检查输入的机具号是否正确?'
       },
       query: '查询',
       replace: '更换',
@@ -57,10 +59,10 @@ export default {
       title: '添加终端',
     },
     edit: {
-      title: '添加终端',
+      title: '编辑终端',
     },
     details: {
-      title: '添加终端',
+      title: '终端详情',
     },
     form: {
       label: {
