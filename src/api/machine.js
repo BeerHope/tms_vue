@@ -49,7 +49,7 @@ export function queryMerchantTerminal(params) {
 }
 
 /* 获取模板 */
-export function getTemplate() {
+export function downloadTemplate() {
   return request({
     url: '/machine/template',
     method: 'get',

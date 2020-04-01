@@ -225,55 +225,77 @@ export const constantRoutes = [
     ]
   },
   // 文件管理
+  
   {
     path: '/file',
     component: Layout,
-    redirect: '/file/package/list',
+    redirect: '/file/ota/list',
     name: 'file',
     meta: { title: 'file', icon: 'file' },
     children: [
       // 我的系统包模块
       {
-        path: 'package/list',
-        name: 'packageList',
-        component: () => import('@/views/system-package/list'),
-        meta: { title: 'systemPackage' }
-      },
-      {
-        path: 'package/details',
-        name: 'packageDetails',
-        component: () => import('@/views/system-package/details'),
-        hidden: true,
-        meta: { title: 'packageDetails' }
-      },
-      {
-        path: 'package/version/recycle',
-        name: 'versionRecycle',
-        component: () => import('@/views/system-package/versionRecycle'),
-        hidden: true,
-        meta: { title: 'versionRecycle' }
+        path: 'ota',
+        redirect: 'ota/list',
+        name: 'ota',
+        component: Index,
+        meta: { title: 'systemPackage' },
+        children: [
+          {
+            path: 'list',
+            name: 'ota',
+            component: () => import('@/views/ota/list'),
+            hidden: true,
+            meta: { title: 'systemPackage', activeMenu: '/file/ota'}
+          },
+          {
+            path: 'details',
+            name: 'otaDetails',
+            component: () => import('@/views/ota/details'),
+            hidden: true,
+            meta: { title: 'packageDetails', activeMenu: '/file/ota' }
+          },
+          {
+            path: 'version/recycle',
+            name: 'versionRecycle',
+            component: () => import('@/views/ota/versionRecycle'),
+            hidden: true,
+            meta: { title: 'versionRecycle', activeMenu: '/file/ota' }
+          },
+        ]
       },
       // 我的应用模块
       {
-        path: 'app/list',
+        path: 'app',
         name: 'appList',
-        component: () => import('@/views/application/list'),
-        meta: { title: 'application' }
+        redirect: 'app/list',
+        component: Index,
+        meta: { title: 'application' },
+        children: [
+          {
+            path: 'list',
+            name: 'appList',
+            component: () => import('@/views/application/list'),
+            hidden: true,
+            meta: { title: 'application', activeMenu: '/file/app' }
+          },
+          {
+            path: 'details',
+            name: 'appDetails',
+            component: () => import('@/views/application/details'),
+            hidden: true,
+            meta: { title: 'appDetails', activeMenu: '/file/app' }
+          },
+          {
+            path: 'recycle',
+            name: 'appRecycle',
+            component: () => import('@/views/application/recycle'),
+            hidden: true,
+            meta: { title: 'appRecycle', activeMenu: '/file/app' }
+          },
+        ]
       },
-      {
-        path: 'app/details',
-        name: 'appDetails',
-        component: () => import('@/views/application/details'),
-        hidden: true,
-        meta: { title: 'appDetails' }
-      },
-      {
-        path: 'app/recycle',
-        name: 'appRecycle',
-        component: () => import('@/views/application/recycle'),
-        hidden: true,
-        meta: { title: 'appRecycle' }
-      },
+      
       // 文件仓库模块
       {
         path: 'file-storage/list',

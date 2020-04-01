@@ -23,7 +23,8 @@ export default {
       tips: {
         file: 'Please upload file',
         company: 'Please select company'
-      }
+      },
+      fileName: 'allocation-import-failed-list'
     }
   }
 }

@@ -55,13 +55,19 @@
     <no-result v-else></no-result>
     <machine-dialog @refresh="getMachineList" ref="machineDialog"></machine-dialog>
     <bind-dialog ref="bindDialog" @refresh="getMachineList"></bind-dialog>
-    <import-dialog ref="importDialog" :title="$t('machine.batchImport.title')"></import-dialog>
+    <upload
+      ref="importDialog"
+      :file-name="$t('terminal.batchBind.fileName')"
+      :title="$t('machine.batchImport.title')"
+      :template-name="$t('machine.batchImport.templateName')"
+      :upload-url="bindUploadUrl" :download="downloadTemplate">
+    </upload>
   </div>
 </template>
 
 <script>
 import ListItem from './components/ListItem'
-import ImportDialog from '@/components/Upload'
+import Upload from '@/components/Upload'
 import MachineDialog from './components/MachineDialog'
 import BindDialog from './components/BindDialog'
 import Treeselect from '@riophae/vue-treeselect'
@@ -69,14 +75,14 @@ import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 /* 后期整合优化 */
 import { sortCompanyTree } from "@/utils/global";
 import { getCompanyTree } from '@/api/company'
-import { getMachineList } from '@/api/machine'
+import { getMachineList, downloadTemplate } from '@/api/machine'
 import { Loading } from 'element-ui'
 
 export default {
   name: 'MachineList',
   components: {
     ListItem,
-    ImportDialog,
+    Upload,
     MachineDialog,
     BindDialog,
     Treeselect
@@ -99,7 +105,11 @@ export default {
       total: 0,
     }
   },
-  computed: {},
+  computed: {
+    bindUploadUrl() {
+      return `${process.env.VUE_APP_BASE_URL}/machine/batch`
+    }
+  },
   watch: {},
   created() {
     this.getCompanyTree()
@@ -140,6 +150,9 @@ export default {
     openImportDialog() {
       this.$refs.importDialog.dialogVisible = true
     },
+    downloadTemplate() {
+      return downloadTemplate()
+    }
   }
 }
 </script>

@@ -24,7 +24,8 @@ export default {
       unbindTimeText: '解绑时间：',
     },
     batchImport: {
-      title: '批量导入'
+      title: '批量导入',
+      templateName: '机具导入模板'
     },
     add: {
       title: '添加机具'

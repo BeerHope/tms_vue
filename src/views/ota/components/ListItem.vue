@@ -4,11 +4,12 @@
       <div class="info" @click="toDetails">
         <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
         <p class="name">{{ itemData.name }}</p>
+        <p class="model">${机型}</p>
       </div>
       <div class="operation">
-        <span @click.stop="$emit('open-update-dialog')">更新</span>
+        <span @click.stop="$emit('open-update-dialog')">{{ $t('ota.list.update') }}</span>
         <span class="line"></span>
-        <span>推送</span>
+        <span>{{ $t('ota.list.push') }}</span>
       </div>
     </el-card>
   </div>
@@ -50,7 +51,7 @@ $hoverTextColor: #3b78fc;
 .list-item {
   display: inline-block;
   width: 228px;
-  height: 196px;
+  height: 216px;
   margin: 10px 26px 10px 0;
   margin-right: 20px;
   cursor: pointer;

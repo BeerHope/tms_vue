@@ -2,19 +2,21 @@
   <div class="common-list package-list">
     <div class="filter-box p-t-6 p-b-6 m-b-10">
       <el-input class="filter-item" v-model="filter.name" placeholder="系统包名称"></el-input>
-      <el-button type="primary">
-        <svg-icon icon-class="search" class="m-r-4"></svg-icon>搜索
+      <el-button type="primary" @click="getOtaList">
+        <svg-icon icon-class="search" class="m-r-4"></svg-icon>
+        {{ $t('ota.list.search') }}
       </el-button>
       <el-button type="primary" class="green-btn" @click="openAddDialog">
-        <svg-icon icon-class="add" class="m-r-4"></svg-icon>新增系统包
+        <svg-icon icon-class="add" class="m-r-4"></svg-icon>
+        {{ $t('ota.list.add') }}
       </el-button>
       <el-button type="primary" class="cancel del-history" @click="viewDeleteHistory">
-        删除记录
+        {{ $t('ota.list.deletedRecord') }}
       </el-button>
     </div>
-    <div class="common-table">
+    <div v-if="otaList.length" class="common-table">
       <list-item
-        v-for="(item, index) in packageList"
+        v-for="(item, index) in otaList"
         :key="index"
         :item-data="item"
         @open-update-dialog="openUpdateDialog"
@@ -22,15 +24,16 @@
       <!-- 分页 -->
       <el-pagination
         class="common-pagination"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[100, 200, 300, 400]"
-        :page-size="100"
+        @size-change="getOtaList"
+        @current-change="getOtaList"
+        :current-page.sync="filter.page"
+        :page-sizes="[10, 20, 30, 50]"
+        :page-size.sync="filter.pageSize"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="total"
       ></el-pagination>
     </div>
+    <no-result v-else></no-result>
     <package-add ref="packageAdd"></package-add>
     <package-update ref="packageUpdate"></package-update>
     <delete-history ref="deleteHistory"></delete-history>
@@ -38,13 +41,12 @@
 </template>
 
 <script>
-import ListItem from './components/ListItem'
-import PackageAdd from './components/PackageAdd'
-import PackageUpdate from './components/PackageUpdate'
-import DeleteHistory from './components/DeleteHistory'
+import { ListItem, PackageAdd, PackageUpdate, DeleteHistory } from './components'
+import { getOtaList } from '@/api/ota'
+import { Loading } from 'element-ui'
 
 export default {
-  name: 'PackageList',
+  name: 'OtaList',
   components: {
     ListItem,
     PackageAdd,
@@ -56,42 +58,34 @@ export default {
   data() {
     return {
       filter: {
-        name: ''
+        name: '',
+        page: 1,
+        pageSize: 10
       },
-      packageList: [
-        {
-          id: 123,
-          name: '系统包名称1'
-        },
-        {
-          id: 112,
-          name: '系统包名称2'
-        },
-        {
-          id: 1231,
-          name: '系统包名称3'
-        },
-        {
-          id: 1132,
-          name: '系统包名称4'
-        }
-      ],
-      currentPage: 1,
+      otaList: [],
+      total: 1,
     }
   },
   computed: {},
   watch: {},
-  created() {},
+  created() {
+    this.getOtaList()
+  },
   beforeMount() {},
   mounted() {},
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleSizeChange() {
-      console.log('handleSizeChange')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!')
+    getOtaList() {
+      const loading = Loading.service()
+      getOtaList(this.filter).then(res => {
+        const resData = res.data
+        this.otaList = resData.rows
+        this.total = resData.totalRecord
+        loading.close()
+      }).catch(() => {
+        loading.close()
+      })
     },
     openAddDialog() {
       const packageAdd = this.$refs.packageAdd

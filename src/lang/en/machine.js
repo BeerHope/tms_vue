@@ -24,7 +24,8 @@ export default {
       unbindTimeText: 'Unbound time：',
     },
     batchImport: {
-      title: 'Batch import'
+      title: 'Batch import',
+      templateName: 'machine-import-template'
     },
     add: {
       title: 'Add machine'

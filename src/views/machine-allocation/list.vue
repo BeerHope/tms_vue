@@ -3,7 +3,8 @@
     <div class="filter-box p-t-6 p-b-6">
       <el-select 
         class="filter-item" 
-        v-model="filter.companyId" 
+        v-model="filter.companyId"
+        clearable
         :placeholder="$t('allocation.list.filter.companyName')">
         <el-option 
           v-for="item in companyData" 

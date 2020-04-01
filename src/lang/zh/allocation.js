@@ -23,7 +23,8 @@ export default {
       tips: {
         file: '请上传文件',
         company: '请选择渠道商'
-      }
+      },
+      fileName: '机具调拨导入失败清单',
     }
   }
 }

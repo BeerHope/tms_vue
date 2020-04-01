@@ -1,28 +1,33 @@
 <template>
-  <div class="no-result" :style="{height}">
+  <div class="no-result" :style="{ height: height }">
     <div> 
       <img src="@/assets/images/no-result.png" alt="No search result">
-      <p>{{$t('base.noResult.desc')}}</p>
+      <p>{{ resultText || $t('base.noResult.desc') }}</p>
     </div>
   </div>
 </template>
 
 <script>
 import mixin from '@/utils/mixin'
+import i18n from '@/lang'
 
 export default {
   name: '',
   components: {},
   mixins: [mixin],
-  props: {},
+  props: {
+    height: {
+      type: String,
+      default: () => '660px'
+    },
+    resultText: {
+      type: String,
+      default: () => ''
+    }
+  },
   directive: {},
   data() {
-    return {
-      height: {
-        type: String | Number,
-        default: '660px'
-      }
-    }
+    return {}
   },
   computed: {},
   watch: {},
@@ -40,7 +45,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 660px;
+  // height: 660px;
   text-align: center;
   p{
     color: #172B4D;

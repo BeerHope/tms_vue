@@ -34,6 +34,13 @@ export default {
         successAmount: '导入成功数量：',
         failureText: '是否需要导出失败清单'
       },
+      /* 导出表头数据 */
+      header: [
+        '商户名称',
+        '商户编号',
+        '原因'
+      ],
+      failedList: '商户导入失败清单'
     },
     add: {
       title: '录入商户',

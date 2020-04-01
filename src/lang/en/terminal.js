@@ -33,11 +33,23 @@ export default {
     },
     batchBind: {
       title: 'Batch bind machine',
-      templateName: 'binding-machine-template'
+      templateName: 'binding-machine-template',
+      header: [
+        'Merchant Number',
+        'Terminal Number',
+        'Reason'
+      ],
+      fileName: 'terminal-bind-failed-list'
     },
     batchImport: {
       title: 'Batch import terminal',
-      templateName: 'importing-terminal-template'
+      templateName: 'importing-terminal-template',
+      header: [
+        'Merchant Number',
+        'Terminal Number',
+        'Reason'
+      ],
+      fileName: 'terminal-import-failed-list'
     },
     unbind: {
       content: '请确认是否解除设备${设备SN号}与${商户名称}(终端号${终端号})的绑定关系?',

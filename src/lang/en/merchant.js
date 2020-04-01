@@ -31,7 +31,14 @@ export default {
         totalMerchant: 'The total number of merchants in the manifest file：',
         successAmount: 'The number of successful imports:',
         failureText: 'Whether you need to export the failure list?'
-      }
+      },
+      /* 导出表头数据 */
+      header: [
+        'Merchant Name',
+        'Merchant Number',
+        'Reason',
+      ],
+      failedList: 'merchant-failed-list'
     },
     add: {
       title: 'Type-in merchant',

@@ -1,6 +1,6 @@
 <template>
   <div class="menu-list common-container">
-    <el-row class="w-100 h-100">
+    <el-row class="w-100 h-100 pos-absolute">
       <el-col :span="4" class="h-100 content-left">
         <!-- drag operation -->
         <div class="category-opt">
@@ -158,7 +158,7 @@ export default {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  min-height: calc(100% - 70px);
   .content-left{
     border: 1px solid #eee;
     border-top: none;

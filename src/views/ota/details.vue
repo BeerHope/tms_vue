@@ -316,7 +316,7 @@ export default {
     }
   }
   .basic-info{
-    margin: 80px auto 40px;
+    margin: 100px auto 0px;
     clear: both;
     .edit-btn{
       font-size: 14px;

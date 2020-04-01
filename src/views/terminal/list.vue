@@ -73,12 +73,14 @@
     <bind-dialog ref="bindDialog" @refresh="getTerminalList"></bind-dialog>
     <upload
       ref="import" 
+      :file-name="$t('terminal.batchImport.fileName')"
       :title="$t('terminal.batchImport.title')"
       :template-name="$t('terminal.batchImport.templateName')"
       :upload-url="importUploadUrl" :download="downloadImportTemplate">
     </upload>
     <upload
-      ref="batchBind" 
+      ref="batchBind"
+      :file-name="$t('terminal.batchBind.fileName')"
       :title="$t('terminal.batchBind.title')"
       :template-name="$t('terminal.batchBind.templateName')"
       :upload-url="bindUploadUrl" :download="downloadBindTemplate">

@@ -30,23 +30,29 @@
 
 <script>
 import { getToken } from '@/utils/auth'
+import XLSX from 'xlsx'
+import i18n from '../../lang'
 
 export default {
-  name: 'BatchImport',
+  name: 'Upload',
   components: {},
   props: {
     title: {
       type: String,
-      default: () => this.$t('base.upload.title'),
+      default: () => i18n.$t('base.upload.title'),
       required: true
     },
-    uploadUrl: {
+    uploadUrl: { // 上传路径
       type: String,
       default: () => '/',
     },
     templateName: {
       type: String,
       default: () => 'template'
+    },
+    fileName: {
+      type: String,
+      default: () => 'failed-list'
     },
     download: {
       type: Function,
@@ -77,6 +83,7 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    /* 下载模板 */
     downloadTemplate() {
       this.download().then(res => {
         const blob = new Blob([res])
@@ -96,6 +103,7 @@ export default {
       this.$refs.upload.clearFiles()
     },
     uploadSuccess(res, file) {
+      this.dialogVisible = false
       if (res.code !== 200) {
         this.$message.error("上传失败");
         this.$refs.upload.clearFiles()
@@ -120,11 +128,14 @@ export default {
         customClass: "delete-confirm"
       })
         .then(() => {
-          // 进行导出失败清单(todo)
-          this.$message.success("失败清单导出成功");
+          // 关闭导入弹出
+          const jsonData = res.data.result
+          const header = this.$t('merchant.batch.header')
+          this.exportExcel(jsonData, header, this.fileName)
+          // this.$message.success(this.$t('base.tips.unbindSuccess'));
         })
         .catch(() => {
-          console.log("取消导出失败清单");
+          console.log("cancel to export failed records");
         });
     },
     beforeUpload(file) {
@@ -139,6 +150,13 @@ export default {
         this.$message.error(this.$t('base.upload.fileCheckSize'))
       }
       return isAcceptedType && isLt5M;
+    },
+    /* 导出excel (此处待优化)*/
+    exportExcel(jsonData, header, fileName) {
+      const ws = XLSX.utils.json_to_sheet(jsonData, header)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, fileName)
+      XLSX.writeFile(wb, `${fileName}.xlsx`)
     }
   }
 }

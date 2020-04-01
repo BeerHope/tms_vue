@@ -17,15 +17,14 @@ export function batchAllocation(data) {
   })
 }
 
-export function batchImportAllocation(data, params) {
+export function batchImportAllocation(companyId, data) {
   return request({
-    url: '/machine/allocation',
+    url: `/machine/allocation/${companyId}`,
     method: 'post',
     headers: {
       "Content-Type": 'multipart/form-data'
     },
-    data,
-    params
+    data
   })
 }
 

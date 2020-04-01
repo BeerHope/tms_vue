@@ -59,6 +59,8 @@ export default {
     position: relative;
     height: 100%;
     width: 100%;
+    min-width: 1366px;
+    overflow: auto;
     &.mobile.openSidebar{
       position: fixed;
       top: 0;

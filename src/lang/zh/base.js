@@ -43,7 +43,7 @@ export default {
   base: {
     upload: {
       title: '批量录入',
-      templateTips: '请先点击下载模板${模板名称}',
+      templateTips: '请先点击下载模板',
       templateName: '商户录入模板',
       uploadTips: '将文件拖到此处，或点击上传',
       fileCheckTips: '只能选择excel文件，仅支持xlsx后缀 ，且不超过5M',

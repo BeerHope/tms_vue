@@ -2,7 +2,7 @@
   <div>
     <!-- 选择商户终端弹窗 -->
     <el-dialog
-      custom-class="bind-dialog"
+      custom-class="machine-bind-dialog"
       :title="$t('machine.bind.title')"
       :visible.sync="bindingDialogVisible"
       @close="closeDialog"
@@ -34,10 +34,14 @@
           style="width: 100%">
           <el-table-column :label="$t('machine.bind.thead.merchantNo')" prop="merchantNo"></el-table-column>
           <el-table-column :label="$t('machine.bind.thead.merchantName')" prop="merchantName"></el-table-column>
-          <el-table-column :label="$t('machine.bind.thead.terminalNo')" prop="terminalNo"></el-table-column>
+          <el-table-column :label="$t('machine.bind.thead.terminalNo')" prop="terminalNo">
+            <template slot-scope="scope">
+              <span class="t-c">{{ scope.row.terminalNo || '--' }}</span>
+            </template>
+          </el-table-column>
           <el-table-column :label="$t('machine.bind.thead.selection')" prop="selection" width="70px" align="center">
             <template slot-scope="scope">
-              <el-checkbox @change="handleSelect(scope.row, scope.column)" v-model="scope.row.isSelected"></el-checkbox>
+              <el-checkbox @change="handleSelect(scope)" v-model="scope.row.isSelected"></el-checkbox>
             </template>
           </el-table-column>
         </el-table>
@@ -120,6 +124,11 @@ export default {
       });
     },
     handleBind() {
+      /* 没有选中的时候 */
+      if (!this.selectedMerchant) {
+        this.$message.warning(this.$t('machine.bind.tips.selection'))
+        return
+      }
       const bindingCellList = []
       const { merchantId, terminalId } = this.selectedMerchant
       if (terminalId) {
@@ -127,12 +136,10 @@ export default {
       } else {
         bindingCellList.push({ merchantId })
       }
-      // return
       const reqData = {
-        id: this.currentMachine.id,
         bindingCellList
       }
-      bindMerchantTerminal(merchantId, reqData).then(res => {
+      bindMerchantTerminal(this.currentMachine.id, reqData).then(res => {
         this.$emit('refresh')
         this.bindingDialogVisible = false
         this.$message.success(this.$t('base.tips.bindSuccess'))
@@ -143,7 +150,11 @@ export default {
     },
     closeDialog() {
       this.clearSelection()
-      this.currentMachine = null
+      this.currentMachine = {
+        sn: '',
+        merchant: ''
+      }
+      this.selectedMerchant = null
     },
     getMerchantTerminal() {
       this.loading = true
@@ -165,7 +176,7 @@ export default {
         } 
       })
     },
-    handleSelect(row, column) {
+    handleSelect({ row, column }) {
       if (column.property !== 'selection') {
         return
       }
@@ -176,7 +187,7 @@ export default {
       this.clearSelection()
       row.isSelected = true
       this.selectedMerchant = row
-    }
+    },
   }
 };
 </script>
@@ -193,7 +204,7 @@ export default {
 }
 </style>
 <style lang="scss">
-.bind-dialog {
+.machine-bind-dialog {
   .el-dialog__body {
     height: 60vh;
     width: calc(100% - 100px);
@@ -205,16 +216,16 @@ export default {
     td{
       border-bottom: none;
     }
-    /deep/.diabled-selection .cell .el-checkbox__inner{
-      display: none;
-      position: relative;
-    }
-    /deep/.diabled-selection .cell:before{
-      content: '';
-      position: absolute;
-      width: 100%;
-      left: 0;
-    }
+    // /deep/.diabled-selection .cell .el-checkbox__inner{
+    //   display: none;
+    //   position: relative;
+    // }
+    // /deep/.diabled-selection .cell:before{
+    //   content: '';
+    //   position: absolute;
+    //   width: 100%;
+    //   left: 0;
+    // }
   }
 }
 </style>

@@ -72,9 +72,9 @@ $navBorderColor: #F0F3F4;
   border-bottom: 1px solid $navBorderColor;
   /* 暂时先这样写死 */
   position: fixed;
-  z-index: 2;  
+  z-index: 999;  
   width: calc(100% - 251px);
-
+  transition: all 0.3s;
   .hamburger-container {
     height: 100%;
     float: left;

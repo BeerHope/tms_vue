@@ -10,6 +10,7 @@ import merchant from './en/merchant'
 import terminal from './en/terminal'
 import machine from './en/machine'
 import allocation from './en/allocation'
+import ota from './en/ota'
 
 export default {
   ...login,
@@ -24,4 +25,5 @@ export default {
   ...terminal,
   ...machine,
   ...allocation,
+  ...ota,
 }

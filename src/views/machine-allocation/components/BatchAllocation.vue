@@ -45,6 +45,7 @@
 <script>
 import { downloadTemplate, batchImportAllocation } from '@/api/allocation'
 import { getToken } from '@/utils/auth'
+import XLSX from 'xlsx'
 
 export default {
   name: 'ImportBatch',
@@ -133,9 +134,10 @@ export default {
       }
       this.$refs.form.validate((valid) => {
         if (valid) {
+          const { companyId } = this.formData
           const formData = new FormData()
           formData.append('file', this.file.raw)
-          batchImportAllocation(formData, this.formData).then(res => {
+          batchImportAllocation(companyId, formData).then(res => {
             // 此处回调展示上传的结果
             this.dialogVisible = false
             const { successAmount, total } = res.data;
@@ -157,20 +159,26 @@ export default {
               customClass: "delete-confirm"
             })
               .then(() => {
-                // 进行导出失败清单(todo)
-                this.$message.success("失败清单导出成功");
+                const jsonData = res.data.result
+                const header = this.$t('merchant.batch.header')
+                this.exportExcel(jsonData, header, this.$t('allocation.batch.fileName'))
               })
               .catch(() => {
-                console.log("取消导出失败清单");
+                console.log("cancel to export ");
               });
           })
         }
       })
     },
+    exportExcel(jsonData, header, fileName) {
+      const ws = XLSX.utils.json_to_sheet(jsonData, header)
+      const wb = XLSX.utils.book_new()
+      XLSX.utils.book_append_sheet(wb, ws, fileName)
+      XLSX.writeFile(wb, `${fileName}.xlsx`)
+    },
     closeDialog() {
       this.$refs.form.resetFields()
       this.$refs.upload.clearFiles()
-      console.log(this.formData, 'formData!!!!!!')
     },
   }
 }

@@ -55,17 +55,23 @@
     </div>
     <no-result v-else></no-result>
     <merchant-dialog ref="merchantDialog" @refresh="getMerchantList"></merchant-dialog>
-    <import-dialog ref="importDialog"></import-dialog>
+    <upload
+      ref="importDialog" 
+      :title="$t('merchant.batch.title')"
+      :template-name="$t('merchant.batch.templateName')"
+      :file-name="$t('merchant.batch.failedList')"
+      :upload-url="uploadUrl" :download="downloadTemplate">
+    </upload>
   </div>
 </template>
 
 <script>
 import ListItem from "./components/ListItem";
-import ImportDialog from "./components/BatchUpload";
+import upload from "@/components/Upload";
 import MerchantDialog from "./components/MerchantDialog";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
-import { getMerchantList } from "@/api/merchant";
+import { getMerchantList, downloadTemplate } from "@/api/merchant";
 import { getCompanyTree } from "@/api/company";
 import { sortCompanyTree } from "@/utils/global";
 import { Loading } from 'element-ui';
@@ -74,7 +80,7 @@ export default {
   name: "",
   components: {
     ListItem,
-    ImportDialog,
+    upload,
     MerchantDialog,
     Treeselect
   },
@@ -107,7 +113,11 @@ export default {
       total: 0
     };
   },
-  computed: {},
+  computed: {
+    uploadUrl() {
+      return `${process.env.VUE_APP_BASE_URL}/merchant/batch`;
+    },
+  },
   watch: {},
   created() {
     this.getCompanyTree();
@@ -143,6 +153,9 @@ export default {
     },
     openImportDialog() {
       this.$refs.importDialog.dialogVisible = true;
+    },
+    downloadTemplate() {
+      return downloadTemplate()
     }
   }
 };

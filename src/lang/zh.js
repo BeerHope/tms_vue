@@ -11,6 +11,7 @@ import merchant from './zh/merchant'
 import terminal from './zh/terminal'
 import machine from './zh/machine'
 import allocation from './zh/allocation'
+import ota from './zh/ota'
 
 export default {
   ...login,
@@ -24,5 +25,6 @@ export default {
   ...merchant,
   ...terminal,
   ...machine,
-  ...allocation
+  ...allocation,
+  ...ota
 }
