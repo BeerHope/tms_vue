@@ -97,6 +97,8 @@ export default {
       bind: '绑定',
       unbind: '解绑',
       search: '搜索',
+      push: '推送',
+      delete: '删除',
       yes: '是',
       no: '否'
     },

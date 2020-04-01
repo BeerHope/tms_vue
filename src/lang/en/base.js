@@ -87,6 +87,8 @@ export default {
       bind: 'Bind',
       unbind: 'Unbind',
       search: 'Search',
+      push: 'Push',
+      delete: 'Delete',
       yes: 'Yes',
       no: 'No'
     },

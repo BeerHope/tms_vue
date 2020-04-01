@@ -1,37 +1,37 @@
 <template>
   <div class="package-details">
     <div class="del">
-      <el-button type="primary" class="r" @click="deletePackages">删除</el-button>
+      <el-button type="primary" class="r" @click="deletePackages">{{ $t('ota.details.delete') }}</el-button>
     </div>
     <div class="main">
       <section :class="['basic-info', {'isEditing': isEditing}]">
         <h4>
-          <span class="common-title f-z-16">基本信息</span>
+          <span class="common-title f-z-16">{{ $t('ota.details.basicInfo') }}</span>
           <span class="edit-btn" @click="toEdit" v-if="!isEditing">
             <i class="el-icon-edit-outline m-r-6"></i>
-            编辑
+            {{ $t('ota.details.edit') }}
           </span>
         </h4>
         <div class="content">
           <el-form class="common-form" :model="formData" :rules="rules" label-width="100px" label-position="right">
             <el-row>
               <el-col :span="12">
-                <el-form-item label="名称：" prop="name">
+                <el-form-item :label="$t('ota.details.form.label.name')" prop="name">
                   <span v-if="!isEditing">{{ formData.name }}</span>
                   <el-input v-else v-model="formData.name"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item label="更新时间：" prop="createdTime">
+                <el-form-item :label="$t('ota.details.form.label.createTime')" prop="createTime">
                   <span v-if="!isEditing">{{ formData.createdTime }}</span>
                   <el-date-picker
                     v-else v-model="formData.createdTime"
-                    type="datetime" placeholder="请选择创建时间">
+                    type="datetime" :placeholder="$t('ota.details.form.placeholder.createTime')">
                   </el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-form-item label="适用机型：" prop="model">
+            <el-form-item :label="$t('ota.details.form.label.modelNames')" prop="model">
               <span v-if="!isEditing">{{ checkedModels }}</span>
               <div class="model" v-else>
                 <ul class="model-row" @click="changeSelectedPos">
@@ -51,44 +51,44 @@
                 </el-select>
               </div>
             </el-form-item>
-            <el-form-item label="备注：" prop="remark">
+            <el-form-item :label="$t('ota.details.form.label.remark')" prop="remark">
               <span v-if="!isEditing">{{ formData.remark }}</span>
               <el-input v-else v-model="formData.remark" type="textarea"></el-input>
             </el-form-item>
             <div v-if="isEditing" class="t-c m-t-30">
-              <el-button class="cancel" type="primary" @click="handleCancel">取消</el-button>
-              <el-button type="primary" @click="handleSave">保存</el-button>
+              <el-button class="cancel" type="primary" @click="handleCancel">{{ $('base.buttons.cancel') }}</el-button>
+              <el-button type="primary" @click="handleSave">{{ $('base.buttons.save') }}</el-button>
             </div>
           </el-form>
         </div>
       </section>
       <section class="update-record">
         <h4>
-          <span class="common-title f-z-16">更新记录</span>
+          <span class="common-title f-z-16">{{ $t('ota.details.updateRecord') }}</span>
           <div class="r">
-            <el-button class="line-type blue-btn" @click="updatePackage">发布新版</el-button>
-            <el-button class="line-type blue-btn" @click="toRecyclePage">版本垃圾桶</el-button>
+            <el-button class="line-type blue-btn" @click="updatePackage">{{ $t('ota.details.publish') }}</el-button>
+            <el-button class="line-type blue-btn" @click="toRecyclePage">{{ $t('ota.details.versionRecycle') }}</el-button>
           </div>
         </h4>
         <el-table class="update-list" :data="updateList" :header-cell-style="headerCellStyle" :cell-style="cellStyle">
-          <el-table-column label="上传时间" prop="uploadTime"></el-table-column>
-          <el-table-column label="版本号" prop="version"></el-table-column>
-          <el-table-column label="更新内容" prop="updatedContent">
+          <el-table-column :label="$t('ota.details.thead.uploadTime')" prop="uploadTime"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.version')" prop="version"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.updateContent')" prop="updatedContent">
             <template slot-scope="scope">
               <el-tooltip placement="bottom" :hide-after="0" effect="light" popper-class="custom-tooltip">
                 <div slot="content">{{ scope.row.updatedContent }}</div>
-                <el-button type="text" style="color: #5087E5">查看</el-button>
+                <el-button type="text" style="color: #5087E5">{{ $t('ota.details.view') }}</el-button>
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column label="支持版本" prop="supportVersion"></el-table-column>
-          <el-table-column label="解压下发" prop="unzipIssue"></el-table-column>
-          <el-table-column label="文件大小" prop="fileSize"></el-table-column>
-          <el-table-column label="上传操作用户" prop="uploadUser"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.supportVersion')" prop="supportVersion"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.unzipIssue')" prop="unzipIssue"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.fileSize')" prop="fileSize"></el-table-column>
+          <el-table-column :label="$t('ota.details.thead.uploadUser')" prop="uploadUser"></el-table-column>
           <el-table-column width="200">
             <template>
-              <el-button type="primary">推送</el-button>
-              <el-button class="green-btn" type="primary" @click="handleDelete">删除</el-button>
+              <el-button type="primary">{{ $t('base.buttons.push') }}</el-button>
+              <el-button class="green-btn" type="primary" @click="handleDelete">{{ $t('base.buttons.delete') }}</el-button>
             </template>
           </el-table-column>
         </el-table>
