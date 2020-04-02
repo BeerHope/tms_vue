@@ -29,7 +29,7 @@
           :total="total">
         </el-pagination>
       </template>
-      <no-result v-else height="558px" :resultText="$t('ota.deletedList.resultText')"></no-result>
+      <no-result v-else height="558px" :result-text="$t('ota.deletedList.resultText')"></no-result>
     </div>
   </el-dialog>
 </template>

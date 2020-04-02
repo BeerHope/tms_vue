@@ -56,7 +56,9 @@ export default {
         totalMerchant: 'The total number of merchants in the manifest file：',
         successAmount: 'The number of successful imports:',
         failureText: 'Whether you need to export the failure list?'
-      }
+      },
+      exceedTips: 'Only a single file is allowed to be uploaded. If you want to replace the file,please remove the current file first',
+      fileNullTips: 'Please upload a file first'
     },
     noResult: {
       desc: 'No Search Result',

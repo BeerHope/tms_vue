@@ -35,8 +35,9 @@ export default {
       title: 'Batch bind machine',
       templateName: 'binding-machine-template',
       header: [
-        'Merchant Number',
-        'Terminal Number',
+        'Merchant number',
+        'Terminal number',
+        'SN',
         'Reason'
       ],
       fileName: 'terminal-bind-failed-list'
@@ -45,8 +46,8 @@ export default {
       title: 'Batch import terminal',
       templateName: 'importing-terminal-template',
       header: [
-        'Merchant Number',
-        'Terminal Number',
+        'Merchant number',
+        'Terminal number',
         'Reason'
       ],
       fileName: 'terminal-import-failed-list'

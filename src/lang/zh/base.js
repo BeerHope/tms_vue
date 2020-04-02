@@ -56,8 +56,10 @@ export default {
         title: '操作提示',
         totalMerchant: '清单文件中商户总数：',
         successAmount: '导入成功数量：',
-        failureText: '是否需要导出失败清单'
+        failureText: '是否需要导出失败清单?'
       },
+      exceedTips: '只允许上传单个文件，若要修改文件，请先移除当前文件',
+      fileNullTips: '请先上传文件'
     },
     noResult: {
       desc: '无搜索结果',

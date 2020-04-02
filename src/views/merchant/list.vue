@@ -60,6 +60,8 @@
       :title="$t('merchant.batch.title')"
       :template-name="$t('merchant.batch.templateName')"
       :file-name="$t('merchant.batch.failedList')"
+      :table-header="$t('merchant.batch.header')"
+      :header="$t"
       :upload-url="uploadUrl" :download="downloadTemplate">
     </upload>
   </div>

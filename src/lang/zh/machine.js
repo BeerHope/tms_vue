@@ -25,7 +25,12 @@ export default {
     },
     batchImport: {
       title: '批量导入',
-      templateName: '机具导入模板'
+      templateName: '机具导入模板',
+      fileName: '机具导入失败清单',
+      header: [
+        '机身号',
+        '原因'
+      ]
     },
     add: {
       title: '添加机具'

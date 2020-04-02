@@ -4,9 +4,10 @@
     :title="title"
     :visible.sync="dialogVisible"
     @close="closeDialog"
-    width="40%"
-  >
-    <el-button type="text" class="download-text" @click="downloadTemplate">{{ $t('base.upload.templateTips') }}</el-button>
+    width="40%">
+    <el-button type="text" class="download-text" @click="downloadTemplate">
+      {{ $t('base.upload.templateTips') }}
+    </el-button>
     <el-upload
       drag
       ref="upload"
@@ -16,14 +17,23 @@
       :headers="headers"
       :on-success="uploadSuccess"
       :before-upload="beforeUpload"
+      :on-exceed="handleExceed"
       :auto-upload="false">
       <i class="el-icon-upload"></i>
       <div class="el-upload__text">{{ $t('base.upload.uploadTips') }}</div>
-      <div class="el-upload__tip m-t-10" slot="tip">{{ $t('base.upload.fileCheckTips') }}</div>
+      <div class="el-upload__tip m-t-10" slot="tip">
+        {{ $t('base.upload.fileCheckTips') }}
+      </div>
     </el-upload>
     <span slot="footer" class="dialog-footer">
-      <el-button type="primary" class="cancel" @click="dialogVisible = false">{{ $t('base.upload.cancel') }}</el-button>
-      <el-button type="primary" @click="handleImport">{{ $t('base.upload.import') }}</el-button>
+      <el-button 
+        type="primary" class="cancel" 
+        @click="dialogVisible = false">
+        {{ $t('base.upload.cancel') }}
+      </el-button>
+      <el-button type="primary" @click="handleImport">
+        {{ $t('base.upload.import') }}
+      </el-button>
     </span>
   </el-dialog>
 </template>
@@ -53,6 +63,11 @@ export default {
     fileName: {
       type: String,
       default: () => 'failed-list'
+    },
+    tableHeader: {
+      type: Array.fileName,
+      default: () => [],
+      required: true
     },
     download: {
       type: Function,
@@ -97,18 +112,39 @@ export default {
       })
     },
     handleImport() {
-      this.$refs.upload.submit()
+      const upload = this.$refs.upload
+      if (!upload.fileList.length) {
+        this.$message.warning(this.$t('base.upload.fileNullTips'))
+        return
+      }
+      upload.submit()
     },
     closeDialog() {
       this.$refs.upload.clearFiles()
     },
+    beforeUpload(file) {
+      const acceptTypes = ['xlsx']
+      const type = file.name.slice(file.name.lastIndexOf('.') + 1)
+      const isAcceptedType = _.includes(acceptTypes, type)
+      const isLt5M = file.size / 1024 / 1024 <= 5;
+      if (!isAcceptedType) {
+        this.$message.error(this.$t('base.upload.fileCheckType'))
+      }
+      if (!isLt5M) {
+        this.$message.error(this.$t('base.upload.fileCheckSize'))
+      }
+      return isAcceptedType && isLt5M;
+    },
+    handleExceed(files, fileList) {
+      this.$message.warning(this.$t('base.upload.exceedTips'))
+    },
     uploadSuccess(res, file) {
-      this.dialogVisible = false
       if (res.code !== 200) {
         this.$message.error("上传失败");
         this.$refs.upload.clearFiles()
         return
       }
+      this.dialogVisible = false
       const { successAmount, total } = res.data;
       const confirmText = [
         `${this.$t('base.upload.uploadRes.totalMerchant')}${total};`,
@@ -130,30 +166,29 @@ export default {
         .then(() => {
           // 关闭导入弹出
           const jsonData = res.data.result
-          const header = this.$t('merchant.batch.header')
-          this.exportExcel(jsonData, header, this.fileName)
-          // this.$message.success(this.$t('base.tips.unbindSuccess'));
+          this.exportExcel(jsonData, this.tableHeader, this.fileName)
         })
         .catch(() => {
           console.log("cancel to export failed records");
         });
     },
-    beforeUpload(file) {
-      const acceptTypes = ['xlsx']
-      const type = file.name.slice(file.name.lastIndexOf('.') + 1)
-      const isAcceptedType = _.includes(acceptTypes, type)
-      const isLt5M = file.size / 1024 / 1024 <= 5;
-      if (!isAcceptedType) {
-        this.$message.error(this.$t('base.upload.fileCheckType'))
-      }
-      if (!isLt5M) {
-        this.$message.error(this.$t('base.upload.fileCheckSize'))
-      }
-      return isAcceptedType && isLt5M;
-    },
-    /* 导出excel (此处待优化)*/
+    /* jsonToExcel */
     exportExcel(jsonData, header, fileName) {
       const ws = XLSX.utils.json_to_sheet(jsonData, header)
+      // format header
+      const range = XLSX.utils.decode_range(ws['!ref']);
+      const wscols = []
+      for (let C = range.s.c; C <= range.e.c; ++C) {
+        const address = XLSX.utils.encode_col(C) + "1"; // <-- first row, column number C
+        if (!ws[address]) continue;
+        ws[address].v = header[C];
+        if (C !== header.length - 1) {
+          wscols.push({ wch: 20 })
+        } else {
+          wscols.push({ wch: 40 })
+        }
+      }
+      ws['!cols'] = wscols;
       const wb = XLSX.utils.book_new()
       XLSX.utils.book_append_sheet(wb, ws, fileName)
       XLSX.writeFile(wb, `${fileName}.xlsx`)

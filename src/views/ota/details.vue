@@ -56,8 +56,8 @@
               <el-input v-else v-model="formData.remark" type="textarea"></el-input>
             </el-form-item>
             <div v-if="isEditing" class="t-c m-t-30">
-              <el-button class="cancel" type="primary" @click="handleCancel">{{ $('base.buttons.cancel') }}</el-button>
-              <el-button type="primary" @click="handleSave">{{ $('base.buttons.save') }}</el-button>
+              <el-button class="cancel" type="primary" @click="handleCancel">{{ $t('base.buttons.cancel') }}</el-button>
+              <el-button type="primary" @click="handleSave">{{ $t('base.buttons.save') }}</el-button>
             </div>
           </el-form>
         </div>

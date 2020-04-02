@@ -74,6 +74,7 @@
     <upload
       ref="import" 
       :file-name="$t('terminal.batchImport.fileName')"
+      :table-header="$t('terminal.batchImport.header')"
       :title="$t('terminal.batchImport.title')"
       :template-name="$t('terminal.batchImport.templateName')"
       :upload-url="importUploadUrl" :download="downloadImportTemplate">
@@ -81,6 +82,7 @@
     <upload
       ref="batchBind"
       :file-name="$t('terminal.batchBind.fileName')"
+      :table-header="$t('terminal.batchBind.header')"
       :title="$t('terminal.batchBind.title')"
       :template-name="$t('terminal.batchBind.templateName')"
       :upload-url="bindUploadUrl" :download="downloadBindTemplate">

@@ -25,22 +25,23 @@ export default {
     batchBind: {
       title: '批量绑定机具',
       templateName: '绑定机具模板',
+      fileName: '终端绑定失败清单',
       header: [
         '商户编号',
         '终端号',
+        '机身号',
         '原因'
       ],
-      fileName: '终端绑定失败清单'
     },
     batchImport: {
       title: '批量导入终端',
       templateName: '终端导入模板',
+      fileName: '终端导入失败清单',
       header: [
         '商户编号',
         '终端号',
         '原因'
       ],
-      fileName: '终端导入失败清单'
     },
     unbind: {
       content: '请确认是否解除设备${设备SN号}与${商户名称}(终端号${终端号})的绑定关系?',

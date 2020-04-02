@@ -25,7 +25,12 @@ export default {
     },
     batchImport: {
       title: 'Batch import',
-      templateName: 'machine-import-template'
+      templateName: 'machine-import-template',
+      fileName: 'machine-import-failed-list',
+      header: [
+        'SN',
+        'Reason'
+      ]
     },
     add: {
       title: 'Add machine'

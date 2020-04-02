@@ -9,7 +9,6 @@
 
 <script>
 import mixin from '@/utils/mixin'
-import i18n from '@/lang'
 
 export default {
   name: '',

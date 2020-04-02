@@ -246,7 +246,7 @@ export const constantRoutes = [
             name: 'ota',
             component: () => import('@/views/ota/list'),
             hidden: true,
-            meta: { title: 'systemPackage', activeMenu: '/file/ota'}
+            meta: { title: 'systemPackage', activeMenu: '/file/ota' }
           },
           {
             path: 'details',

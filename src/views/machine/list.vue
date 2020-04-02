@@ -57,7 +57,8 @@
     <bind-dialog ref="bindDialog" @refresh="getMachineList"></bind-dialog>
     <upload
       ref="importDialog"
-      :file-name="$t('terminal.batchBind.fileName')"
+      :file-name="$t('machine.batchImport.fileName')"
+      :table-header="$t('machine.batchImport.header')"
       :title="$t('machine.batchImport.title')"
       :template-name="$t('machine.batchImport.templateName')"
       :upload-url="bindUploadUrl" :download="downloadTemplate">
