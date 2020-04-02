@@ -2,14 +2,14 @@
 export default {
   /* 路由&菜单 */
   routes: {
-    dashboard: 'Home',
+    home: 'Home',
     system: 'System Management',
     menu: 'Menu Management',
     role: 'Role Management',
     roleList: 'Role List',
     roleUser: 'User Management',
     user: 'User Management',
-    details: 'Details',
+    details: 'User Details',
     company: 'Channel Management',
     companyInfo: 'Channel Information Management',
     equipment: 'Equipment Configuration Management',

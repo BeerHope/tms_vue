@@ -25,6 +25,10 @@ export default {
         company: '请选择渠道商'
       },
       fileName: '机具调拨导入失败清单',
+      header: [
+        '机身号',
+        '原因'
+      ]
     }
   }
 }

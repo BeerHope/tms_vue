@@ -5,11 +5,11 @@
       class="hamburger-container"
       @toggleClick="toggleSideBar"
     />
-    <breadcrumb class="breadcrumb-container" />
+    <!-- <breadcrumb class="breadcrumb-container" /> -->
+    <tags-view class="tags-view"></tags-view>
     <div class="right-menu">
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <!-- <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar" /> -->
           <svg-icon icon-class="username" style="font-size: 32px;color:#87A7D6;"></svg-icon>
           <i class="el-icon-caret-bottom" />
         </div>
@@ -28,13 +28,17 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
+// import Breadcrumb from '@/components/Breadcrumb'
+import TagsView from '@/components/TagsView'
+import TagsView2 from '@/components/TagsView/index2'
 import Hamburger from '@/components/Hamburger'
 import { Loading } from 'element-ui'
 
 export default {
   components: {
-    Breadcrumb,
+    // Breadcrumb,
+    TagsView2,
+    TagsView,
     Hamburger
   },
   computed: {
@@ -67,14 +71,16 @@ $navBorderColor: #F0F3F4;
   overflow: hidden;
   position: relative;
   background: #fff;
-  // box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
   box-shadow: none;
   border-bottom: 1px solid $navBorderColor;
-  /* 暂时先这样写死 */
   position: fixed;
   z-index: 999;  
   width: calc(100% - 251px);
   transition: all 0.3s;
+  // display: flex;
+  .tags-view{
+    flex: auto;
+  }
   .hamburger-container {
     height: 100%;
     float: left;

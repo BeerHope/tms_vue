@@ -27,6 +27,7 @@
       ref="upload"
       :limit="1"
       :auto-upload="false"
+      :on-exceed="handleExceed"
       :on-change="uploadChange"
       :headers="headers"
       :on-remove="removeFile"
@@ -45,7 +46,7 @@
 <script>
 import { downloadTemplate, batchImportAllocation } from '@/api/allocation'
 import { getToken } from '@/utils/auth'
-import XLSX from 'xlsx'
+import { exportExcel, download } from '@/utils/global'
 
 export default {
   name: 'ImportBatch',
@@ -96,13 +97,7 @@ export default {
     downloadTemplate() {
       downloadTemplate().then(res => {
         const blob = new Blob([res])
-        const link = document.createElement('a')
-        link.href = URL.createObjectURL(blob)
-        link.download = `${this.$t('allocation.batch.templateName')}.xlsx`
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        download(blob, this.$t('allocation.batch.templateName'))
       }).catch(err => {
         console.log(err)
       })
@@ -118,7 +113,7 @@ export default {
       if (!isLt5M) {
         this.$message.error(this.$t('base.upload.fileCheckSize'))
       }
-      if (!isAcceptedType || !isAcceptedType) {
+      if (!isAcceptedType || !isLt5M) {
         this.$refs.upload.clearFiles()
         return
       }
@@ -160,8 +155,8 @@ export default {
             })
               .then(() => {
                 const jsonData = res.data.result
-                const header = this.$t('merchant.batch.header')
-                this.exportExcel(jsonData, header, this.$t('allocation.batch.fileName'))
+                const header = this.$t('allocation.batch.header')
+                exportExcel(jsonData, header, this.$t('allocation.batch.fileName'))
               })
               .catch(() => {
                 console.log("cancel to export ");
@@ -170,11 +165,8 @@ export default {
         }
       })
     },
-    exportExcel(jsonData, header, fileName) {
-      const ws = XLSX.utils.json_to_sheet(jsonData, header)
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, fileName)
-      XLSX.writeFile(wb, `${fileName}.xlsx`)
+    handleExceed() {
+      this.$message.warning(this.$t('base.upload.exceedTips'))
     },
     closeDialog() {
       this.$refs.form.resetFields()

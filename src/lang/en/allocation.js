@@ -24,7 +24,11 @@ export default {
         file: 'Please upload file',
         company: 'Please select company'
       },
-      fileName: 'allocation-import-failed-list'
+      fileName: 'allocation-import-failed-list',
+      header: [
+        'SN',
+        'Reason'
+      ]
     }
   }
 }

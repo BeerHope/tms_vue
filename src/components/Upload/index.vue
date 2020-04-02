@@ -40,8 +40,8 @@
 
 <script>
 import { getToken } from '@/utils/auth'
-import XLSX from 'xlsx'
-import i18n from '../../lang'
+import { exportExcel, download } from '@/utils/global'
+import i18n from '@/lang'
 
 export default {
   name: 'Upload',
@@ -102,18 +102,12 @@ export default {
     downloadTemplate() {
       this.download().then(res => {
         const blob = new Blob([res])
-        const link = document.createElement('a')
-        link.href = URL.createObjectURL(blob)
-        link.download = `${this.templateName}.xlsx`
-        link.style.display = 'none';
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
+        download(blob, this.templateName)
       })
     },
     handleImport() {
       const upload = this.$refs.upload
-      if (!upload.fileList.length) {
+      if (!upload.uploadFiles.length) {
         this.$message.warning(this.$t('base.upload.fileNullTips'))
         return
       }
@@ -166,32 +160,11 @@ export default {
         .then(() => {
           // 关闭导入弹出
           const jsonData = res.data.result
-          this.exportExcel(jsonData, this.tableHeader, this.fileName)
+          exportExcel(jsonData, this.tableHeader, this.fileName)
         })
         .catch(() => {
           console.log("cancel to export failed records");
         });
-    },
-    /* jsonToExcel */
-    exportExcel(jsonData, header, fileName) {
-      const ws = XLSX.utils.json_to_sheet(jsonData, header)
-      // format header
-      const range = XLSX.utils.decode_range(ws['!ref']);
-      const wscols = []
-      for (let C = range.s.c; C <= range.e.c; ++C) {
-        const address = XLSX.utils.encode_col(C) + "1"; // <-- first row, column number C
-        if (!ws[address]) continue;
-        ws[address].v = header[C];
-        if (C !== header.length - 1) {
-          wscols.push({ wch: 20 })
-        } else {
-          wscols.push({ wch: 40 })
-        }
-      }
-      ws['!cols'] = wscols;
-      const wb = XLSX.utils.book_new()
-      XLSX.utils.book_append_sheet(wb, ws, fileName)
-      XLSX.writeFile(wb, `${fileName}.xlsx`)
     }
   }
 }

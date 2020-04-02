@@ -6,7 +6,7 @@ Vue.use(Router)
 /* Layout */
 import Layout from '@/layout'
 /* commonIndex */
-import Index from '@/components/CommonIndex/index'
+import Index from '@/components/CommonIndex'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -59,7 +59,7 @@ export const constantRoutes = [
       path: 'home',
       name: 'home',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'dashboard', icon: 'dashboard' }
+      meta: { title: 'home', icon: 'home', affix: true }
     }]
   },
   /* 系统管理 */
@@ -79,15 +79,15 @@ export const constantRoutes = [
       {
         path: 'role',
         redirect: 'role/list',
-        meta: { title: 'role' },
         component: Index,
         name: 'role',
+        meta: { title: 'role' },
         children: [
           {
             path: 'list',
             name: 'roleList',
             component: () => import('@/views/role/list'),
-            meta: { activeMenu: '/system/role' },
+            meta: { title: 'role', activeMenu: '/system/role' },
             hidden: true
           },
           {
@@ -110,7 +110,7 @@ export const constantRoutes = [
             path: 'list',
             component: () => import('@/views/user/list'), // Parent router-view
             name: 'userList',
-            meta: { activeMenu: '/system/user' },
+            meta: { title: 'user', activeMenu: '/system/user' },
             hidden: true
           },
           {
@@ -196,7 +196,7 @@ export const constantRoutes = [
             path: 'list',
             name: 'machineList',
             component: () => import('@/views/machine/list'),
-            meta: { activeMenu: '/merchant/machine' },
+            meta: { title: 'machine', activeMenu: '/merchant/machine' },
             hidden: true
           },
           {

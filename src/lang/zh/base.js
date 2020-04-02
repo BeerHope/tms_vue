@@ -1,14 +1,13 @@
 /* 公共部分 */
 export default {
   routes: {
-    dashboard: '终端管理系统',
+    home: '首页',
     system: '系统管理',
     menu: '菜单管理',
     role: '角色管理',
-    roleList: '角色列表',
     roleUser: '管理用户',
     user: '用户管理',
-    details: '详情',
+    details: '用户详情',
     company: '渠道商管理',
     companyInfo: '渠道商信息管理',
     equipment: '设备配置管理',
