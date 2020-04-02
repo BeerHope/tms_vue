@@ -113,6 +113,11 @@
   transition: all 0.3s;
 }
 
+#app .hideSidebar.mobile .navbar {
+  width: 100%;
+  transition: all 0.3s;
+}
+
 #app .hideSidebar .submenu-title-noDropdown {
   padding: 0 !important;
   position: relative;

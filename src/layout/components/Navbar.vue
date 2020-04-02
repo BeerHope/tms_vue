@@ -77,7 +77,7 @@ $navBorderColor: #F0F3F4;
   z-index: 999;  
   width: calc(100% - 251px);
   transition: all 0.3s;
-  // display: flex;
+  display: flex;
   .tags-view{
     flex: auto;
   }

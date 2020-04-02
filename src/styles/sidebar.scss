@@ -131,6 +131,12 @@ $navHeight: 70px;
       width: calc(100% - 54px);
       transition: all 0.3s;
     }
+    &.mobile{
+      .navbar{ 
+        width: 100%;
+        transition: all 0.3s;
+      }
+    }
     .submenu-title-noDropdown {
       padding: 0 !important;
       position: relative;
