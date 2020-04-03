@@ -1,9 +1,7 @@
 <template>
   <div class="smart-app">
-    <div class="app-info">
-     
-      
-    </div>
+    <!-- <div class="app-info">
+    </div> -->
     <el-form :model="appDetails" label-width="80px">
       <el-row>
         <el-col :span="12">
@@ -72,12 +70,8 @@
 </template>
 
 <script>
-import TPOS from "@/assets/images/tpos.png"
-import SPOS from "@/assets/images/spos.png"
-import MPOS from "@/assets/images/mpos.png"
-
 export default {
-  name: 'traditionalApp',
+  name: 'TraditionalApp',
   components: {},
   props: {},
   directive: {},
@@ -117,12 +111,12 @@ export default {
       this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
+      const isJPEG = file.type === 'image/jpeg'
       const isLt200K = file.size / 1024 <= 200
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!')
       // }
-      if (!isLt200K) {
+      if (!isLt200K && isJPEG) {
         this.$message.error('上传头像图片大小不能超过 200KB!')
       }
       // return isJPG && isLt200K;

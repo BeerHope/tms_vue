@@ -1,34 +1,50 @@
 <template>
   <el-dialog
-    title="调拨详情"
+    custom-class="allocation-details"
+    :title="$t('allocation.details.title')"
     :visible.sync="dialogVisible"
+    @open="getAllocationDetails"
     width="40%">
-    <div>
-      <el-button type="primary" class="r m-b-20" @click="handleExport">导出</el-button>
+    <div v-if="detailsList.length || true" v-loading="loading">
+      <el-button type="primary" class="r m-b-20" @click="handleExport">
+        {{ $t('allocation.details.export') }}
+      </el-button>
       <el-table
+        height="420"
         :data="detailsList"
         style="width: 100%"
         class="f-z-14"
         :header-cell-style="headerStyle">
-        <el-table-column prop="model" label="机型" align="center"></el-table-column>
-        <el-table-column prop="machineSN" label="机身号SN" align="center"></el-table-column>
+        <el-table-column 
+          prop="modelName" 
+          :label="$t('allocation.details.thead.modelName')" 
+          align="center">
+          <template slot-scope="scope">{{ scope.row.modelName || '--' }}</template>
+        </el-table-column>
+        <el-table-column 
+          prop="sn" 
+          :label="$t('allocation.details.thead.sn')" 
+          align="center">
+        </el-table-column>
       </el-table>
       <!-- 分页 -->
       <el-pagination
-        class="common-pagination m-t-20"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
+        class="common-pagination p-b-0 m-t-0"
+        @current-change="getAllocationDetails"
         :current-page.sync="filter.page"
         :page-sizes="[10, 20, 30, 50]"
         :page-size.sync="filter.pageSize"
-        layout="prev, pager, next, jumper"
+        layout="total, prev, pager, next, jumper"
         :total="total">
       </el-pagination>
     </div>
+    <no-result v-else height="558px" :result-text="$t('allocation.details.resultText')"></no-result>
   </el-dialog>
 </template>
 
 <script>
+import { getAllocationDetails } from '@/api/allocation'
+import { exportExcel } from '@/utils/global'
 export default {
   name: '',
   components: {},
@@ -38,20 +54,12 @@ export default {
     return {
       dialogVisible: false,
       allocationId: -1,
+      loading: false,
       filter: {
         page: 1,
         pageSize: 10
       },
-      detailsList: [
-        {
-          model: 'G2',
-          machineSN: 'G2452365481',
-        },
-        {
-          model: 'N2',
-          machineSN: 'N2452365481',
-        },
-      ],
+      detailsList: [],
       total: 0,
       headerStyle() {
         return "background: #E2E4E9; color: #172B4D;height: 42px;"
@@ -66,19 +74,31 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    handleSizeChange() {
-      console.log('handleSizeChange!!!')
-    },
-    handleCurrentChange() {
-      console.log('handleCurrentChange!!!')
+    getAllocationDetails() {
+      this.loading = true
+      console.log(this.allocationId)
+      getAllocationDetails(this.allocationId).then(res => {
+        console.log(res, 'res')
+        this.detailsList = res.data
+        this.total = res.data.length
+        this.loading = false
+      }).catch(() => {
+        this.loading = false
+      })
     },
     handleExport() {
-      console.log('处理导出操作！！')
+      const fileName = this.$t('allocation.details.exportFileName')
+      const header = this.$t('allocation.details.header')
+      exportExcel(this.detailsList, header, fileName, true)
     }
   }
 }
 </script>
 
-<style lang='scss' scoped>
-
+<style lang='scss'>
+.allocation-details{
+  .el-dialog__body{
+    width: calc(100% - 100px);
+  }
+}
 </style>

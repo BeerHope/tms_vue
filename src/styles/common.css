@@ -1612,9 +1612,22 @@
   border-color: #5087E5;
 }
 
+.el-button.el-button--primary:hover {
+  background-color: #497cd4;
+  color: #ffffff;
+  border-color: #497cd4;
+}
+
 .el-button.el-button--primary.green-btn {
   background-color: #1ECE9A;
+  color: #ffffff;
   border-color: #1ECE9A;
+}
+
+.el-button.el-button--primary.green-btn:hover {
+  background-color: #1fc392;
+  color: #ffffff;
+  border-color: #1fc392;
 }
 
 .el-button.el-button--primary.cancel {

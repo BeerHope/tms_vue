@@ -35,7 +35,7 @@ export default {
   },
   computed: {
     appImg() {
-      return this.itemData.type ? apkImg: zipImg
+      return this.itemData.type ? apkImg : zipImg
     }
   },
   watch: {},

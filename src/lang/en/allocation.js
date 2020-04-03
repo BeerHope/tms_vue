@@ -29,6 +29,16 @@ export default {
         'SN',
         'Reason'
       ]
+    },
+    details: {
+      title: 'Machine Allocation Details',
+      export: 'Export',
+      thead: {
+        modelName: 'Model Name',
+        sn: 'SN'
+      },
+      resultText: 'The details of Machine allocation  is empty',
+      exportFileName: 'machine-allocation-details'
     }
   }
 }

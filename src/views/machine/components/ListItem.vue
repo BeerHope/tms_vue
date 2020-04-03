@@ -57,14 +57,13 @@
 
 <script>
 import { unbindTerminal } from '@/api/machine'
+import { formatTime } from '@/utils/global'
 
 export default {
   name: 'UserListItem',
   components: {},
   filters: {
-    formatTime(time) {
-      return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : '--'
-    }
+    formatTime
   },
   props: {
     itemData: {

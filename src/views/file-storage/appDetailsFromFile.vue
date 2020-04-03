@@ -57,7 +57,7 @@
 
 <script>
 import AppDetails from './appDetails'
-import { getAppList } from '@/api/machine'
+// import { getAppList } from '@/api/machine'
 export default {
   name: '',
   components: {

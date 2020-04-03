@@ -154,7 +154,9 @@ $color-cbcfd4: #cbcfd4;
 $color-f5: #f5f5f5;
 $white: #ffffff;
 $color-5087E5: #5087E5;
+$color-497cd4: #497cd4;
 $color-1ECE9A: #1ECE9A;
+$color-1fc392: #1fc392;
 $color-172B4D: #172B4D;
 $color-BFBDC0: #BFBDC0; //
 
@@ -202,9 +204,14 @@ $hoverOpacity: 0.78;
     color: $white;
     &.el-button--primary {
         @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
+        &:hover{
+            @include bg_text_border-color($color-497cd4, $white, $color-497cd4);
+        }
         &.green-btn {
-            background-color: $color-1ECE9A;
-            border-color: $color-1ECE9A;
+            @include bg_text_border-color($color-1ECE9A, $white, $color-1ECE9A);
+            &:hover{
+                @include bg_text_border-color($color-1fc392, $white, $color-1fc392);
+            }
         }
         &.cancel {
             @include bg_text_border-color($white, $color-5087E5, $color-5087E5);

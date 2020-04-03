@@ -1,5 +1,5 @@
 <template>
-<!-- 共享新版本 -->
+  <!-- 共享新版本 -->
   <el-dialog
     :title="dialogTitle"
     :visible.sync="dialogVisible"

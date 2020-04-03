@@ -27,7 +27,11 @@
         style="width: 100%"
         class="f-z-14"
         :header-cell-style="headerStyle">
-        <el-table-column prop="createTime" :label="$t('allocation.list.thead.createTime')" align="center"></el-table-column>
+        <el-table-column prop="createTime" :label="$t('allocation.list.thead.createTime')" align="center">
+          <template slot-scope="scope">
+            <span>{{ scope.row.createTime | formatTime }}</span>
+          </template>
+        </el-table-column>
         <el-table-column prop="companyName" :label="$t('allocation.list.thead.companyName')" align="center"></el-table-column>
         <el-table-column prop="machineAmount" :label="$t('allocation.list.thead.machineAmount')" align="center"></el-table-column>
         <el-table-column prop="batchNo" :label="$t('allocation.list.thead.batchNo')" align="center"></el-table-column>
@@ -65,12 +69,16 @@ import DetailsDialog from './components/DetailsDialog'
 import { getAllocationList } from '@/api/allocation'
 import { getDirectCompany } from '@/api/company'
 import { Loading } from 'element-ui'
+import { formatTime } from '@/utils/global'
 
 export default {
   name: '',
   components: {
     BatchAllocation,
     DetailsDialog
+  },
+  filters: {
+    formatTime
   },
   props: {},
   directive: {},
@@ -121,10 +129,9 @@ export default {
     },
     /* 查看详情 */
     viewDetails(id) {
-      console.log(id)
       const detailsDialog = this.$refs.details
-      detailsDialog.dialogVisible = true
       detailsDialog.allocationId = id
+      detailsDialog.dialogVisible = true
     },
   }
 }

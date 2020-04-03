@@ -30,14 +30,12 @@
 import { mapGetters } from 'vuex'
 // import Breadcrumb from '@/components/Breadcrumb'
 import TagsView from '@/components/TagsView'
-import TagsView2 from '@/components/TagsView/index2'
 import Hamburger from '@/components/Hamburger'
 import { Loading } from 'element-ui'
 
 export default {
   components: {
     // Breadcrumb,
-    TagsView2,
     TagsView,
     Hamburger
   },

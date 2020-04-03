@@ -14,6 +14,11 @@ export function sortCompanyTree(array) {
   })
 }
 
+/* 转换时间 */
+export function formatTime(time) {
+  return time ? moment(time).format('YYYY-MM-DD HH:mm:ss') : '--'
+}
+
 /**
  * @export jsonToExcel
  * @param {Array(json)} jsonData (json类型的数组)
@@ -75,7 +80,7 @@ function s2ab(s) {
 }
 
 /* 将json转为sheet，导出excel */
-export function exportExcel(jsonData, header, fileName) {
+export function exportExcel(jsonData, header, fileName, isometric) {
   const ws = XLSX.utils.json_to_sheet(jsonData, header)
   // format header
   const range = XLSX.utils.decode_range(ws['!ref']);
@@ -84,10 +89,14 @@ export function exportExcel(jsonData, header, fileName) {
     const address = XLSX.utils.encode_col(C) + "1"; // <-- first row, column number C
     if (!ws[address]) continue;
     ws[address].v = header[C];
-    if (C !== header.length - 1) {
+    if (isometric) {
       wsCols.push({ wch: 20 })
     } else {
-      wsCols.push({ wch: 40 })
+      if (C !== header.length - 1) {
+        wsCols.push({ wch: 20 })
+      } else {
+        wsCols.push({ wch: 40 })
+      }
     }
   }
   ws['!cols'] = wsCols;

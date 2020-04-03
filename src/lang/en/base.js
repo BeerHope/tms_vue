@@ -1,7 +1,10 @@
 /* 公共部分 */
 export default {
+  
+  documentTitle: 'Terminal Management System',
   /* 路由&菜单 */
   routes: {
+    login: 'Login',
     home: 'Home',
     system: 'System Management',
     menu: 'Menu Management',

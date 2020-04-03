@@ -1,7 +1,6 @@
+
 module.exports = {
-
-  title: 'Vue Admin Template',
-
+  title: 'Terminal Management System',
   /**
    * @type {boolean} true | false
    * @description Whether fix the header

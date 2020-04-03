@@ -29,6 +29,20 @@ export default {
         '机身号',
         '原因'
       ]
+    },
+    details: {
+      title: '机器调拨详情',
+      export: '导出',
+      thead: {
+        modelName: '机型',
+        sn: '机身号'
+      },
+      resultText: '机器调拨详情为空',
+      exportFileName: '机器调拨详情',
+      header: [
+        '机型',
+        '机身号'
+      ]
     }
   }
 }

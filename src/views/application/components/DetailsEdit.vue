@@ -9,7 +9,7 @@
       </el-form-item>
       <el-form-item label="适用机型" prop="suitableModel">
         <el-checkbox-group v-model="formData.suitableModel" @change="handleModelChange">
-          <el-checkbox v-for="model in models" :label="model" :key="model">{{model}}</el-checkbox>
+          <el-checkbox v-for="model in models" :label="model" :key="model">{{ model }}</el-checkbox>
         </el-checkbox-group>
       </el-form-item>
       <el-form-item label="应用icon" prop="icon">
@@ -99,7 +99,7 @@ export default {
       // this.imageUrl = URL.createObjectURL(file.raw);
     },
     beforeAvatarUpload(file) {
-      const isJPG = file.type === 'image/jpeg'
+      // const isJPG = file.type === 'image/jpeg'
       const isLt200K = file.size / 1024 <= 200
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!')

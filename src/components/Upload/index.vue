@@ -49,7 +49,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: () => i18n.$t('base.upload.title'),
+      default: () => i18n.t('base.upload.title'),
       required: true
     },
     uploadUrl: { // 上传路径

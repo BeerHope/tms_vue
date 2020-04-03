@@ -1,27 +1,27 @@
 <template>
   <div class="smart-app">
     <el-form class="app-info" :model="appDetails" label-width="80px">
-        <el-row>
-          <el-col :span="12">
-            <span>应用名称：</span>
-            <span>{{ appDetails.displayName }}</span>
-          </el-col>
-          <el-col :span="12">
-            <span>版本：</span>
-            <span>{{ appDetails.version}}</span>
-          </el-col>
-        </el-row>
-        <el-row>
-          <el-col :span="12">
-            <span>大小：</span>
-            <span>{{ appDetails.size}}</span>
-          </el-col>
-          <el-col :span="12">
-            <span>文件MD5：</span>
-            <span>{{ appDetails.fileMD5}}</span>
-          </el-col>
-        </el-row>
-      </el-form>
+      <el-row>
+        <el-col :span="12">
+          <span>应用名称：</span>
+          <span>{{ appDetails.displayName }}</span>
+        </el-col>
+        <el-col :span="12">
+          <span>版本：</span>
+          <span>{{ appDetails.version }}</span>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col :span="12">
+          <span>大小：</span>
+          <span>{{ appDetails.size }}</span>
+        </el-col>
+        <el-col :span="12">
+          <span>文件MD5：</span>
+          <span>{{ appDetails.fileMD5 }}</span>
+        </el-col>
+      </el-row>
+    </el-form>
     <el-form class="editable-form" :model="formData" label-width="80px" label-position="left">
       <el-form-item label="应用名称" required>
         <el-input v-model="formData.appname"></el-input>
@@ -69,12 +69,12 @@
 </template>
 
 <script>
-import TPOS from "@/assets/images/tpos.png"
-import SPOS from "@/assets/images/spos.png"
-import MPOS from "@/assets/images/mpos.png"
+// import TPOS from "@/assets/images/tpos.png"
+// import SPOS from "@/assets/images/spos.png"
+// import MPOS from "@/assets/images/mpos.png"
 
 export default {
-  name: 'smartApp',
+  name: 'SmartApp',
   components: {},
   props: {},
   directive: {},
@@ -89,7 +89,7 @@ export default {
         fileMD5: 'MD54324324343',
         model: '机型111',
       },
-      modelList: [ 'N2', 'G2', 'T2' ],
+      modelList: ['N2', 'G2', 'T2'],
       formData: {
         appname: '',
         model: [], // 适用机型
@@ -122,7 +122,7 @@ export default {
       // if (!isJPG) {
       //   this.$message.error('上传头像图片只能是 JPG 格式!')
       // }
-      if (!isLt200K) {
+      if (!isLt200K && isJPG) {
         this.$message.error('上传头像图片大小不能超过 200KB!')
       }
       // return isJPG && isLt200K;

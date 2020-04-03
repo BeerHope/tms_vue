@@ -1,6 +1,8 @@
 /* 公共部分 */
 export default {
+  documentTitle: '终端管理系统',
   routes: {
+    login: '登录',
     home: '首页',
     system: '系统管理',
     menu: '菜单管理',
