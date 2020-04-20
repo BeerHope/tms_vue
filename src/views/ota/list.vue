@@ -1,7 +1,7 @@
 <template>
   <div class="common-list package-list">
     <div class="filter-box p-t-6 p-b-6 m-b-10">
-      <el-input class="filter-item" v-model="filter.name" placeholder="系统包名称"></el-input>
+      <el-input class="filter-item" v-model="filter.name" :placeholder="$t('ota.list.filter.name')"></el-input>
       <el-button type="primary" @click="getOtaList">
         <svg-icon icon-class="search" class="m-r-4"></svg-icon>
         {{ $t('ota.list.search') }}

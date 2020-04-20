@@ -23,27 +23,27 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item :label="$t('ota.details.form.label.createTime')" prop="createTime">
-                  <span v-if="!isEditing">{{ formData.createdTime }}</span>
+                  <span v-if="!isEditing">{{ formData.createTime | formatTime }}</span>
                   <el-date-picker
-                    v-else v-model="formData.createdTime"
+                    v-else v-model="formData.createTime"
                     type="datetime" :placeholder="$t('ota.details.form.placeholder.createTime')">
                   </el-date-picker>
                 </el-form-item>
               </el-col>
             </el-row>
             <el-form-item :label="$t('ota.details.form.label.modelNames')" prop="model">
-              <span v-if="!isEditing">{{ checkedModels }}</span>
+              <span v-if="!isEditing">{{ modelNames }}</span>
               <div class="model" v-else>
                 <ul class="model-row" @click="changeSelectedPos">
-                  <li v-for="item in posList" :key="item.textDesc">
+                  <li v-for="item in posTypes" :key="item.textDesc">
                     <img
-                      :src="item.imgPath" :alt="item.textDesc"
-                      :class="{'active': selectedPosType==item.type}"
-                      :data-type="item.type">
+                      :src="item.value | getImg" :alt="item.textDesc"
+                      :class="{'active': selectedPosType==item.value}"
+                      :data-type="item.value">
                     <p>{{ item.textDesc }}</p>
                   </li>
                 </ul>
-                <el-select v-model="formData.model" multiple>
+                <el-select v-model="formData.modelIds" multiple>
                   <el-option
                     v-for="item in modelList" :key="item.label"
                     :value="item.value" :label="item.label">
@@ -104,10 +104,26 @@ import TPOS from '@/assets/images/tpos.png'
 import SPOS from '@/assets/images/spos.png'
 import MPOS from '@/assets/images/mpos.png'
 import PackageUpdate from './components/PackageUpdate'
+import { formatTime } from '@/utils/global'
+import { getModelTree } from '@/api/model'
+import { getOtaDetails } from '@/api/ota'
+
 export default {
   name: '',   
   components: {
     PackageUpdate
+  },
+  filters: {
+    formatTime,
+    getImg(type) {
+      if (type === 1) {
+        return TPOS
+      } else if (type === 2) {
+        return SPOS
+      } else if (type === 3) {
+        return MPOS
+      }
+    }
   },
   props: {},
   directive: {},
@@ -128,30 +144,14 @@ export default {
           label: 'N2'
         }
       ],
+      modelTree: [],
       selectedPosType: 0,
-      checkedModels: 'G2, N3',
-      posList: [
-        {
-          type: 1,
-          imgPath: TPOS,
-          textDesc: 'TPOS',
-        },
-        {
-          type: 2,
-          imgPath: SPOS,
-          textDesc: 'SPOS',
-        },
-        {
-          type: 3,
-          imgPath: MPOS,
-          textDesc: 'MPOS',
-        }
-      ],
+      modelNames: '', // 使用机型描述
       formData: {
-        name: 'SPOS G2',
-        createdTime: '2020-03-10 10:30:30',
+        name: '',
+        createdTime: '',
         model: [],
-        remark: '这里是备注信息,XXXXXXXXXXXXXXXX'
+        remark: ''
       },
       rules: {
         name: [
@@ -209,17 +209,48 @@ export default {
         color: '#172B4D',
         height: '60px',
       },
-     
     }
   },
-  computed: {},
+  computed: {
+    otaId() {
+      return this.$route.params.id
+    },
+    posTypes() {
+      return _.filter(this.$t('base.posTypes'), 'value')
+    }
+  },
   watch: {},
-  created() {},
+  created() {
+    this.getModelTree()
+    this.getOtaDetails()
+  },
   beforeMount() {},
-  mounted() {},
+  mounted() {
+    
+  },
   beforeDestroy() {},
   destroyed() {},
   methods: {
+    getOtaDetails() {
+      getOtaDetails(this.otaId).then(res => {
+        const resData = res.data
+        this.formData = _.pick(resData, [
+          'name',
+          'createTime',
+          'remark',
+        ])
+        this.modelNames = _.join(resData.modelNames, ',')
+        this.selectedPosType = resData.modelIds[0]
+        this.formData.modelIds = _.drop(resData.modelIds)
+        console.log(resData.modelIds, ' resData.modelIds!! ')
+      }) 
+    },
+    getModelTree() {
+      getModelTree().then(res => {
+        this.modelTree = res.data
+        console.log(this.modelTree, 'modelTree')
+      })
+    },
     toEdit() {
       this.isEditing = true
     },

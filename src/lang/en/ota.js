@@ -5,7 +5,10 @@ export default {
       add: 'Add system package',
       deletedRecord: 'Deleted records',
       update: 'Update',
-      push: 'Push'
+      push: 'Push',
+      filter: {
+        name: 'System package name'
+      }
     },
     deletedList: {
       title: 'Deleted Package',

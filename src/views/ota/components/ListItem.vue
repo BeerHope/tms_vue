@@ -1,7 +1,7 @@
 <template>
   <div class="list-item">
     <el-card shadow="hover">
-      <div class="info" @click="toDetails">
+      <div class="info" @click="toDetails(itemData.id)">
         <svg-icon style="font-size: 50px;" icon-class="package"></svg-icon>
         <p class="name">{{ itemData.name }}</p>
         <p class="model">${机型}</p>
@@ -38,8 +38,8 @@ export default {
   beforeDestroy() {},
   destroyed() {},
   methods: {
-    toDetails() {
-      this.$router.push('./details')
+    toDetails(otaId) {
+      this.$router.push(`./details/${otaId}`)
     }
   }
 }

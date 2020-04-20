@@ -12,7 +12,7 @@ export default {
     roleList: 'Role List',
     roleUser: 'User Management',
     user: 'User Management',
-    details: 'User Details',
+    userDetails: 'User Details',
     company: 'Channel Management',
     companyInfo: 'Channel Information Management',
     equipment: 'Equipment Configuration Management',
@@ -26,7 +26,8 @@ export default {
     machineControl: 'Machine Remote Control',
     machineAllocation: 'Machines batch allocation',
     file: 'Files Management',
-    systemPackage: 'System Packages',
+    systemPackage: 'My System Packages',
+    packageDetails: 'My System Package Details',
     application: 'Applications',
     appDetails: 'Application Details',
     fileStorage: 'Files Storage'

@@ -9,7 +9,7 @@ export default {
     role: '角色管理',
     roleUser: '管理用户',
     user: '用户管理',
-    details: '用户详情',
+    userDetails: '用户详情',
     company: '渠道商管理',
     companyInfo: '渠道商信息管理',
     equipment: '设备配置管理',
@@ -24,6 +24,7 @@ export default {
     machineAllocation: '机具批量调拨',
     file: '文件管理',
     systemPackage: '我的系统包',
+    packageDetails: '我的系统包详情',
     application: '我的应用',
     appDetails: '应用详情',
     fileStorage: '文件仓库'

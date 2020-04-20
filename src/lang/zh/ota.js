@@ -5,7 +5,10 @@ export default {
       add: '新增系统包',
       deletedRecord: '删除记录',
       update: '更新',
-      push: '推送'
+      push: '推送',
+      filter: {
+        name: '系统包名称'
+      }
     },
     deletedList: {
       title: '已删除系统包',

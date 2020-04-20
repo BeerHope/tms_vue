@@ -120,7 +120,7 @@ export const constantRoutes = [
             path: '/system/user/:userId/details',
             component: () => import('@/views/user/details'), // Parent router-view
             name: 'userDetails',
-            meta: { title: 'details', activeMenu: '/system/user' },
+            meta: { title: 'userDetails', activeMenu: '/system/user' },
             hidden: true
           }
         ]
@@ -252,7 +252,7 @@ export const constantRoutes = [
             meta: { title: 'systemPackage', activeMenu: '/file/ota' }
           },
           {
-            path: 'details',
+            path: 'details/:id',
             name: 'otaDetails',
             component: () => import('@/views/ota/details'),
             hidden: true,

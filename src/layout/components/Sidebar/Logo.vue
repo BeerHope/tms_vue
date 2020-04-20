@@ -48,8 +48,9 @@ export default {
   height: 70px;
   line-height: 70px;
   background: #5087E5;
-  text-align: center;
+  // text-align: center;
   overflow: hidden;
+  padding-left: 20px;
 
   & .sidebar-logo-link {
     height: 100%;
@@ -80,5 +81,9 @@ export default {
       margin-right: 0px;
     }
   }
+}
+.hideSidebar .sidebar-logo-container{
+  text-align: center;
+  padding-left: 0;
 }
 </style>
