@@ -1,8 +1,7 @@
 <template>
   <div
     :style="{'width':typeof width === 'number' ? width + 'px' : width}"
-    class="lu-country"
-  >
+    class="lu-country">
     <input
       ref="input"
       v-model="select.text"
@@ -43,8 +42,7 @@
                     :key="country.code"
                     :code="country.code"
                     :text="country.name"
-                    @click="selectCountry(country)"
-                  >
+                    @click="selectCountry(country)">
                     {{ country.name }}
                   </a>
                 </dd>
@@ -141,19 +139,15 @@ export default {
     }
   },
   watch: {
-    'select.code': function(newVal, oldVal) {
-      if (newVal !== oldVal) {
-        this.$emit('input', newVal);
-      }
+    value: function(newVal) {
+      this.getText(newVal)
     }
   },
   created() {
-    console.log(this.value, '！！！')
     // 对传入的数据进行分组
     this.formatCountry();
-    
     // 根据传入的value查找text;
-    this.getText();
+    this.getText(this.select.code);
   },
   mounted() {
     // 设置dropdown的位置
@@ -183,7 +177,6 @@ export default {
       let initial = '';
       this.data.forEach((country, index) => {
         initial = this.getInitial(country);
-        
         if (country.hot) {
           if (!countries.HOT['HOT']) countries.HOT['HOT'] = [];
           this.pushCountries(countries.HOT['HOT'], country);
@@ -199,11 +192,12 @@ export default {
       });
       this.countries = countries;
     },
-    
-    getText() {
-      const code = this.value;
+    getText(code) {
+      if (!code) {
+        this.select.text = ''
+        return
+      }
       for (let i = 0, j = this.data.length; i < j; i++) {
-        if (!code) break;
         const country = this.data[i];
         if (country.code === code) {
           if (this.lang === 'zh') {

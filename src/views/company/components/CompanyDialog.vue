@@ -9,8 +9,7 @@
       <el-form-item
         v-if="flag!== 0"
         :label="$t('company.form.label.customerCode')"
-        prop="customerCode"
-      >
+        prop="customerCode">
         <el-input v-model="formData.customerCode" disabled></el-input>
       </el-form-item>
       <el-form-item :label="$t('company.form.label.name')" prop="name">
@@ -30,7 +29,7 @@
         </el-select>
       </el-form-item>
       <el-form-item :label="$t('company.form.label.area')" prop="area">
-        <country-selector :language="language" :value="formData.area"></country-selector>
+        <country-selector @change="changeCountry" :language="language" :value="formData.area"></country-selector>
       </el-form-item>
       <el-form-item :label="$t('company.form.label.address')" prop="address">
         <el-input v-model="formData.address" maxlength="100"></el-input>
@@ -125,7 +124,7 @@ export default {
       return getLanguage();
     },
     dialogTitle() {
-      return this.flag
+      return !this.flag
         ? this.$t("company.add.title")
         : this.$t("company.edit.title");
     }
@@ -181,6 +180,9 @@ export default {
           });
         }
       })
+    },
+    changeCountry(country) {
+      this.formData.area = country.code
     }
   }
 };

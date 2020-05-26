@@ -1,7 +1,6 @@
 // sidebar
 $menuText: #505F79;
-$menuActiveText: #5087E5;
-$subMenuActiveText: #5087E5;
+$color_5087E5: #5087E5;
 
 $menuBg: #F4F5F7;
 $menuHover: #E2E4E9;
@@ -17,8 +16,8 @@ $readonlyColor: #DCDFE6;
 :export
 {
     menuText: $menuText;
-    menuActiveText: $menuActiveText;
-    subMenuActiveText: $subMenuActiveText;
+    menuActiveText: $color_5087E5;
+    subMenuActiveText: $color_5087E5;
     menuBg: $menuBg;
     menuHover: $menuHover;
     subMenuBg: $subMenuBg;
@@ -33,3 +32,4 @@ $customBlackFont: #172B4D; // 自定义黑体
 /* default style */
 $defaultFontSize: 14px;
 $defaultTextColor: #333;
+

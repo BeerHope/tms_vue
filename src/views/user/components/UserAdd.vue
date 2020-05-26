@@ -129,7 +129,7 @@ export default {
     }
     const validateTel = (rule, value, callback) => {
       const regExp = /^(((\d{2}-)?0\d{2,3}-\d{7,8})|((\+\d{2}-)?(\d{2,3}-)?([1][3,4,5,7,8][0-9]\d{8})))$/
-      if (_.trim(value) && !regExp.test(value)) {
+      if (!regExp.test(value)) {
         callback(new Error(this.$t('user.add.form.tips.cellphone')))
       }
       callback()
@@ -169,14 +169,10 @@ export default {
           }
         ],
         email: [
-          {
-            validator: validateEmail, trigger: 'blur'
-          }
+          { validator: validateEmail, trigger: 'blur' }
         ],
         cellphone: [
-          {
-            validator: validateTel, trigger: 'blur'
-          }
+          { required: true, validator: validateTel, trigger: 'blur' }
         ],
         expireTime: [
           {

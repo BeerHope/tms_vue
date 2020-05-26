@@ -40,7 +40,7 @@ export default {
           account: 'Account does not meet the requirements, please enter again',
           name: 'The name does not meet the requirement, please enter again',
           password: 'Support 6-18 - bit characters, must contain uppercase, lowercase letters, Numbers',
-          cellphone: 'Cellphone does not match, please enter again',
+          cellphone: 'Cellphone does not match',
           email: 'The email format does not match, please enter again',
         }
       },

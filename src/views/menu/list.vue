@@ -18,7 +18,7 @@
           node-key="id"
           :props="defaultProps"
           @node-click="handleNodeClick"
-          :expand-on-click-node="true"
+          :expand-on-click-node="false"
           @node-drop="dropNode"
         >
           <span slot-scope="{node, data}" class="custom-tree-node">

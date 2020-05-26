@@ -119,3 +119,9 @@ $cardTitleBg: #ECEDF0;
         font-weight: normal;
     }
 }
+
+/* 进度条颜色 */
+#nprogress .bar {  
+    background:$menuActiveText !important;
+    border-color: $menuActiveText !important;
+  }

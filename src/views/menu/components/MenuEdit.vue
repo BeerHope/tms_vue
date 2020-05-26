@@ -55,6 +55,7 @@
 
 <script>
 import { updateMenu } from '@/api/menu'
+import { Loading } from 'element-ui'
 
 export default {
   name: '',

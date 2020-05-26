@@ -106,7 +106,7 @@ export default {
   destroyed() {},
   methods: {
     headerStyle() {
-      return "background: #E2E4E9; color: #172B4D;height: 42px;"
+      return "background: #E2E4E9; color: #172B4D"
     },
     /* 打开批量调拨 */
     openBatchAllocation() {
