@@ -54,7 +54,8 @@ module.exports = {
     name: name,
     resolve: {
       alias: {
-        '@': resolve('src')
+        '@': resolve('src'),
+        'mock': resolve('mock') // 后期移除 TODO
       }
     }
   },

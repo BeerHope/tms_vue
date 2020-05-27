@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div>首页</div>
-    <div class="dashboard-text">name: {{ name }}</div>
+    <div class="dashboard-text">username: {{ account }}</div>
     <!-- <div class="dashboard-text">test: {{ $t('login.submit') }}</div> -->
   </div>
 </template>
@@ -13,7 +13,7 @@ export default {
   name: 'Dashboard',
   computed: {
     ...mapGetters([
-      'name'
+      'account'
     ])
   }
 }

@@ -18,11 +18,10 @@ export function getInfo() {
 }
 
 /* 登出 */
-export function logout(data) {
+export function logout() {
   return request({
     url: '/user/logout',
     method: 'get',
-    data
   })
 }
 

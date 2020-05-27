@@ -1,7 +1,7 @@
 <template>
   <div class="menu-list common-container">
     <el-row class="w-100 h-100 pos-absolute">
-      <el-col :span="4" class="h-100 content-left">
+      <el-col :xl="4" :lg="5" :span="6" class="h-100 content-left">
         <!-- drag operation -->
         <div class="category-opt">
           <template v-if="isNodeDragged">
@@ -27,7 +27,7 @@
           </span>
         </el-tree>
       </el-col>
-      <el-col :span="20" class="p-l-10 h-100 pos-relative">
+      <el-col :xl="20" :lg="19" :span="18" class="p-l-10 h-100 pos-relative">
         <menu-edit
           :menu-details="menuDetails"
           :backup-data="backupData"
@@ -126,6 +126,14 @@ export default {
         }, 100)
       })
     },
+    getDefaultKey(obj) {
+      if (obj.child.length) {
+        this.getDefaultKey(obj.child[0])
+      } else {
+        this.menuId = obj.id
+        this.menuType = obj.type
+      }
+    },
     /* 拖拽 */
     dropNode(before, after, inner, event) {
       console.log('树节点拖拽了')
@@ -160,7 +168,6 @@ export default {
   width: 100%;
   min-height: calc(100% - 70px);
   .content-left{
-    border: 1px solid #eee;
     border-top: none;
   }
   .category-opt {

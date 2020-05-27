@@ -8,9 +8,10 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
     <tags-view class="tags-view"></tags-view>
     <div class="right-menu">
-      <el-dropdown class="avatar-container" trigger="click">
+      <el-dropdown class="avatar-container" placement="bottom-end" trigger="click">
         <div class="avatar-wrapper">
-          <svg-icon icon-class="username" style="font-size: 32px;color:#87A7D6;"></svg-icon>
+          <svg-icon icon-class="username" class="user-avatar"></svg-icon>
+          <span class="username">{{ account }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -42,6 +43,7 @@ export default {
   computed: {
     ...mapGetters([
       'sidebar',
+      'account'
     ])
   },
   methods: {
@@ -117,29 +119,36 @@ $navBorderColor: #F0F3F4;
         }
       }
     }
-
     .avatar-container {
       margin-right: 30px;
       cursor: pointer;
       .avatar-wrapper {
-        margin-top: 5px;
-        position: relative;
-
+        display: flex;
+        align-items: center;
         .user-avatar {
-          width: 40px;
-          height: 40px;
+          font-size: 28px;
+          color:#87A7D6;
           border-radius: 10px;
+          margin-right: 8px;
         }
-
+        .username{
+          font-size: 16px;
+        }
         .el-icon-caret-bottom {
           cursor: pointer;
           position: absolute;
           right: -20px;
-          top: 25px;
           font-size: 12px;
         }
       }
     }
   }
+}
+</style>
+
+<style lang="scss">
+.el-dropdown-menu{
+  left: auto !important;
+  right: 34px !important;
 }
 </style>

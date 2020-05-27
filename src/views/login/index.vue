@@ -228,6 +228,7 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
   .login-form {
     position: relative;
     width: 510px;
+    height: 562px;
     max-width: 100%;
     padding: 60px 90px 80px;
     overflow: hidden;
@@ -312,6 +313,7 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     background-position-y: -40px;
     .login-form{
       width: 480px;
+      height: 562px;
     }
     .system-title{
       img{
@@ -326,6 +328,7 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
     background-position-y: -140px;
     .login-form{
       width: 460px;
+      height: auto;
       padding: 40px 60px 70px;
     }
     .system-title{
@@ -354,6 +357,9 @@ $login_bg: url('~@/assets/login_images/login_bg.png');
 @media screen and (max-width: 1366px){
   .login-container{
     background-position-y: -150px;
+    .login-body{
+      height: calc(100% - 100px);
+    }
     .login-form{
       width: 380px;
       padding: 30px 40px 30px;

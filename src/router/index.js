@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 /* commonIndex */
 import Index from '@/components/CommonIndex'
+// import Index from '@/layout/components/AppMain'
 
 /**
  * Note: sub-menu only appear when route children.length >= 1
@@ -69,7 +70,101 @@ export const constantRoutes = [
   {
     path: '/system',
     component: Layout,
-    redirect: '/system/role/list',
+    name: 'system',
+    meta: { title: 'system', icon: 'system' },
+    children: [
+      {
+        path: 'menu',
+        redirect: 'menu/list',
+        name: 'menu',
+        component: Index,
+        meta: { title: 'menu' },
+        children: [
+          {
+            path: 'list',
+            name: 'menuList',
+            component: () => import('@/views/menu/list'),
+            meta: { title: 'menu', activeMenu: '/system/menu' },
+            hidden: true
+          }
+        ]
+      },
+      {
+        path: 'role',
+        redirect: 'role/list',
+        component: Index,
+        name: 'role',
+        meta: { title: 'role' },
+        children: [
+          {
+            path: 'list',
+            name: 'roleList',
+            component: () => import('@/views/role/list'),
+            meta: { title: 'role', activeMenu: '/system/role' },
+            hidden: true
+          },
+          {
+            path: '/system/role/:roleId/user',
+            name: 'roleUser',
+            component: () => import('@/views/role/roleUserList'),
+            meta: { title: 'roleUser', activeMenu: '/system/role' },
+            hidden: true
+          }
+        ]
+      },
+      {
+        path: 'user',
+        redirect: 'user/list',
+        component: Index, // Parent router-view
+        name: 'user',
+        meta: { title: 'user' },
+        children: [
+          {
+            path: 'list',
+            component: () => import('@/views/user/list'), // Parent router-view
+            name: 'userList',
+            meta: { title: 'user', activeMenu: '/system/user' },
+            hidden: true
+          },
+          {
+            path: '/system/user/:userId/details',
+            component: () => import('@/views/user/details'), // Parent router-view
+            name: 'userDetails',
+            meta: { title: 'userDetails', activeMenu: '/system/user' },
+            hidden: true
+          }
+        ]
+      }
+    ]
+  },
+  // 渠道商管理
+  // {
+  //   path: '/company',
+  //   component: Layout,
+  //   name: 'company',
+  //   meta: { title: 'company', icon: 'channel' },
+  //   children: [
+  //     {
+  //       path: 'information',
+  //       redirect: 'information/list',
+  //       name: 'companyInfo',
+  //       component: Index,
+  //       meta: { title: 'companyInfo' },
+  //       children: [
+  //         {
+  //           path: 'list',
+  //           name: 'companyInfoList',
+  //           component: () => import('@/views/company/list'),
+  //           meta: { title: 'companyInfo', activeMenu: '/company/information' },
+  //           hidden: true
+  //         }
+  //       ]
+  //     },
+  //   ]
+  // },
+  {
+    path: '/system',
+    component: Layout,
     name: 'system',
     meta: { title: 'system', icon: 'system' },
     children: [
@@ -77,7 +172,54 @@ export const constantRoutes = [
         path: 'menu/list',
         name: 'menu',
         component: () => import('@/views/menu/list'),
-        meta: { title: 'menu' }
+        meta: { title: 'menu' },
+      }
+      
+    ]
+  },
+]
+
+export const asyncRoutes1 = [
+  {
+    path: '/system',
+    component: Layout,
+    name: 'system',
+    meta: { title: 'system', icon: 'system' },
+    children: [
+      {
+        path: 'menu/list',
+        name: 'menu',
+        component: () => import('@/views/menu/list'),
+        meta: { title: 'menu' },
+      }
+      
+    ]
+  },
+]
+/* async routes */
+export const asyncRoutes = [
+  /* 系统管理 */
+  {
+    path: '/system',
+    component: Layout,
+    name: 'system',
+    meta: { title: 'system', icon: 'system' },
+    children: [
+      {
+        path: 'menu',
+        redirect: 'menu/list',
+        name: 'menu',
+        component: Index,
+        meta: { title: 'menu' },
+        children: [
+          {
+            path: 'list',
+            name: 'menuList',
+            component: () => import('@/views/menu/list'),
+            meta: { title: 'menu', activeMenu: '/system/menu' },
+            hidden: true
+          }
+        ]
       },
       {
         path: 'role',
@@ -131,15 +273,24 @@ export const constantRoutes = [
   {
     path: '/company',
     component: Layout,
-    redirect: '/company/list',
     name: 'company',
     meta: { title: 'company', icon: 'channel' },
     children: [
       {
-        path: 'information/list',
+        path: 'information',
+        redirect: 'information/list',
         name: 'companyInfo',
-        component: () => import('@/views/company/list'),
-        meta: { title: 'companyInfo' }
+        component: Index,
+        meta: { title: 'companyInfo' },
+        children: [
+          {
+            path: 'list',
+            name: 'companyInfoList',
+            component: () => import('@/views/company/list'),
+            meta: { title: 'companyInfo', activeMenu: '/company/information' },
+            hidden: true
+          }
+        ]
       },
     ]
   },
@@ -228,7 +379,6 @@ export const constantRoutes = [
     ]
   },
   // 文件管理
-  
   {
     path: '/file',
     component: Layout,
@@ -246,7 +396,7 @@ export const constantRoutes = [
         children: [
           {
             path: 'list',
-            name: 'ota',
+            name: 'otaList',
             component: () => import('@/views/ota/list'),
             hidden: true,
             meta: { title: 'systemPackage', activeMenu: '/file/ota' }
@@ -270,7 +420,7 @@ export const constantRoutes = [
       // 我的应用模块
       {
         path: 'app',
-        name: 'appList',
+        name: 'app',
         redirect: 'app/list',
         component: Index,
         meta: { title: 'application' },
@@ -340,7 +490,9 @@ export const constantRoutes = [
       },
     ]
   },
-  // 404 page must be placed at the end !!!
+]
+/* 404 page must be placed at the end !!! */
+export const routes404 = [
   { path: '*', redirect: '/404', hidden: true }
 ]
 const createRouter = () => new Router({
