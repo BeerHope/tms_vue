@@ -1,0 +1,540 @@
+@import './variables.scss';
+
+@each $alignName,
+$align in(c, center),
+(l, left),
+(r, right) {
+    .t-#{$alignName} {
+        text-align: $align;
+    }
+    .f-#{$alignName} {
+        float: $align;
+    }
+}
+
+@each $displayName,
+$display in(db, block),
+(dib, inline-block),
+(di, inline),
+(df, flex),
+(dt, table) {
+    .#{$displayName} {
+        display: $display;
+    }
+}
+
+@each $posType in static,
+fixed,
+absolute,
+relative {
+    .pos-#{$posType} {
+        position: $posType;
+    }
+}
+
+@each $cursor in auto, pointer, wait, help, move, {
+    .cur-#{$cursor} {
+        cursor: $cursor;
+    }
+}
+
+
+/* size of margin/border/padding */
+
+$size: 0;
+
+@while $size <=50 {
+    .m-#{$size} {
+        margin: 1px * $size !important;
+    }
+
+    .m-t-#{$size} {
+        margin-top: 1px * $size !important;
+    }
+
+    .m-r-#{$size} {
+        margin-right: 1px * $size !important;
+    }
+
+    .m-b-#{$size} {
+        margin-bottom: 1px * $size !important;
+    }
+
+    .m-l-#{$size} {
+        margin-left: 1px * $size !important;
+    }
+
+    .p-#{$size} {
+        padding: 1px * $size !important;
+    }
+
+    .p-t-#{$size} {
+        padding-top: 1px * $size !important;
+    }
+
+    .p-r-#{$size} {
+        padding-right: 1px * $size !important;
+    }
+
+    .p-b-#{$size} {
+        padding-bottom: 1px * $size !important;
+    }
+
+    .p-l-#{$size} {
+        padding-left: 1px * $size !important;
+    }
+
+    @if $size <=10 {
+        .b-#{$size} {
+            border-width: 1px * $size;
+        }
+
+        .b-t-#{$size} {
+            border-top-width: 1px * $size;
+        }
+
+        .b-r-#{$size} {
+            border-right-width: 1px * $size;
+        }
+
+        .b-b-#{$size} {
+            border-bottom-width: 1px * $size;
+        }
+
+        .b-l-#{$size} {
+            border-left: 1px * $size;
+        }
+    }
+
+    .f-z-#{$size} {
+        font-size: 1px * $size !important;
+    }
+
+    $size: $size + 2;
+}
+
+
+/* mixin style */
+
+@mixin clearfix {
+    display: inline-block;
+
+    &:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    * html & {
+        height: 1px
+    }
+}
+
+
+/* set color of background,text and border */
+
+@mixin bg_text_border-color($bgColor, $textColor, $borderColor) {
+    background-color: $bgColor;
+    color: $textColor;
+    border-color: $borderColor;
+}
+
+
+/* common theme colors */
+
+$color-333: #333;
+$color-666: #666;
+$color-999: #999;
+$color-ccc: #ccc;
+$color-ddd: #ddd;
+$color-eee: #eee;
+$color-cbcfd4: #cbcfd4;
+$color-f5: #f5f5f5;
+$white: #ffffff;
+$color-5087E5: #5087E5;
+$color-497cd4: #497cd4;
+$color-1ECE9A: #1ECE9A;
+$color-1fc392: #1fc392;
+$color-172B4D: #172B4D;
+$color-BFBDC0: #BFBDC0; //
+
+@each $colorName,
+$color in(color-333, $color-333),
+(color-666, $color-666),
+(color-999, $color-999),
+(color-ccc, $color-ccc),
+(color-ddd, $color-ddd),
+(color-eee, $color-eee),
+(color-cbcfd4, $color-cbcfd4),
+(color-00b4c5, $color-5087E5),
+(color-1ECE9A, $color-1ECE9A),
+(color-white, $white) {
+    .text-#{$colorName} {
+        color: $color;
+    }
+
+    .border-#{$colorName} {
+        border-color: $color;
+    }
+
+    .border-left-#{$colorName} {
+        border-left-color: $color;
+    }
+
+    .border-right-#{$colorName} {
+        border-right-color: $color;
+    }
+
+    .border-top-#{$colorName} {
+        border-top-color: $color;
+    }
+
+    .border-bottom-#{$colorName} {
+        border-bottom-color: $color;
+    }
+}
+
+
+/* set button style */
+
+$hoverOpacity: 0.78;
+.el-button {
+    color: $white;
+    &.el-button--primary {
+        @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
+        &:hover{
+            @include bg_text_border-color($color-497cd4, $white, $color-497cd4);
+        }
+        &.green-btn {
+            @include bg_text_border-color($color-1ECE9A, $white, $color-1ECE9A);
+            &:hover{
+                @include bg_text_border-color($color-1fc392, $white, $color-1fc392);
+            }
+        }
+        &.cancel {
+            @include bg_text_border-color($white, $color-5087E5, $color-5087E5);
+        }
+    }
+    &.line-type{
+        &.blue-btn{
+            @include bg_text_border-color($white, $color-5087E5, $color-5087E5);
+            &:hover, &.is-active{
+                @include bg_text_border-color($color-5087E5, $white, $color-5087E5);
+            }
+        }
+        &.green-btn {
+            @include bg_text_border-color($white, $color-1ECE9A, $color-1ECE9A);
+            &:hover, &.is-active{
+                @include bg_text_border-color($color-1ECE9A, $white, $color-1ECE9A);
+            }
+        }
+    }
+}
+
+
+/* set form item style */
+
+.el-form-item__content {
+    @include bg_text_border-color($white, $color-999, $color-cbcfd4);
+}
+
+
+/* readonly form item */
+
+.el-input__inner {
+
+    &[readonly="readonly"]:focus,
+    &[readonly="readonly"]:hover {
+        border-color: $readonlyColor;
+    }
+}
+
+
+/* set dropdown style */
+
+.el-dropdown-menu__item {
+
+    &:focus,
+    &:not(.is-disabled):hover {
+        color: $color-5087E5;
+    }
+}
+
+
+/* set button style */
+
+.el-button {
+    color: $color-666;
+    min-width: 80px;
+
+    .el-button-small {
+        height: $smallSize;
+    }
+}
+.el-input--small .el-input__inner {
+    height: $smallSize;
+    line-height: $smallSize;
+}
+
+/* set common-container style */
+
+.common-container {
+    position: absolute;
+    min-height: calc(100% - 32px);
+    width: calc(100% - 32px);
+}
+
+.common-form {
+    width: 60%;
+    min-width: 400px;
+    margin: auto;
+    .el-select, .el-date-editor,
+    .el-input-number, .el-cascader{
+        width: 100%;
+    }
+    .el-input-number__decrease,
+    .el-input-number__increase{
+        height: calc(100% - 2px);
+        line-height: $smallSize;
+    }
+}
+
+.common-pagination {
+    width: 100%;
+    padding: 20px 10px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+.common-list {
+    padding: 0 40px;
+    .filter-box{
+        display: flex;
+    }
+    .filter-item{
+        display: inline-block;
+        width: 210px;
+        margin-right: 10px;
+    }
+    .common-table {
+        height: calc(100% - 50px);
+        margin: auto;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .list-wrapper{
+        width: calc(100% - 100px);
+        min-width: 1060px;
+    }
+}
+
+.custom-hover {
+    &:hover {
+        color: $color-5087E5;
+    }
+}
+
+/* tooltip style */
+
+.el-tooltip__popper.is-light{
+    border-color: #cdcdcd;
+}
+/* custom tooltip */
+.custom-tooltip{
+    min-width: 160px;
+    min-height: 100px;
+    line-height: 18px;
+    background: #fff !important;
+    box-shadow: 0 5px 8px 2px #ddd;
+    color: #666 !important;
+    border-color: transparent !important;
+    .popper__arrow {
+        border-width: 0 !important;
+        background-color: #fff !important;
+    }
+    .popper__arrow::after{
+        background-color: transparent !important;
+    }
+}
+
+/* common tabs */
+.common-tabs{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    top: 0;
+    .el-tabs__active-bar{
+        background-color: $color-5087E5;
+    }
+    .el-tabs__item{
+        font-family: 'SourceHanSansCN-Normal';
+        color: $color-172B4D;
+        font-size: 18px;
+        &.is-active{
+            color: $color-5087E5;
+        }
+    }
+    .el-tabs__nav-wrap.is-top{
+        padding: 0 56px;
+        height: 60px;
+        line-height: 60px;
+    }
+    .el-tabs__content{
+        padding: 0 56px;
+    }
+}
+
+/* 状态颜色值 */
+$enabledBg: #E5F1FB;
+$enabledTextColor: #016ECA;
+$disabledBg: #FEDEE0;
+$disabledTextColor: #FB2434;
+.state {
+    &.enabled {
+        background-color: $enabledBg;
+        color: $enabledTextColor;
+    }
+
+    &.disabled {
+        background-color: $disabledBg;
+        color: $disabledTextColor;
+    }
+    &.bottom {
+        float: right;
+        margin-top: -20px;
+        min-width: 46px;
+        height: 56px;
+        position: relative;
+        padding:10px 4px 20px;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            border-top: 20px solid transparent;
+            border-right: 23px solid transparent;
+            border-bottom: 20px solid #fff;
+            border-left: 23px solid transparent;
+            right: 0;
+            bottom: 0;
+        }
+    }
+    &.right {
+        display: inline-block;
+        margin-top: -20px;
+        min-width: 76px;
+        height: 28px;
+        line-height: 28px;
+        position: relative;
+        text-align: center;
+        text-indent: 10px;
+        font-size: 14px;
+        font-weight: normal;
+        padding-right: 20px;
+        &:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            border-top: 14px solid transparent;
+            border-right: 12px solid #fff;
+            border-bottom: 14px solid transparent;
+            right: 0;
+            bottom: 0;
+        }
+    }
+}
+
+/* title */
+$titleBorderWidth: 4px;
+$titleBorderColor: #1ece9a;
+$titleFontSize: 18px;
+
+.common-title {
+    padding: 2px 20px;
+    border-left: $titleBorderWidth solid $titleBorderColor;
+    font-size: $titleFontSize;
+    color: $customBlackFont;
+}
+
+/* common avatar styles */
+.common-avatar-uploader{
+    .el-upload{
+        width: 90px;
+        height: 90px;
+        line-height: 90px;
+        text-align: center;
+        border: 1px solid #DCDFE6;
+    }
+   .el-icon-plus{
+       font-size: 32px;
+       color: #BCC0C7;
+   }
+   .el-upload__tip{
+       margin-top: 0;
+       color: #8c8c8c;
+   }
+}
+
+/* 删除对话框 */
+$delConfirmWidth: 632px;
+$delConfirmContWidth: 380px;
+$delConfirmHeight: 304px;
+.delete-confirm {
+    width: $delConfirmWidth;
+    height: $delConfirmHeight;
+    padding: 4px 25px;
+    .el-message-box__header {
+        margin-bottom: 50px;
+    }
+
+    .el-message-box__content {
+        height: 150px;
+        width: $delConfirmContWidth;
+        color: $customBlackFont;
+        margin: auto;
+    }
+
+    .el-message-box__btns {
+        text-align: center;
+    }
+}
+
+.el-card{
+    color: $color-172B4D;
+}
+.shadow {
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+}
+
+.common-border {
+    border: 1px solid $color-eee;
+}
+
+.l {
+    float: left;
+}
+
+.r {
+    float: right;
+}
+
+.b {
+    font-weight: bold;
+}
+
+.m-a {
+    margin: auto;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.h-100 {
+    height: 100%;
+}
+.clear-fix{
+    @include clearfix();
+}

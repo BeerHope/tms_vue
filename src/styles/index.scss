@@ -1,0 +1,127 @@
+@import './variables.scss';
+@import './mixin.scss';
+@import './transition.scss';
+@import './element-ui.scss';
+@import './sidebar.scss';
+@import './dialog.scss';
+@import './pagination.scss';
+@import './common.scss';
+
+
+body {
+    height: 100%;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-family: Source Han Sans CN, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+    font-size: $defaultFontSize;
+    color: $defaultTextColor;
+    user-select: none;
+}
+
+html {
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#app {
+    height: 100%;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+a:focus,
+a:active {
+    outline: none;
+}
+
+a,
+a:focus,
+a:hover {
+    cursor: pointer;
+    color: inherit;
+    text-decoration: none;
+}
+
+div:focus {
+    outline: none;
+}
+
+.clearfix {
+    &:after {
+        visibility: hidden;
+        display: block;
+        font-size: 0;
+        content: " ";
+        clear: both;
+        height: 0;
+    }
+}
+
+// main-container global css
+.app-container {
+    padding: 20px;
+}
+
+/* role-add */
+.role-dialog {
+    .tree-wrapper {
+        .el-form-item__content {
+            height: 250px;
+            border: 1px solid #DCDFE6;
+            overflow-y: auto;
+            border-radius: 2px;
+        }
+    }
+}
+
+/* common-list role-list-item */
+.list-item {
+    .el-card__body {
+        height: 100%;
+        position: relative;
+    }
+}
+
+
+/* user-edit-dialog */
+$cardTitleBg: #ECEDF0;
+.user-edit-dialog{
+    margin-top: 8vh !important;
+    .el-dialog__body{
+        width: 100%;
+    }
+    .el-dialog__header{
+        padding: 0 !important;
+    }
+    .el-card__header{
+        padding: 11px 20px;
+        line-height: 32px;
+        background-color: $cardTitleBg;
+        color: #172B4D;
+    }
+    .user-info{
+        margin-bottom: 38px;
+    }
+}
+
+/* companyInfo-list */
+.company-list, .machine-list, .merchant-list{
+    .vue-treeselect__control{
+        height: $smallSize;
+        outline: none;
+    }
+    .vue-treeselect__menu{
+        font-weight: normal;
+    }
+}
+
+/* 进度条颜色 */
+#nprogress .bar {  
+    background:$menuActiveText !important;
+    border-color: $menuActiveText !important;
+  }

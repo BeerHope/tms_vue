@@ -1,0 +1,26 @@
+$defaultBorderColor: #DDDDDE;
+$activeBgColor: #5087E5;
+$activeTextColor: #fff;
+$pagerMargin: 12px;
+$pagerSize: 32px;
+
+.el-pagination button, .el-pagination span:not([class*=suffix]) {
+  height: $pagerSize;
+  line-height: $pagerSize;
+}
+.el-pager li{
+  width: $pagerSize;
+  height: $pagerSize;
+  line-height: $pagerSize;
+  border: 1px solid $defaultBorderColor;
+  &+li{
+    margin-left: $pagerMargin;
+  }
+  &:hover, &.active{
+    background-color: $activeBgColor;
+    color: $activeTextColor;
+    &+li{
+      border-left: 1px solid $defaultBorderColor;
+    }
+  }
+}

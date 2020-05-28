@@ -1,0 +1,35 @@
+// sidebar
+$menuText: #505F79;
+$color_5087E5: #5087E5;
+
+$menuBg: #F4F5F7;
+$menuHover: #E2E4E9;
+
+$subMenuBg: #F4F5F7;
+$subMenuHover: #E2E4E9;
+
+$sideBarWidth: 250px;
+$readonlyColor: #DCDFE6;
+
+// the :export directive is the magic sauce for webpack
+// https://www.bluematador.com/blog/how-to-share-variables-between-js-and-sass
+:export
+{
+    menuText: $menuText;
+    menuActiveText: $color_5087E5;
+    subMenuActiveText: $color_5087E5;
+    menuBg: $menuBg;
+    menuHover: $menuHover;
+    subMenuBg: $subMenuBg;
+    subMenuHover: $subMenuHover;
+    sideBarWidth: $sideBarWidth;
+    readonlyColor: $readonlyColor;
+}
+
+/* common size variable */
+$smallSize: 34px; // 设置表单元素的统一高度
+$customBlackFont: #172B4D; // 自定义黑体
+/* default style */
+$defaultFontSize: 14px;
+$defaultTextColor: #333;
+
