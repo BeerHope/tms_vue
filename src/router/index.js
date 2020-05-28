@@ -4,7 +4,7 @@ import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
 
-const routes = [
+export const constantRoutes = [
   {
     path: '/',
     name: 'Home',
@@ -20,10 +20,15 @@ const routes = [
   }
 ]
 
-const router = new VueRouter({
+const createRouter = () =>new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes
+  routes: constantRoutes
 })
-
+const router = createRouter()
+export function resetRouter() {
+  const newRouter = createRouter()
+  console.log(newRouter, 'newRouter!!!!')
+  router.matcher = newRouter.matcher
+}
 export default router
