@@ -11,7 +11,6 @@ export function filterAsyncRoutes(frontendRoutes, backendRoutes) {
     const tempRoute = { ...frontRoute }
     _.forEach(backendRoutes, (backRoute) => {
       if (frontRoute.path === backRoute.className) {
-        debugger
         if (backRoute.child && backRoute.child.length) {
           tempRoute.children = filterAsyncRoutes(tempRoute.children, backRoute.child)
         }

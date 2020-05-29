@@ -12,10 +12,14 @@
       </el-button>
     </div>
     <div class="common-table" v-if="vendorList.length">
-      <list-item v-for="item in vendorList" :key="item.id" :data="item" @handle-edit="openDialog(1, item.id, true)"></list-item>
+      <list-item
+        v-for="item in vendorList"
+        :key="item.id"
+        :data="item"
+        @handle-edit="openDialog(1, item.id, true)">
+      </list-item>
       <!-- 分页 -->
-      <el-pagination
-        class="common-pagination"
+      <el-pagination class="common-pagination"
         @size-change="getVendorList"
         @current-change="getVendorList"
         :current-page.sync="filter.page"
@@ -44,28 +48,28 @@ export default {
   },
   props: {},
   directive: {},
-  data() {
+  data () {
     return {
       filter: {
         name: '',
         page: 1,
-        pageSize: 10,
+        pageSize: 10
       },
       vendorList: [],
-      total: 0,
+      total: 0
     }
   },
   computed: {},
   watch: {},
-  created() {
+  created () {
     this.getVendorList()
   },
-  beforeMount() {},
-  mounted() {},
-  beforeDestroy() {},
-  destroyed() {},
+  beforeMount () { },
+  mounted () { },
+  beforeDestroy () { },
+  destroyed () { },
   methods: {
-    getVendorList() {
+    getVendorList () {
       const loading = Loading.service()
       getVendorList(this.filter).then(res => {
         this.vendorList = res.data.rows
@@ -75,18 +79,17 @@ export default {
         loading.close()
       })
     },
-    openDialog(flag = 0, vendorId = -1, dialogVisible = true) {
+    openDialog (flag = 0, vendorId = -1, dialogVisible = true) {
       const vendorDialog = this.$refs.vendorDialog
       _.assign(vendorDialog, {
         flag,
         vendorId,
         dialogVisible
       })
-    },
+    }
   }
 }
 </script>
 
 <style lang='scss' scoped>
-
 </style>

@@ -3,7 +3,6 @@
     :visible.sync="dialogVisible"
     title="删除记录"
     width="40%">
-
     <el-table
       :data="detailsList"
       style="width: 100%"
@@ -41,18 +40,18 @@ export default {
         {
           name: 'packageName11111(要附上icon)',
           operator: '小明',
-          deletedTime: '2020-03-02 10:20:12',
+          deletedTime: '2020-03-02 10:20:12'
         },
         {
           name: 'package name 222(要附上icon)',
           operator: '李四',
-          deletedTime: '2020-03-02 10:20:12',
-        },
+          deletedTime: '2020-03-02 10:20:12'
+        }
       ],
       currentPage: 1,
       headerStyle() {
-        return "background: #E2E4E9; color: #172B4D;height: 42px;"
-      },
+        return 'background: #E2E4E9; color: #172B4D;height: 42px;'
+      }
     }
   },
   computed: {},

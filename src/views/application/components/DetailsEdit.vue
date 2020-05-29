@@ -61,7 +61,7 @@ export default {
   props: {},
   directive: {},
   data() {
-    const modelOptions = ['G2', 'T2', 'N2', 'KD58'];
+    const modelOptions = ['G2', 'T2', 'N2', 'KD58']
     return {
       checkedModels: ['T2', 'KD58'],
       models: modelOptions,
@@ -108,7 +108,7 @@ export default {
         this.$message.error('上传头像图片大小不能超过 200KB!')
       }
       // return isJPG && isLt200K;
-      return isLt200K;
+      return isLt200K
     },
     handleCancel() {
       this.dialogVisible = false

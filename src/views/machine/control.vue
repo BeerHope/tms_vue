@@ -24,28 +24,37 @@
         <dt>远程控制命令</dt>
         <dd>
           <div>
-            <el-select v-model="currentDirective" class="m-r-40">
-              <el-option
-                v-for="(item, index) in directives" :key="item.value+index"
-                :value="item.value" :label="item.label">
+            <el-select v-model="currentDirective"
+                       class="m-r-40">
+              <el-option v-for="(item, index) in directives"
+                         :key="item.value+index"
+                         :value="item.value"
+                         :label="item.label">
               </el-option>
             </el-select>
-            <el-button type="primary" class="m-l-0">设置</el-button>
+            <el-button type="primary"
+                       class="m-l-0">设置</el-button>
             <el-button type="primary">清除命令</el-button>
           </div>
-          <app-item
-            v-for="item in appList" :key="item.id" :item-data="item"
-            width="100%" custom-class="custom-app-list">
+          <app-item v-for="item in appList"
+                    :key="item.id"
+                    :item-data="item"
+                    width="100%"
+                    custom-class="custom-app-list">
           </app-item>
         </dd>
       </dl>
       <dl>
         <dt class="clearfix">最近下发指令</dt>
         <dd>
-          <el-table :data="recentDirectiveList" :header-row-style="headerRowStyle">
-            <el-table-column prop="setTime" label="设置时间"></el-table-column>
-            <el-table-column prop="directive" label="指令"></el-table-column>
-            <el-table-column prop="sendTime" label="下发时间"></el-table-column>
+          <el-table :data="recentDirectiveList"
+                    :header-row-style="headerRowStyle">
+            <el-table-column prop="setTime"
+                             label="设置时间"></el-table-column>
+            <el-table-column prop="directive"
+                             label="指令"></el-table-column>
+            <el-table-column prop="sendTime"
+                             label="下发时间"></el-table-column>
           </el-table>
         </dd>
       </dl>
@@ -63,7 +72,7 @@ export default {
   },
   props: {},
   directive: {},
-  data() {
+  data () {
     return {
       checkList: [],
       radio: '',
@@ -121,7 +130,7 @@ export default {
     }
   },
   computed: {
-    headerRowStyle() {
+    headerRowStyle () {
       return {
         fontSize: '14px',
         color: '#172B4D',
@@ -129,29 +138,29 @@ export default {
     }
   },
   watch: {},
-  created() {},
-  beforeMount() {},
-  mounted() {},
-  beforeDestroy() {},
-  destroyed() {},
+  created () { },
+  beforeMount () { },
+  mounted () { },
+  beforeDestroy () { },
+  destroyed () { },
   methods: {}
 }
 </script>
 
 <style lang='scss' scoped>
-.machine-control{
+.machine-control {
   padding: 0 120px;
-  color: '#172B4D';
+  color: "#172B4D";
   .content {
     max-width: 700px;
     margin: auto;
-    dl{
+    dl {
       margin-bottom: 30px;
     }
-    dt{
+    dt {
       padding-bottom: 20px;
       font-size: 16px;
-      color: #172B4D;
+      color: #172b4d;
       margin: 0;
     }
     dd {
@@ -159,11 +168,12 @@ export default {
       line-height: 34px;
       margin-left: 70px;
     }
-    .el-checkbox, .el-radio{
+    .el-checkbox,
+    .el-radio {
       display: inline-block;
       width: 160px;
     }
-    .custom-app-list{
+    .custom-app-list {
       float: left;
       padding-top: 20px;
     }
@@ -171,11 +181,12 @@ export default {
 }
 </style>
 <style lang="scss">
-.machine-control{
-  .el-checkbox__inner, .el-radio__inner{
-    border-color: #7A8190;
+.machine-control {
+  .el-checkbox__inner,
+  .el-radio__inner {
+    border-color: #7a8190;
   }
-  .el-table td{
+  .el-table td {
     border-bottom: none;
     height: 36px;
   }

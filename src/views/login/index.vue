@@ -66,8 +66,7 @@ import { JSEncrypt } from 'jsencrypt'
 export default {
   name: 'Login',
   components: {
-    LangSelect,
-    // TimezonePicker
+    LangSelect
   },
   data() {
     /* 密码校验后期增加 */
@@ -120,7 +119,7 @@ export default {
             password: this.encryptedData(publicKey, loginData.password)
           })
           this.$store.dispatch('user/login', loginData).then(() => {
-            this.$router.push({ path: this.redirect || '/' })
+            this.$router.push({path: '/'})
             this.loading = false
           }).catch(() => {
             this.loading = false
@@ -136,7 +135,7 @@ export default {
       // 设置公钥
       encryptor.setPublicKey(publicKey)
       // 加密数据
-      return encryptor.encrypt(data);
+      return encryptor.encrypt(data)
     }
   }
 }

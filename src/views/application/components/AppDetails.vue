@@ -31,7 +31,7 @@ export default {
   directive: {},
   data() {
     return {
-      dialogVisible: false,
+      dialogVisible: false
     }
   },
   computed: {},

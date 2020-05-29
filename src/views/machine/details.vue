@@ -1,8 +1,13 @@
 <template v-loading="loading">
-  <el-tabs class="machine-details common-tabs" v-model="activeName" @tab-click="handleClick">
-    <el-tab-pane :label="$t('machine.details.machineDetails')" name="details">
-      <el-card class="box-card" shadow="never">
-        <div slot="header" class="clearfix basic-info">
+  <el-tabs class="machine-details common-tabs"
+           v-model="activeName"
+           @tab-click="handleClick">
+    <el-tab-pane :label="$t('machine.details.machineDetails')"
+                 name="details">
+      <el-card class="box-card"
+               shadow="never">
+        <div slot="header"
+             class="clearfix basic-info">
           <span>{{ $t('machine.details.machineDetails') }}</span>
         </div>
         <div class="content">
@@ -40,8 +45,10 @@
           </el-row>
         </div>
       </el-card>
-      <el-card class="box-card" shadow="never">
-        <div slot="header" class="clearfix run-info">
+      <el-card class="box-card"
+               shadow="never">
+        <div slot="header"
+             class="clearfix run-info">
           <span>{{ $t('machine.details.runningInfo') }}</span>
         </div>
         <div class="content">
@@ -98,8 +105,11 @@
         </div>
       </el-card>
     </el-tab-pane>
-    <el-tab-pane label="应用信息" name="appInfo">
-      <app-item v-for="item in appList" :key="item.id" :item-data="item"></app-item>
+    <el-tab-pane label="应用信息"
+                 name="appInfo">
+      <app-item v-for="item in appList"
+                :key="item.id"
+                :item-data="item"></app-item>
     </el-tab-pane>
   </el-tabs>
 </template>
@@ -115,7 +125,7 @@ export default {
   },
   props: {},
   directive: {},
-  data() {
+  data () {
     return {
       activeName: 'details',
       loading: false,
@@ -132,28 +142,28 @@ export default {
     }
   },
   computed: {
-    modelType() {
+    modelType () {
       return this.machineDetails ? _.find(this.$t('base.posTypes'), {
         value: this.machineDetails.modelType
       }).label : '--'
     }
   },
   watch: {},
-  created() {
+  created () {
     this.getMachineDetails()
   },
-  beforeMount() {},
-  mounted() {},
-  beforeDestroy() {},
-  destroyed() {},
+  beforeMount () { },
+  mounted () { },
+  beforeDestroy () { },
+  destroyed () { },
   methods: {
-    handleClick() {
+    handleClick () {
       if (this.activeName === 'appInfo') {
         // this.getAppList()
         console.log('看情况确定要不要重新获取')
       }
     },
-    getMachineDetails() {
+    getMachineDetails () {
       this.loading = true
       const machineId = this.$route.params.id
       getMachineDetails(machineId).then(res => {
@@ -167,37 +177,37 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.el-tabs__content{
+.el-tabs__content {
   max-width: 1200px;
 }
 </style>
 <style lang='scss'>
-.machine-details{
-  .el-tabs__content{
-    .el-card + .el-card{
+.machine-details {
+  .el-tabs__content {
+    .el-card + .el-card {
       margin-top: 40px;
     }
-    .el-card__header{
+    .el-card__header {
       font-weight: bold;
-      color: #172B4D;
+      color: #172b4d;
       font-size: 16px;
-      background: #ECEDF0;
+      background: #ecedf0;
     }
-    .el-card__body{
+    .el-card__body {
       height: 280px;
     }
   }
-  #pane-details{
+  #pane-details {
     max-width: 1200px;
     width: 80%;
     margin: auto;
     padding: 20px 0 30px;
-    .content{
+    .content {
       width: 60%;
       max-width: 600px;
       margin: auto;
     }
-    .el-row{
+    .el-row {
       height: 40px;
       line-height: 40px;
     }

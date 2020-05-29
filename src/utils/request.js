@@ -2,7 +2,6 @@ import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
-
 // create an axios instance
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_URL, // url = base url + request url
@@ -14,8 +13,6 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
       // please modify it according to the actual situation
       config.headers['token'] = getToken()
     }
@@ -23,7 +20,6 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -46,7 +42,7 @@ service.interceptors.response.use(
     if (response.status && (res.code === 200 || isBlob)) {
       return res
     // if the custom code is not 200, it is judged as an error.
-    } else { 
+    } else {
       Message({
         message: res.msg || 'Error',
         type: 'error',

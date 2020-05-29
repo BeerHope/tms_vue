@@ -2,14 +2,17 @@ import Vue from 'vue'
 import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import i18n from '@/lang/index' // lang i18n
+import i18n from '@/lang/index'
+import '@/styles/index.scss' // global css
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import _ from 'lodash'
 import moment from 'moment'
-
 import '@/icons' // icon
+import '@/permission'
+
+
 
 _.assign(window, {
   _,
